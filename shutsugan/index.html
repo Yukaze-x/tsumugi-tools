@@ -1,0 +1,229 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>大学受験の出願スケジュール表｜締切・試験日・合格発表・入学金の期限を日付順に（無料）</title>
+<meta name="description" content="受ける大学ごとに出願締切・試験日・合格発表・入学手続の締切を入れると、日付順の日程表になります。試験日の重なりと、第一志望の発表より前に来る入学金の締切も分かります。登録不要・無料。">
+<meta property="og:title" content="大学受験の出願スケジュール表（無料）">
+<meta property="og:description" content="締切・試験日・合格発表・入学金の期限を日付順に並べ、重なりを知らせます。">
+<meta name="theme-color" content="#1f2a36">
+<style>
+:root {
+  --bg: #f6f7f9; --card: #ffffff; --text: #1f2a36; --sub: #5b6570; --line: #dde2e7;
+  --accent: #2a8c82; --accent-soft: #e6f3f1; --warn: #fff4d6; --warn-line: #e8c56a;
+  --late: #fde2e1; --late-line: #e59a96; --done: #9aa3ad;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #171b21; --card: #20262e; --text: #e4e7eb; --sub: #a3acb6; --line: #333b45;
+    --accent: #4fb8ad; --accent-soft: #1f3432; --warn: #3a3222; --warn-line: #8a6f2c;
+    --late: #3d2626; --late-line: #8a4a47; --done: #6b737c;
+  }
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--text);
+  font-family: "BIZ UDPGothic", "Hiragino Sans", "Yu Gothic UI", "Meiryo", sans-serif; line-height: 1.7; }
+header { background: #1f2a36; color: #fff; padding: 20px 16px 16px; }
+header h1 { margin: 0; font-size: 1.35rem; }
+header p { margin: 6px 0 0; color: #c9d3dd; font-size: .9rem; }
+main { max-width: 860px; margin: 0 auto; padding: 16px; }
+.card { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 16px; margin-bottom: 16px; }
+.setup { display: grid; gap: 12px; grid-template-columns: 1fr; }
+@media (min-width: 640px) { .setup { grid-template-columns: 1fr 1fr; } }
+label { font-weight: bold; font-size: .95rem; display: block; margin-bottom: 4px; }
+input[type=date], select { font: inherit; font-size: 1.05rem; padding: 8px 10px; border: 1px solid var(--line); border-radius: 8px;
+  background: var(--card); color: var(--text); width: 100%; }
+.progress { margin-top: 12px; }
+.bar { height: 10px; background: var(--line); border-radius: 99px; overflow: hidden; }
+.bar > div { height: 100%; background: var(--accent); width: 0; transition: width .3s; }
+.progress small { color: var(--sub); }
+.tabs { display: flex; gap: 8px; margin-bottom: 12px; flex-wrap: wrap; }
+.tabs button, .tools button { font: inherit; border: 1px solid var(--line); background: var(--card); color: var(--text);
+  padding: 8px 14px; border-radius: 99px; cursor: pointer; }
+.tabs button[aria-selected=true] { background: var(--accent); border-color: var(--accent); color: #fff; font-weight: bold; }
+.tools { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin-bottom: 8px; }
+.tools label { font-weight: normal; display: inline-flex; gap: 6px; align-items: center; margin: 0; }
+h2.phase { font-size: 1.05rem; margin: 20px 0 8px; padding-left: 10px; border-left: 4px solid var(--accent); }
+.item { display: grid; grid-template-columns: 28px 1fr; gap: 8px; padding: 10px 12px; border: 1px solid var(--line);
+  border-radius: 10px; margin-bottom: 8px; background: var(--card); }
+.item.soon { background: var(--warn); border-color: var(--warn-line); }
+.item.late { background: var(--late); border-color: var(--late-line); }
+.item.done { color: var(--done); }
+.item.done .title { text-decoration: line-through; }
+.item input[type=checkbox] { width: 22px; height: 22px; margin-top: 3px; accent-color: var(--accent); }
+.meta { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; font-size: .85rem; color: var(--sub); }
+.chip { background: var(--accent-soft); color: var(--text); border-radius: 99px; padding: 0 8px; font-size: .8rem; }
+.due { font-weight: bold; }
+.title { font-weight: bold; }
+details summary { cursor: pointer; color: var(--sub); font-size: .85rem; }
+details p { margin: 4px 0 0; font-size: .92rem; }
+table { width: 100%; border-collapse: collapse; font-size: .92rem; }
+th, td { border-bottom: 1px solid var(--line); padding: 8px 6px; text-align: left; vertical-align: top; }
+th { color: var(--sub); font-weight: bold; }
+@media (max-width: 640px) {
+  table, thead, tbody, tr, th, td { display: block; }
+  thead { display: none; }
+  tr { border: 1px solid var(--line); border-radius: 10px; margin-bottom: 8px; padding: 8px; background: var(--card); }
+  td { border: none; padding: 2px 0; }
+  td::before { content: attr(data-label) "："; color: var(--sub); font-size: .8rem; }
+}
+.promo { border-color: var(--accent); }
+.promo a { color: var(--accent); font-weight: bold; }
+.note { color: var(--sub); font-size: .85rem; }
+footer { max-width: 860px; margin: 0 auto; padding: 8px 16px 40px; color: var(--sub); font-size: .8rem; }
+@media print {
+  header, .tabs, .tools, .promo, footer, .setup-hint { display: none; }
+  body { background: #fff; color: #000; }
+  .item { break-inside: avoid; background: #fff !important; }
+  details { display: block; } details > * { display: block; }
+}
+
+/* 固定費の計算（household） */
+.sum { display: grid; gap: 8px; grid-template-columns: repeat(2, 1fr); }
+@media (min-width: 640px) { .sum { grid-template-columns: repeat(4, 1fr); } }
+.sum div { background: var(--bg); border-radius: 10px; padding: 10px; }
+.sum small { color: var(--sub); display: block; font-size: .8rem; }
+.sum b { font-size: 1.2rem; }
+.sum .big b { color: var(--accent); font-size: 1.4rem; }
+.row { display: grid; grid-template-columns: 1fr 92px 92px; gap: 8px; align-items: center; padding: 8px 0; border-bottom: 1px solid var(--line); }
+.row .name { font-weight: bold; }
+.row .diff { grid-column: 1 / -1; font-size: .85rem; color: var(--sub); }
+.row input { font: inherit; width: 100%; padding: 6px 8px; border: 1px solid var(--line); border-radius: 8px; background: var(--card); color: var(--text); text-align: right; }
+.row input.name-in { text-align: left; }
+.head { font-size: .8rem; color: var(--sub); border-bottom: 2px solid var(--line); }
+.head span:not(:first-child) { text-align: right; }
+.add { margin-top: 10px; }
+
+input[type=text], input[type=date], select { font: inherit; padding: 8px 10px; border: 1px solid var(--line); border-radius: 8px; background: var(--card); color: var(--text); width: 100%; box-sizing: border-box; }
+.sch { border-bottom: 1px solid var(--line); padding: 12px 0; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 8px; }
+.sch input, .sch select { min-width: 0; }
+.sch .full { grid-column: 1 / -1; }
+.sch label { font-size: .8rem; color: var(--sub, #5b6570); display: block; }
+.sch .row { display: flex; gap: 8px; align-items: center; }
+.card button { font: inherit; font-size: .9rem; padding: 6px 14px; border: 1px solid var(--line); border-radius: 8px; background: var(--card); color: var(--text); cursor: pointer; }
+@media (min-width: 640px) { .sch { grid-template-columns: repeat(4, minmax(0, 1fr)); } .sch .full { grid-column: span 2; } }
+table.plan { width: 100%; border-collapse: collapse; font-size: .92rem; }
+table.plan, table.plan thead, table.plan tbody, table.plan tr, table.plan th, table.plan td { display: revert; }
+table.plan thead { display: table-header-group; } table.plan tr { display: table-row; } table.plan td, table.plan th { display: table-cell; }
+table.plan td::before { content: none; }
+table.plan th, table.plan td { padding: 6px 4px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+table.plan td.d { white-space: nowrap; }
+tr.past td { color: #9aa3ad; }
+tr.soon td { background: #fff4d6; }
+tr.exam td.k { font-weight: bold; color: var(--accent, #2a8c82); }
+.warn { color: #c0392b; font-weight: bold; }
+@media (prefers-color-scheme: dark) { tr.soon td { background: #3a3320; } }
+</style>
+<link rel="canonical" href="https://yukaze-x.github.io/tsumugi-tools/shutsugan/">
+<meta property="og:url" content="https://yukaze-x.github.io/tsumugi-tools/shutsugan/">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://yukaze-x.github.io/tsumugi-tools/shutsugan/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "大学受験の出願スケジュール表", "url": "https://yukaze-x.github.io/tsumugi-tools/shutsugan/", "description": "受ける大学ごとに出願締切・試験日・合格発表・入学手続の締切を入れると、日付順の日程表になります。試験日の重なりと、第一志望の発表より前に来る入学金の締切も分かります。登録不要・無料。", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Web", "inLanguage": "ja", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "JPY"}, "creator": {"@type": "Organization", "name": "ツムギ"}}</script>
+</head>
+<body>
+<header>
+  <h1>大学受験の出願スケジュール表</h1>
+  <p>受ける大学の日付を入れると、出願締切・試験日・合格発表・入学手続の締切が日付順に並びます。登録不要・無料。</p>
+</header>
+<main>
+  <section class="card">
+    <div class="sum">
+      <div class="big"><small>次の予定</small><b id="next">―</b></div>
+      <div><small>受験校</small><b id="count">―</b></div>
+      <div><small>注意</small><b id="nwarn">―</b></div>
+    </div>
+    <div id="warns"></div>
+    <h2 class="phase">日程（日付順）</h2>
+    <table class="plan"><thead><tr><th>日付</th><th>何の日</th><th>大学・方式</th></tr></thead><tbody id="plan"></tbody></table>
+    <p class="note">今日から7日以内は黄色、過ぎた日は灰色です。</p>
+  </section>
+
+  <section class="card">
+    <h2 class="phase" style="margin-top:0">受ける大学</h2>
+    <p class="note">1つの大学・方式を1つの枠に入れます。日付は最新の年度の募集要項で確かめてください。入力した内容はこの端末の中だけに保存されます。</p>
+    <div id="rows"></div>
+    <p style="margin-top:10px"><button type="button" id="addRow">＋ 大学を追加</button></p>
+  </section>
+
+  <section class="card">
+    <h2 class="phase" style="margin-top:0">併願の日程とお金の管理のコツ</h2>
+    <ul id="tips"></ul>
+  </section>
+
+  <section class="card promo">
+    <strong>Excel 版もあります（有料・780円）</strong>
+    <p>30校ぶんの受験校の一覧（締切の条件・受験料・入学金・状態つき）、日付順の日程表、受験料の合計、出願の準備チェック、試験当日の持ち物をまとめた Excel 版を、このページの作者が BOOTH で販売しています。</p>
+    <a href="https://tsumugi-ops.booth.pm" target="_blank" rel="noopener">大学受験の出願・併願校の管理表（Excel）</a>
+  </section>
+<section class="card"><h2 class="phase" style="margin-top:0">ほかの無料ツール</h2><ul style="margin:0;padding-left:1.2em;line-height:2"><li><a href="../moving/">引っ越しやることリスト</a></li><li><a href="../household/">固定費の見直し計算</a></li><li><a href="../study/">試験日から逆算する勉強計画</a></li><li><a href="../wedding/">結婚式準備やることリスト</a></li><li><a href="../procedures/">家族が亡くなったあとの手続き 期限の早見表</a></li><li><a href="../mealplan/">1週間の献立から買い物リスト</a></li><li><a href="../jobhunt/">転職の面接でよく聞かれる質問</a></li><li><a href="../kyotsu/">共通テストまであと何日・科目ごとの時間配分</a></li><li><a href="../shimai/">年賀状じまいの文例（相手別）</a></li><li><a href="../furusato/">ふるさと納税 ワンストップ特例チェック</a></li></ul></section>
+</main>
+<footer>
+  <p>このページは日程を整理するための道具です。大学・入試の日程は入っていません。締切や条件は、各大学の最新の募集要項で必ず確かめてください。合格を約束するものではありません。</p>
+  <p>作成: ツムギ（<a href="https://tsumugi-ops.booth.pm" target="_blank" rel="noopener">BOOTH</a>）・<a href="../">ほかの無料ツール</a></p>
+</footer>
+<script>
+const C = {"tips": ["締切の条件は、募集要項で1校ずつ確かめる。「〇日消印有効」なのか「〇日必着」なのか、ネット出願は「〇時まで」なのかで、実質の締切は変わる。管理表には時刻も書く", "日付は、出願締切、検定料の支払い期限、試験日、合格発表、入学手続きの期限の5つを1行にまとめる。日付順に並べ替えて、近い順に見ると出し忘れが減る", "試験日が連続する週は、移動時間も一緒に計算する。午前に受けた大学の試験のあと、午後に別の会場へ行けるかまで考える。無理な組み合わせは早めに見直す", "入学金の納付期限と、第一志望の合格発表の日を並べて見る。発表より先に納付期限が来る大学があるかは、要項で確かめる。払うかどうかは家庭の判断なので、この順番を材料にして決める", "入学金と授業料等では返還の扱いが分かれる。入学金は原則返還されないが、大学独自の返還・負担軽減制度がある場合もある。授業料・施設設備費等は、原則として3月31日までの入学辞退なら返還対象になるが、専願・学校推薦型選抜等には例外がある。募集要項と手続要項を確認し、払う前に読んで、管理表のメモ欄に書き留める", "検定料は、出願のたびに管理表へ金額を入れて、合計を見えるようにする。合計が上限を超えそうなら、方式や大学の数を家族で相談する", "国公立大学の日程や、共通テスト後に行う一般選抜の出願に関する扱いは、その年の要項や大学のお知らせで変わることがある。変更の連絡がないか、月に何度かは各大学のサイトを見る", "ネット出願のマイページのIDとパスワードは、大学ごとに紙かパスワード管理の方法で分けて控える。メールアドレスは1つにそろえておくと、通知を見落としにくい", "合格発表のあとは、書類の提出、入学金の納付、辞退の連絡と、やることが短い期間に重なる。期限は管理表で赤字にし、誰が手続きをするかも決めておく"]};
+const KEY = "tsumugi-shutsugan-v1";
+const DAY = 86400000;
+const $ = (id) => document.getElementById(id);
+const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const blank = () => ({ name: "", kind: "併願", deadline: "", exam: "", result: "", pay: "" });
+const state = (() => { try { return JSON.parse(localStorage.getItem(KEY)) || {}; } catch { return {}; } })();
+state.rows = state.rows && state.rows.length ? state.rows : [blank()];
+const save = () => { try { localStorage.setItem(KEY, JSON.stringify(state)); } catch {} };
+const today = () => { const t = new Date(); t.setHours(0, 0, 0, 0); return t; };
+const d = (s) => (s ? new Date(s + "T00:00:00") : null);
+const W = "日月火水木金土";
+const fmt = (x) => `${x.getMonth() + 1}/${x.getDate()}（${W[x.getDay()]}）`;
+const FIELDS = [["deadline", "出願締切"], ["exam", "試験日"], ["result", "合格発表"], ["pay", "入学手続の締切"]];
+
+function drawRows() {
+  $("rows").innerHTML = state.rows.map((r, i) => `<div class="sch">
+    <div class="full"><label>大学・学部・方式</label><input type="text" data-i="${i}" data-k="name" value="${esc(r.name)}" placeholder="例: ◯◯大学 経済学部 一般選抜"></div>
+    <div><label>区分</label><select data-i="${i}" data-k="kind">${["第一志望", "併願", "滑り止め"].map((k) => `<option${k === r.kind ? " selected" : ""}>${k}</option>`).join("")}</select></div>
+    ${FIELDS.map(([k, lab]) => `<div><label>${lab}</label><input type="date" data-i="${i}" data-k="${k}" value="${esc(r[k])}"></div>`).join("")}
+    <div class="row" style="justify-content:flex-end;align-self:end"><button type="button" data-del="${i}">消す</button></div></div>`).join("");
+  $("rows").querySelectorAll("input,select").forEach((el) => el.addEventListener(el.tagName === "SELECT" ? "change" : "input", () => {
+    state.rows[el.dataset.i][el.dataset.k] = el.value; save(); calc();
+  }));
+  $("rows").querySelectorAll("button[data-del]").forEach((b) => b.addEventListener("click", () => {
+    state.rows.splice(+b.dataset.del, 1); if (!state.rows.length) state.rows.push(blank()); save(); drawRows(); calc();
+  }));
+}
+
+function calc() {
+  const rows = state.rows.filter((r) => r.name.trim());
+  const ev = [];
+  rows.forEach((r) => FIELDS.forEach(([k, lab]) => { if (r[k]) ev.push({ date: d(r[k]), kind: lab, name: r.name.trim() }); }));
+  ev.sort((a, b) => a.date - b.date);
+  const t = today();
+  $("plan").innerHTML = ev.map((e) => {
+    const cls = e.date < t ? "past" : (e.date - t) / DAY <= 7 ? "soon" : "";
+    return `<tr class="${cls}${e.kind === "試験日" ? " exam" : ""}"><td class="d">${fmt(e.date)}</td><td class="k">${e.kind}</td><td>${esc(e.name)}</td></tr>`;
+  }).join("") || `<tr><td colspan="3" class="note">下の「受ける大学」に日付を入れると、ここに並びます。</td></tr>`;
+  const nx = ev.find((e) => e.date >= t);
+  $("next").textContent = nx ? `${fmt(nx.date)} ${nx.kind}` : "―";
+  $("count").textContent = `${rows.length}校`;
+  // 注意: 試験日の重なり、第一志望の発表より前に来る入学金の締切
+  const warns = [];
+  const byExam = {};
+  rows.forEach((r) => { if (r.exam) (byExam[r.exam] = byExam[r.exam] || []).push(r.name.trim()); });
+  Object.entries(byExam).forEach(([k, ns]) => { if (ns.length > 1) warns.push(`${fmt(d(k))}に試験が重なっています: ${ns.join("、")}`); });
+  const firsts = rows.filter((r) => r.kind === "第一志望" && r.result).map((r) => d(r.result));
+  if (firsts.length) {
+    const fr = new Date(Math.max(...firsts));
+    rows.filter((r) => r.kind !== "第一志望" && r.pay && d(r.pay) < fr).forEach((r) =>
+      warns.push(`${r.name.trim()} の入学手続の締切（${fmt(d(r.pay))}）が、第一志望の合格発表（${fmt(fr)}）より前です。入学金を納めるかどうか、家族で決めておきましょう。`));
+  }
+  $("nwarn").textContent = `${warns.length}件`;
+  $("warns").innerHTML = warns.map((w) => `<p class="warn">${esc(w)}</p>`).join("");
+}
+$("tips").innerHTML = C.tips.map((x) => `<li>${esc(x)}</li>`).join("");
+$("addRow").addEventListener("click", () => { state.rows.push(blank()); save(); drawRows(); calc(); });
+drawRows();
+calc();
+</script>
+</body>
+</html>
