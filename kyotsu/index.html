@@ -98,6 +98,9 @@ footer { max-width: 860px; margin: 0 auto; padding: 8px 16px 40px; color: var(--
 .grid2 { display: grid; gap: 12px; grid-template-columns: 1fr; }
 @media (min-width: 640px) { .grid2 { grid-template-columns: 1fr 1fr; } }
 input[type=number], select { font: inherit; padding: 8px 10px; border: 1px solid var(--line); border-radius: 8px; background: var(--card); color: var(--text); width: 100%; box-sizing: border-box; }
+table.alloc, table.alloc thead, table.alloc tbody, table.alloc tr, table.alloc th, table.alloc td { display: revert; }
+table.alloc thead { display: table-header-group; } table.alloc tr { display: table-row; } table.alloc td, table.alloc th { display: table-cell; }
+table.alloc td::before { content: none; }
 table { width: 100%; border-collapse: collapse; font-size: .92rem; }
 th, td { padding: 6px 4px; border-bottom: 1px solid var(--line); text-align: right; }
 th:first-child, td:first-child { text-align: left; }
@@ -136,7 +139,7 @@ td input { width: 64px; }
   <section class="card">
     <h2 class="phase" style="margin-top:0">科目ごとの時間の配分</h2>
     <p class="note">目標点と、最新の模試の点を入れると、伸びしろ（目標−模試）の大きさに合わせて時間を配分します。</p>
-    <table>
+    <table class="alloc">
       <thead><tr><th>科目</th><th>目標</th><th>模試</th><th>配分</th><th>時間</th></tr></thead>
       <tbody id="rows"></tbody>
     </table>
@@ -149,7 +152,7 @@ td input { width: 64px; }
       試験日から日付が決まる直前30日のチェックリスト、当日の持ち物をまとめた Excel 版を、このページの作者が BOOTH で販売しています。</p>
     <a href="https://tsumugi-ops.booth.pm" target="_blank" rel="noopener">共通テスト直前 学習の立て直しキット（Excel）</a>
   </section>
-<section class="card"><h2 class="phase" style="margin-top:0">ほかの無料ツール</h2><ul style="margin:0;padding-left:1.2em;line-height:2"><li><a href="../moving/">引っ越しやることリスト</a></li><li><a href="../household/">固定費の見直し計算</a></li><li><a href="../study/">試験日から逆算する勉強計画</a></li><li><a href="../wedding/">結婚式準備やることリスト</a></li><li><a href="../procedures/">家族が亡くなったあとの手続き 期限の早見表</a></li><li><a href="../mealplan/">1週間の献立から買い物リスト</a></li><li><a href="../jobhunt/">転職の面接でよく聞かれる質問</a></li></ul></section>
+<section class="card"><h2 class="phase" style="margin-top:0">ほかの無料ツール</h2><ul style="margin:0;padding-left:1.2em;line-height:2"><li><a href="../moving/">引っ越しやることリスト</a></li><li><a href="../household/">固定費の見直し計算</a></li><li><a href="../study/">試験日から逆算する勉強計画</a></li><li><a href="../wedding/">結婚式準備やることリスト</a></li><li><a href="../procedures/">家族が亡くなったあとの手続き 期限の早見表</a></li><li><a href="../mealplan/">1週間の献立から買い物リスト</a></li><li><a href="../jobhunt/">転職の面接でよく聞かれる質問</a></li><li><a href="../shimai/">年賀状じまいの文例（相手別）</a></li></ul></section>
 </main>
 <footer>
   <p>このページは計画を立てるための道具で、合格や点数の上昇を約束するものではありません。科目と配点は 2026-09-26 時点で公表されている内容をもとにしています。</p>
