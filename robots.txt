@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://yukaze-x.github.io/tsumugi-tools/sitemap.xml

@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>家族が亡くなったあとの手続き 期限の早見表（日付つき・無料）</title>
+<meta name="description" content="亡くなった日を入れると、死亡届（7日以内）・年金・健康保険・相続放棄（3か月以内）・準確定申告（4か月以内）・相続税（10か月以内）・相続登記（3年以内）など、主な手続き28件の期限の目安を日付で表示します。登録不要・無料。">
+<meta property="og:title" content="家族が亡くなったあとの手続き 期限の早見表（無料）">
+<meta property="og:description" content="亡くなった日を入れると、主な手続きの期限の目安を日付で表示します。">
+<meta name="theme-color" content="#1f2a36">
+<style>
+:root {
+  --bg: #f6f7f9; --card: #ffffff; --text: #1f2a36; --sub: #5b6570; --line: #dde2e7;
+  --accent: #2a8c82; --accent-soft: #e6f3f1; --warn: #fff4d6; --warn-line: #e8c56a;
+  --late: #fde2e1; --late-line: #e59a96; --done: #9aa3ad;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #171b21; --card: #20262e; --text: #e4e7eb; --sub: #a3acb6; --line: #333b45;
+    --accent: #4fb8ad; --accent-soft: #1f3432; --warn: #3a3222; --warn-line: #8a6f2c;
+    --late: #3d2626; --late-line: #8a4a47; --done: #6b737c;
+  }
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--text);
+  font-family: "BIZ UDPGothic", "Hiragino Sans", "Yu Gothic UI", "Meiryo", sans-serif; line-height: 1.7; }
+header { background: #1f2a36; color: #fff; padding: 20px 16px 16px; }
+header h1 { margin: 0; font-size: 1.35rem; }
+header p { margin: 6px 0 0; color: #c9d3dd; font-size: .9rem; }
+main { max-width: 860px; margin: 0 auto; padding: 16px; }
+.card { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 16px; margin-bottom: 16px; }
+.setup { display: grid; gap: 12px; grid-template-columns: 1fr; }
+@media (min-width: 640px) { .setup { grid-template-columns: 1fr 1fr; } }
+label { font-weight: bold; font-size: .95rem; display: block; margin-bottom: 4px; }
+input[type=date], select { font: inherit; font-size: 1.05rem; padding: 8px 10px; border: 1px solid var(--line); border-radius: 8px;
+  background: var(--card); color: var(--text); width: 100%; }
+.progress { margin-top: 12px; }
+.bar { height: 10px; background: var(--line); border-radius: 99px; overflow: hidden; }
+.bar > div { height: 100%; background: var(--accent); width: 0; transition: width .3s; }
+.progress small { color: var(--sub); }
+.tabs { display: flex; gap: 8px; margin-bottom: 12px; flex-wrap: wrap; }
+.tabs button, .tools button { font: inherit; border: 1px solid var(--line); background: var(--card); color: var(--text);
+  padding: 8px 14px; border-radius: 99px; cursor: pointer; }
+.tabs button[aria-selected=true] { background: var(--accent); border-color: var(--accent); color: #fff; font-weight: bold; }
+.tools { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin-bottom: 8px; }
+.tools label { font-weight: normal; display: inline-flex; gap: 6px; align-items: center; margin: 0; }
+h2.phase { font-size: 1.05rem; margin: 20px 0 8px; padding-left: 10px; border-left: 4px solid var(--accent); }
+.item { display: grid; grid-template-columns: 28px 1fr; gap: 8px; padding: 10px 12px; border: 1px solid var(--line);
+  border-radius: 10px; margin-bottom: 8px; background: var(--card); }
+.item.soon { background: var(--warn); border-color: var(--warn-line); }
+.item.late { background: var(--late); border-color: var(--late-line); }
+.item.done { color: var(--done); }
+.item.done .title { text-decoration: line-through; }
+.item input[type=checkbox] { width: 22px; height: 22px; margin-top: 3px; accent-color: var(--accent); }
+.meta { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; font-size: .85rem; color: var(--sub); }
+.chip { background: var(--accent-soft); color: var(--text); border-radius: 99px; padding: 0 8px; font-size: .8rem; }
+.due { font-weight: bold; }
+.title { font-weight: bold; }
+details summary { cursor: pointer; color: var(--sub); font-size: .85rem; }
+details p { margin: 4px 0 0; font-size: .92rem; }
+table { width: 100%; border-collapse: collapse; font-size: .92rem; }
+th, td { border-bottom: 1px solid var(--line); padding: 8px 6px; text-align: left; vertical-align: top; }
+th { color: var(--sub); font-weight: bold; }
+@media (max-width: 640px) {
+  table, thead, tbody, tr, th, td { display: block; }
+  thead { display: none; }
+  tr { border: 1px solid var(--line); border-radius: 10px; margin-bottom: 8px; padding: 8px; background: var(--card); }
+  td { border: none; padding: 2px 0; }
+  td::before { content: attr(data-label) "："; color: var(--sub); font-size: .8rem; }
+}
+.promo { border-color: var(--accent); }
+.promo a { color: var(--accent); font-weight: bold; }
+.note { color: var(--sub); font-size: .85rem; }
+footer { max-width: 860px; margin: 0 auto; padding: 8px 16px 40px; color: var(--sub); font-size: .8rem; }
+@media print {
+  header, .tabs, .tools, .promo, footer, .setup-hint { display: none; }
+  body { background: #fff; color: #000; }
+  .item { break-inside: avoid; background: #fff !important; }
+  details { display: block; } details > * { display: block; }
+}
+
+/* 固定費の計算（household） */
+.sum { display: grid; gap: 8px; grid-template-columns: repeat(2, 1fr); }
+@media (min-width: 640px) { .sum { grid-template-columns: repeat(4, 1fr); } }
+.sum div { background: var(--bg); border-radius: 10px; padding: 10px; }
+.sum small { color: var(--sub); display: block; font-size: .8rem; }
+.sum b { font-size: 1.2rem; }
+.sum .big b { color: var(--accent); font-size: 1.4rem; }
+.row { display: grid; grid-template-columns: 1fr 92px 92px; gap: 8px; align-items: center; padding: 8px 0; border-bottom: 1px solid var(--line); }
+.row .name { font-weight: bold; }
+.row .diff { grid-column: 1 / -1; font-size: .85rem; color: var(--sub); }
+.row input { font: inherit; width: 100%; padding: 6px 8px; border: 1px solid var(--line); border-radius: 8px; background: var(--card); color: var(--text); text-align: right; }
+.row input.name-in { text-align: left; }
+.head { font-size: .8rem; color: var(--sub); border-bottom: 2px solid var(--line); }
+.head span:not(:first-child) { text-align: right; }
+.add { margin-top: 10px; }
+
+.proc { display: grid; grid-template-columns: 120px 1fr; gap: 10px; padding: 10px 12px; border: 1px solid var(--line); border-radius: 10px; margin-bottom: 8px; background: var(--card); }
+.proc .date { font-weight: bold; }
+.proc .date small { display: block; font-weight: normal; color: var(--sub); font-size: .8rem; }
+.proc.soon { background: var(--warn); border-color: var(--warn-line); }
+.proc.past { background: var(--late); border-color: var(--late-line); }
+@media (max-width: 480px) { .proc { grid-template-columns: 1fr; gap: 2px; } }
+</style>
+</head>
+<body>
+<header>
+  <h1>家族が亡くなったあとの手続き 期限の早見表</h1>
+  <p>亡くなった日を入れると、主な手続きの期限の目安を日付で表示します。登録不要・無料。</p>
+</header>
+<main>
+  <section class="card">
+    <label for="d">亡くなった日（または亡くなったことを知った日）</label>
+    <input type="date" id="d">
+    <p class="note setup-hint">期限の多くは「亡くなったことを知った日」や「手続きの事由が生じた日」から数えます。ここでは入力した日から数えた目安を出しています（数え方の違いで、実際の期限より1日早く出ることがあります）。起算日が別の手続き（診療を受けた月、葬儀の日など）は日付を出していません。
+      一般的な目安で、期限や必要な書類は自治体・会社・状況によって異なります。最新の情報は各窓口で確認し、判断に迷うときは専門家（税理士・司法書士・弁護士など）に相談してください。</p>
+  </section>
+
+  <section>
+    <h2 class="phase">期限のある手続き（早い順）</h2>
+    <div id="dated"><p class="note">日付を入れると表示されます。</p></div>
+    <h2 class="phase">期限の決まりがない手続き・早めにしたいこと</h2>
+    <div id="other"></div>
+  </section>
+
+  <section class="card promo">
+    <strong>ご自身の備えに</strong>
+    <p>口座・保険・契約・連絡先などを、家族が探さずに済むよう1つにまとめておく Excel（もしものときの情報ファイル・980円）を、
+      このページの作者が BOOTH で販売しています。この早見表の内容も入っています。</p>
+    <a href="https://tsumugi-ops.booth.pm" target="_blank" rel="noopener">もしものときの情報ファイル（Excel）</a>
+  </section>
+</main>
+<footer>
+  <p>このページは一般的な情報をまとめたもので、個別の法律・税の助言ではありません。内容の作成には AI を利用し、公的機関の情報で確認しています（2026-09-25 時点）。</p>
+  <p>作成: ツムギ（<a href="https://tsumugi-ops.booth.pm" target="_blank" rel="noopener">BOOTH</a>）・<a href="../">ほかの無料ツール</a></p>
+</footer>
+<script>
+const PROCS = [{"timing": "死亡直後", "name": "死亡診断書（死体検案書）の受け取り", "where": "病院・医師", "note": "死亡届と同じ用紙の右半分にあたります。提出すると手元に戻らないため、先にコピーを数枚とっておきます。保険金の請求などで求められることがあります。"}, {"timing": "死亡後すぐ", "name": "葬儀社への連絡・安置先と日程の決定", "where": "葬儀社（互助会に入っている場合は互助会）", "note": "病院に長く安置することはできず、搬送先を早く決める必要があります。このファイルの「葬儀の希望」シートと事前相談書があれば、そのまま伝えられます。"}, {"timing": "死亡の事実を知った日から7日以内（国外で亡くなった場合は3か月以内）。火葬許可申請は死亡届と同時", "name": "死亡届の提出と火葬許可申請（火葬許可証の受け取り）", "where": "死亡地・死亡者の本籍地・届出人の所在地のいずれかの市区町村役場", "note": "届出人は親族、同居者、家主・地主など。葬儀社が代行することが多く、夜間や休日の受付方法は自治体により異なります。死亡後24時間を過ぎないと火葬はできません。火葬後に押印された火葬許可証が埋葬許可証になり、納骨のときに必要です。なくさないようにします。"}, {"timing": "5日以内（会社員の場合）", "name": "健康保険・厚生年金保険の資格喪失届と、勤務先での手続き", "where": "勤務先（事業主が年金事務所または健康保険組合へ届出）", "note": "勤務先へ連絡し、保険証や資格確認書、扶養家族の分の返却と切り替えを確認します。給与の精算、退職金、団体保険、社内の遺族への給付もあわせて聞きます。"}, {"timing": "厚生年金は10日以内、国民年金は14日以内", "name": "年金受給権者死亡届（報告書）", "where": "年金事務所・街角の年金相談センター", "note": "日本年金機構にマイナンバーが登録されている人は、届出が省略できる場合があります。未支給年金の請求（下記）も同じ窓口で確認できます。"}, {"timing": "14日以内", "name": "国民健康保険・後期高齢者医療・介護保険の資格喪失届と、世帯主変更届", "where": "市区町村役場の国保・後期高齢者医療、介護保険、住民異動の各窓口", "note": "保険証や資格確認書、介護保険の被保険者証・負担割合証を返却します。介護保険は65歳以上の人、または40〜64歳で要介護認定を受けていた人が対象で、担当のケアマネジャーやサービス事業所にも連絡します。世帯主変更は、亡くなった人が世帯主で、残る世帯員が2人以上いて新しい世帯主が自動的に決まらない場合に必要です。要否は死亡届を出すときに窓口で確認できます。葬祭費の申請（下記）も同じ窓口で聞けることが多いです。"}, {"timing": "原則として所有者変更の事由が生じた日から15日以内", "name": "自動車の名義変更（移転登録）または廃車、自動車保険の切り替え", "where": "運輸支局（軽自動車は軽自動車検査協会）、保険会社", "note": "乗り続ける場合は名義変更、乗らない場合は抹消登録をします。名義変更には相続人の間での合意が必要になることが多く、遺産分割が終わっていないなどで15日以内に進められないときは、運輸支局または軽自動車検査協会に早めに確認します。"}, {"timing": "できるだけ早く", "name": "遺言書の有無の確認", "where": "自宅・貸金庫、公証役場、法務局", "note": "公正証書遺言は公証役場で検索できます。自筆証書遺言書保管制度を使っていれば法務局に保管されています。自宅で見つかった自筆の遺言書は、開封せずに家庭裁判所で検認を受けます。"}, {"timing": "できるだけ早く", "name": "金融機関への死亡の連絡・相続手続きの案内を受ける", "where": "銀行・信用金庫・証券会社などの各支店や相談窓口", "note": "連絡すると口座が凍結され、入出金や引き落としが止まります。公共料金などの引き落とし先を先に確認しておきます。相続手続き前でも、金融機関ごとに上限150万円までの預貯金の仮払い制度があります（法定相続分などの条件あり）。"}, {"timing": "できるだけ早く", "name": "生命保険・医療保険・共済の死亡保険金などの請求", "where": "保険会社・共済の窓口", "note": "保険証券の番号を伝えて必要書類を取り寄せます。請求できる期間は契約により異なり、3年が目安です。契約書類で確認してください。"}, {"timing": "できるだけ早く", "name": "クレジットカードの解約と、サブスク・会員サービスの解約", "where": "カード会社、各サービスの窓口・問い合わせフォーム", "note": "カードの未払い残高、年会費、ポイントの扱いは会社によって異なります。「契約・サブスク」シートと、通帳やカード明細の定期的な引き落としを突き合わせて探し、カードで払っていた契約は支払い方法を変えます。スマホの中の課金は、端末を開けないと分からないことがあります。"}, {"timing": "できるだけ早く", "name": "電気・ガス・水道・固定電話・インターネット・携帯電話の名義変更または解約", "where": "電力会社・ガス会社・水道局・通信会社・携帯電話会社", "note": "住み続ける場合は名義変更、空き家になる場合は解約や停止の手続きをします。お客様番号は検針票や請求書に載っています。"}, {"timing": "契約書の解約予告期間による（1〜2か月前が多い）", "name": "賃貸住宅の解約・明け渡し", "where": "管理会社・貸主", "note": "解約予告期間の間は家賃が発生します。荷物の整理や原状回復の費用の扱いは契約内容によります。連帯保証人がいる場合は、その人にも連絡します。"}, {"timing": "死亡届の提出後に自動失効（返納は任意）", "name": "マイナンバーカードの扱い", "where": "市区町村役場", "note": "死亡届が出されると自動的に失効し、返納の義務はありません。返納の案内や方法は自治体により異なるので、窓口で聞いてください。カードは個人情報を含むため、処分するときは自治体の案内に従います。"}, {"timing": "死亡届の提出後に自動廃止", "name": "印鑑登録の扱い", "where": "市区町村役場", "note": "死亡届が出されると自動的に廃止され、廃止申請は要りません。印鑑登録証（カード）は自治体の案内に従って返却または処分します。実印は、相続手続きが終わるまで手元に置いておくと安心です。"}, {"timing": "期限の定めはない（有効期限内のものは早めに）", "name": "パスポートの死亡の届出", "where": "都道府県の旅券窓口（パスポートセンター）", "note": "有効なパスポートは、死亡を証する書類とともに旅券窓口へ届け出ます。必要な書類や旅券の扱いは窓口で確認してください。"}, {"timing": "期限の定めはない", "name": "運転免許証の扱い", "where": "都道府県警察（警察署・運転免許センター）", "note": "返納が必要かどうか、必要な持ち物は、都道府県警察に確認してください。運転免許証が本人確認書類として手続きに必要になることもあるため、返納前に他の手続きの予定を確認します。"}, {"timing": "相続の開始があったことを知った日から3か月以内", "name": "相続放棄・限定承認の申述（必要な場合）", "where": "亡くなった人の最後の住所地を管轄する家庭裁判所", "note": "財産と借金の全体がまだ分からないときは、3か月の期間を延ばしてもらう申立てもできます。預貯金を使うなど財産を処分すると、放棄が認められなくなることがあります。迷ったら弁護士・司法書士か家庭裁判所に相談してください。"}, {"timing": "相続の開始があったことを知った日の翌日から4か月以内", "name": "準確定申告（必要な場合）", "where": "亡くなった人の住所地を管轄する税務署", "note": "事業や家賃などの収入があった場合など、対象は人によって異なります。申告が必要かどうかは、税務署か税理士に確認してください。"}, {"timing": "死亡を知った日の翌日から10か月以内", "name": "相続税の申告・納付（必要な場合）", "where": "亡くなった人の住所地を管轄する税務署", "note": "財産の合計が基礎控除額を超えるかどうかが申告の目安になります。特例の適用を受ける場合は、控除内でも申告が必要になることがあります。個別の判断は税務署か税理士に確認してください。"}, {"timing": "葬儀を行った日の翌日から2年以内", "name": "葬祭費の申請（国民健康保険・後期高齢者医療）", "where": "市区町村役場（国保・後期高齢者医療の担当窓口）", "note": "支給額や必要書類は自治体により異なります。葬儀の領収書や会葬礼状などが求められることがあるので、捨てずに置いておきます。"}, {"timing": "埋葬料・家族埋葬料は死亡日の翌日から2年以内、埋葬費は埋葬を行った日の翌日から2年以内", "name": "埋葬料・家族埋葬料・埋葬費の申請（健康保険）", "where": "加入していた健康保険組合・協会の窓口", "note": "会社員などが加入する健康保険の給付です。埋葬料は被保険者が亡くなった場合、家族埋葬料は被扶養者が亡くなった場合、埋葬費は埋葬料を受ける人がいない場合に埋葬を行った人が実費を請求する形です。対象や必要書類は保険者に確認してください。"}, {"timing": "診療を受けた月の翌月1日から2年以内", "name": "高額療養費の払い戻し請求", "where": "加入していた健康保険の窓口（国保・後期高齢者医療は市区町村役場）", "note": "亡くなった人が入院や外来で自己負担限度額を超えて払っていた場合に、相続人が請求できることがあります。保険者からの通知が届いていないか確認します。"}, {"timing": "原則、サービス利用月の翌月1日から2年以内。支払いがそれより後の場合などは起算日が異なるため市区町村に確認", "name": "高額介護サービス費の払い戻し請求", "where": "市区町村役場の介護保険担当窓口", "note": "亡くなった人が介護サービスで自己負担の上限を超えて払っていた場合に、相続人が請求できることがあります。通知が届いていないか、担当のケアマネジャーにも確認します。"}, {"timing": "死亡日の翌日から2年以内", "name": "国民年金の死亡一時金の請求", "where": "年金事務所・市区町村役場の国民年金窓口", "note": "保険料を納めた期間などの条件があり、遺族基礎年金を受けられる場合は対象外です。対象かどうかは窓口で確認します。"}, {"timing": "相続で不動産を取得したことを知った日から3年以内", "name": "相続登記（不動産の名義変更）", "where": "不動産の所在地を管轄する法務局", "note": "2024年4月1日から義務化され、正当な理由なく怠ると10万円以下の過料の対象です。遺産分割が決まらないときは、相続人申告登記で期限内の義務を果たせます。2024年3月以前に相続した不動産も対象で、その期限は2027年3月31日です。"}, {"timing": "死亡日の翌日から5年以内（時効）", "name": "遺族年金の請求", "where": "年金事務所・街角の年金相談センター（国民年金のみの場合は市区町村役場でも受付）", "note": "遺族基礎年金・遺族厚生年金は、亡くなった人の加入状況と残された家族の状況で受けられるかが決まります。時効までは請求できますが、早めに窓口へ行くと受け取りの開始も早くなります。"}, {"timing": "各年金の支払日の翌月初日から5年", "name": "未支給年金の請求", "where": "年金事務所・街角の年金相談センター（国民年金のみの場合は市区町村役場でも受付）", "note": "亡くなった年金受給者と生計を同じくしていた遺族が請求できます。年金は後払いのため、亡くなった月の分までが未支給になることがあります。年金受給権者死亡届と同じ窓口で確認できます。"}];
+const $ = (id) => document.getElementById(id);
+const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const fmt = (d) => `${d.getFullYear()}/${d.getMonth() + 1}/${d.getDate()}（${"日月火水木金土"[d.getDay()]}）`;
+const today = () => { const t = new Date(); t.setHours(0, 0, 0, 0); return t; };
+
+// 「7日以内」「3か月以内」「10か月以内」「2年以内」を読み取る（最初に出てくるもの）。「翌日から」は1日足す
+function deadline(base, timing) {
+  // 起算日が亡くなった日ではないもの（診療月・利用月・葬儀の日・支払日など）は日付を出さない
+  if (/診療|利用月|葬儀を行った|埋葬を行った|支払日|事由が生じた/.test(timing)) return null;
+  const m = timing.match(/(\d+)\s*(日|か月|ヶ月|カ月|年)以内/);
+  if (!m) return null;
+  const n = +m[1], d = new Date(base);
+  if (/翌日から/.test(timing.slice(0, timing.indexOf(m[0]) + 1))) d.setDate(d.getDate() + 1);
+  if (m[2] === "日") d.setDate(d.getDate() + n - 1);
+  else if (m[2] === "年") { d.setFullYear(d.getFullYear() + n); d.setDate(d.getDate() - 1); }
+  else { d.setMonth(d.getMonth() + n); d.setDate(d.getDate() - 1); }
+  return d;
+}
+
+function render() {
+  const v = $("d").value;
+  const base = v ? new Date(v + "T00:00:00") : null;
+  const dated = [], other = [];
+  for (const p of PROCS) {
+    const dl = base ? deadline(base, p.timing) : null;
+    (dl ? dated : other).push({ ...p, dl });
+  }
+  dated.sort((a, b) => a.dl - b.dl);
+  const item = (p) => {
+    let cls = "", when = esc(p.timing);
+    if (p.dl) {
+      const left = Math.round((p.dl - today()) / 86400000);
+      cls = left < 0 ? "past" : left <= 7 ? "soon" : "";
+      when = `${fmt(p.dl)}まで<small>${left < 0 ? `${-left}日過ぎています` : left === 0 ? "今日まで" : `あと${left}日`}（${esc(p.timing)}）</small>`;
+    }
+    return `<div class="proc ${cls}"><div class="date">${when}</div><div><div class="title">${esc(p.name)}</div>
+      <div class="meta"><span class="chip">${esc(p.where)}</span></div><details><summary>注意</summary><p>${esc(p.note)}</p></details></div></div>`;
+  };
+  $("dated").innerHTML = base ? dated.map(item).join("") : "<p class='note'>日付を入れると表示されます。</p>";
+  $("other").innerHTML = (base ? other : PROCS).map(item).join("");
+}
+$("d").addEventListener("input", render);
+render();
+</script>
+</body>
+</html>

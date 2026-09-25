@@ -1,0 +1,230 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>試験日から逆算する勉強計画｜週ごとの予定時間と、目安の学習時間に足りるかがわかる（無料）</title>
+<meta name="description" content="試験日と、平日・休日の1日の勉強時間を入れると、試験までに勉強できる総時間と週ごとの計画（インプット・問題演習・総復習）が出ます。簿記・FP・IT 系など主な資格18種類の学習時間の目安と比べられます。登録不要・無料。">
+<meta property="og:title" content="試験日から逆算する勉強計画（無料）">
+<meta property="og:description" content="試験日と1日の勉強時間から、週ごとの計画と総時間を出します。主な資格の目安時間との比較つき。">
+<meta name="theme-color" content="#1f2a36">
+<style>
+:root {
+  --bg: #f6f7f9; --card: #ffffff; --text: #1f2a36; --sub: #5b6570; --line: #dde2e7;
+  --accent: #2a8c82; --accent-soft: #e6f3f1; --warn: #fff4d6; --warn-line: #e8c56a;
+  --late: #fde2e1; --late-line: #e59a96; --done: #9aa3ad;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #171b21; --card: #20262e; --text: #e4e7eb; --sub: #a3acb6; --line: #333b45;
+    --accent: #4fb8ad; --accent-soft: #1f3432; --warn: #3a3222; --warn-line: #8a6f2c;
+    --late: #3d2626; --late-line: #8a4a47; --done: #6b737c;
+  }
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--text);
+  font-family: "BIZ UDPGothic", "Hiragino Sans", "Yu Gothic UI", "Meiryo", sans-serif; line-height: 1.7; }
+header { background: #1f2a36; color: #fff; padding: 20px 16px 16px; }
+header h1 { margin: 0; font-size: 1.35rem; }
+header p { margin: 6px 0 0; color: #c9d3dd; font-size: .9rem; }
+main { max-width: 860px; margin: 0 auto; padding: 16px; }
+.card { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 16px; margin-bottom: 16px; }
+.setup { display: grid; gap: 12px; grid-template-columns: 1fr; }
+@media (min-width: 640px) { .setup { grid-template-columns: 1fr 1fr; } }
+label { font-weight: bold; font-size: .95rem; display: block; margin-bottom: 4px; }
+input[type=date], select { font: inherit; font-size: 1.05rem; padding: 8px 10px; border: 1px solid var(--line); border-radius: 8px;
+  background: var(--card); color: var(--text); width: 100%; }
+.progress { margin-top: 12px; }
+.bar { height: 10px; background: var(--line); border-radius: 99px; overflow: hidden; }
+.bar > div { height: 100%; background: var(--accent); width: 0; transition: width .3s; }
+.progress small { color: var(--sub); }
+.tabs { display: flex; gap: 8px; margin-bottom: 12px; flex-wrap: wrap; }
+.tabs button, .tools button { font: inherit; border: 1px solid var(--line); background: var(--card); color: var(--text);
+  padding: 8px 14px; border-radius: 99px; cursor: pointer; }
+.tabs button[aria-selected=true] { background: var(--accent); border-color: var(--accent); color: #fff; font-weight: bold; }
+.tools { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin-bottom: 8px; }
+.tools label { font-weight: normal; display: inline-flex; gap: 6px; align-items: center; margin: 0; }
+h2.phase { font-size: 1.05rem; margin: 20px 0 8px; padding-left: 10px; border-left: 4px solid var(--accent); }
+.item { display: grid; grid-template-columns: 28px 1fr; gap: 8px; padding: 10px 12px; border: 1px solid var(--line);
+  border-radius: 10px; margin-bottom: 8px; background: var(--card); }
+.item.soon { background: var(--warn); border-color: var(--warn-line); }
+.item.late { background: var(--late); border-color: var(--late-line); }
+.item.done { color: var(--done); }
+.item.done .title { text-decoration: line-through; }
+.item input[type=checkbox] { width: 22px; height: 22px; margin-top: 3px; accent-color: var(--accent); }
+.meta { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; font-size: .85rem; color: var(--sub); }
+.chip { background: var(--accent-soft); color: var(--text); border-radius: 99px; padding: 0 8px; font-size: .8rem; }
+.due { font-weight: bold; }
+.title { font-weight: bold; }
+details summary { cursor: pointer; color: var(--sub); font-size: .85rem; }
+details p { margin: 4px 0 0; font-size: .92rem; }
+table { width: 100%; border-collapse: collapse; font-size: .92rem; }
+th, td { border-bottom: 1px solid var(--line); padding: 8px 6px; text-align: left; vertical-align: top; }
+th { color: var(--sub); font-weight: bold; }
+@media (max-width: 640px) {
+  table, thead, tbody, tr, th, td { display: block; }
+  thead { display: none; }
+  tr { border: 1px solid var(--line); border-radius: 10px; margin-bottom: 8px; padding: 8px; background: var(--card); }
+  td { border: none; padding: 2px 0; }
+  td::before { content: attr(data-label) "："; color: var(--sub); font-size: .8rem; }
+}
+.promo { border-color: var(--accent); }
+.promo a { color: var(--accent); font-weight: bold; }
+.note { color: var(--sub); font-size: .85rem; }
+footer { max-width: 860px; margin: 0 auto; padding: 8px 16px 40px; color: var(--sub); font-size: .8rem; }
+@media print {
+  header, .tabs, .tools, .promo, footer, .setup-hint { display: none; }
+  body { background: #fff; color: #000; }
+  .item { break-inside: avoid; background: #fff !important; }
+  details { display: block; } details > * { display: block; }
+}
+
+/* 固定費の計算（household） */
+.sum { display: grid; gap: 8px; grid-template-columns: repeat(2, 1fr); }
+@media (min-width: 640px) { .sum { grid-template-columns: repeat(4, 1fr); } }
+.sum div { background: var(--bg); border-radius: 10px; padding: 10px; }
+.sum small { color: var(--sub); display: block; font-size: .8rem; }
+.sum b { font-size: 1.2rem; }
+.sum .big b { color: var(--accent); font-size: 1.4rem; }
+.row { display: grid; grid-template-columns: 1fr 92px 92px; gap: 8px; align-items: center; padding: 8px 0; border-bottom: 1px solid var(--line); }
+.row .name { font-weight: bold; }
+.row .diff { grid-column: 1 / -1; font-size: .85rem; color: var(--sub); }
+.row input { font: inherit; width: 100%; padding: 6px 8px; border: 1px solid var(--line); border-radius: 8px; background: var(--card); color: var(--text); text-align: right; }
+.row input.name-in { text-align: left; }
+.head { font-size: .8rem; color: var(--sub); border-bottom: 2px solid var(--line); }
+.head span:not(:first-child) { text-align: right; }
+.add { margin-top: 10px; }
+
+.grid2 { display: grid; gap: 12px; grid-template-columns: 1fr; }
+@media (min-width: 640px) { .grid2 { grid-template-columns: 1fr 1fr; } }
+input[type=number] { font: inherit; font-size: 1.05rem; padding: 8px 10px; border: 1px solid var(--line); border-radius: 8px; background: var(--card); color: var(--text); width: 100%; }
+.verdict { margin-top: 12px; padding: 10px 12px; border-radius: 10px; background: var(--accent-soft); }
+.verdict.short { background: var(--warn); }
+.wk { display: grid; grid-template-columns: 44px 1fr 90px 70px; gap: 6px; padding: 6px 0; border-bottom: 1px solid var(--line); font-size: .92rem; }
+.wk.now { background: var(--warn); }
+.ph { border-radius: 99px; padding: 0 8px; font-size: .8rem; text-align: center; }
+.ph-i { background: #e6f3f1; color: #1f2a36; } .ph-p { background: #e8f0fb; color: #1f2a36; } .ph-r { background: #f3eaf7; color: #1f2a36; }
+</style>
+</head>
+<body>
+<header>
+  <h1>試験日から逆算する勉強計画</h1>
+  <p>試験日と1日の勉強時間から、勉強できる総時間と週ごとの計画を出します。登録不要・無料。</p>
+</header>
+<main>
+  <section class="card">
+    <div class="grid2">
+      <div><label for="exam">試験の種類（目安の学習時間と比べます）</label><select id="exam"></select></div>
+      <div><label for="examDate">試験日</label><input type="date" id="examDate"></div>
+      <div><label for="start">勉強を始める日</label><input type="date" id="start"></div>
+      <div class="grid2">
+        <div><label for="wd">平日の時間</label><input type="number" id="wd" min="0" max="24" step="0.5" value="1.5"></div>
+        <div><label for="hd">土日の時間</label><input type="number" id="hd" min="0" max="24" step="0.5" value="3"></div>
+      </div>
+    </div>
+    <div class="sum" style="margin-top:12px">
+      <div><small>試験までの日数</small><b id="days">―</b></div>
+      <div><small>勉強できる総時間</small><b id="total">―</b></div>
+      <div><small>週あたり</small><b id="perWeek">―</b></div>
+      <div class="big"><small>目安の学習時間</small><b id="target">―</b></div>
+    </div>
+    <div class="verdict" id="verdict" hidden></div>
+    <p class="note setup-hint">期間の割合は、インプット60%・問題演習30%・総復習10%で計算しています。学習時間の目安は公開情報でよく言われる範囲で、経験や教材で大きく変わります（諸説あり）。入力した内容はこの端末の中だけに保存されます。</p>
+  </section>
+
+  <section class="card">
+    <h2 class="phase" style="margin-top:0">週ごとの計画</h2>
+    <div class="wk head"><span>週</span><span>期間・日付</span><span style="text-align:right">予定時間</span><span style="text-align:right">累計</span></div>
+    <div id="weeks"><p class="note">試験日と勉強を始める日を入れると出ます。</p></div>
+  </section>
+
+  <section class="card">
+    <h2 class="phase" style="margin-top:0">期間ごとにやること</h2>
+    <div id="phases"></div>
+  </section>
+
+  <section class="card promo">
+    <strong>Excel 版もあります（有料・980円）</strong>
+    <p>この計画に、学習の記録（週ごとの実績と達成率を自動で集計）、模試・過去問の得点グラフ、苦手な問題の復習日（翌日・1週間後・1か月後）の自動計算をつけた Excel 版を、
+      このページの作者が BOOTH で販売しています。</p>
+    <a href="https://tsumugi-ops.booth.pm" target="_blank" rel="noopener">資格試験の逆算 学習計画表（Excel）</a>
+  </section>
+</main>
+<footer>
+  <p>このページは計画を立てるための道具で、合格を約束するものではありません。試験日や出題範囲は各試験の主催団体の最新の案内で確認してください。内容の作成には AI を利用しています（2026-09-25 時点）。</p>
+  <p>作成: ツムギ（<a href="https://tsumugi-ops.booth.pm" target="_blank" rel="noopener">BOOTH</a>）・<a href="../">ほかの無料ツール</a></p>
+</footer>
+<script>
+const EXAMS = [{"name": "日商簿記検定3級", "field": "会計・お金", "hours": "100〜150時間", "note": "統一試験（例年6月・11月・2月）とネット試験（随時）がある。日程と申込期限は商工会議所の公式サイトで確認する"}, {"name": "日商簿記検定2級", "field": "会計・お金", "hours": "250〜350時間", "note": "3級の知識がある人は短くなる傾向。商業簿記と工業簿記の両方があり、工業簿記は早めに手をつけると楽になる"}, {"name": "FP技能検定3級", "field": "会計・お金", "hours": "60〜100時間", "note": "学科と実技の2本立て。実施団体は日本FP協会と金融財政事情研究会の2つで、実技の科目名が違う。方式と日程は各団体の公式サイトで確認"}, {"name": "FP技能検定2級", "field": "会計・お金", "hours": "150〜300時間", "note": "受験資格は3級合格、FP実務経験、認定研修の修了などいくつかある。自分が当てはまるか申込前に公式で確認する"}, {"name": "宅地建物取引士", "field": "法律・不動産", "hours": "300〜400時間", "note": "年1回、例年10月の第3日曜。申込は例年7月ごろ。権利関係と宅建業法に時間を配分する人が多い"}, {"name": "行政書士", "field": "法律・不動産", "hours": "600〜1000時間", "note": "年1回、例年11月の第2日曜。法令科目に記述式があり、基礎知識科目には満点の40％以上という合格基準がある"}, {"name": "社会保険労務士", "field": "法律・不動産", "hours": "800〜1000時間", "note": "年1回、例年8月の第4日曜。科目ごとの基準点があるため、苦手科目を残さない計画にする"}, {"name": "ITパスポート試験", "field": "IT", "hours": "100〜150時間", "note": "CBT方式で通年受験できる。ITの経験がまったくない人は上限に近い時間を見ておく"}, {"name": "情報セキュリティマネジメント試験", "field": "IT", "hours": "100〜200時間", "note": "CBT方式で通年受験できる。組織の情報管理を問う内容で、用語よりも場面の判断が中心"}, {"name": "基本情報技術者試験", "field": "IT", "hours": "150〜300時間", "note": "科目Aと科目Bに分かれ、CBT方式で通年受験できる。科目Bはアルゴリズムと情報セキュリティで、演習量が結果に出やすい"}, {"name": "応用情報技術者試験", "field": "IT", "hours": "200〜500時間", "note": "2026年度からCBT方式の前期・後期試験。科目A・科目Bの実施期間と申込期限はIPA公式サイトで確認する"}, {"name": "TOEIC L&Rテスト", "field": "語学", "hours": "スコア100点アップに200〜300時間", "note": "時間は現在のスコアと目標で大きく変わる。公開テストは土曜または日曜に年複数回実施される。申込期限は公式サイトで確認"}, {"name": "実用英語技能検定（英検）2級", "field": "語学", "hours": "200〜300時間", "note": "年3回の実施回があり、一次試験（筆記・リスニング）と二次試験（面接）がある。ライティングの練習時間も計画に入れる"}, {"name": "中小企業診断士", "field": "ビジネス", "hours": "800〜1200時間", "note": "一次試験と二次筆記試験の日程は公式サイトで確認する。長期戦なので週ごとの予備日を多めに取る"}, {"name": "ビジネス実務法務検定試験2級", "field": "ビジネス", "hours": "100〜200時間", "note": "東京商工会議所が実施。契約や会社法務など、実務の場面で問われる。日程と受験方式は公式サイトで確認"}, {"name": "衛生管理者（第一種）", "field": "その他", "hours": "50〜100時間", "note": "安全衛生技術センターで受験する。試験日は地区ごとに異なるので、希望するセンターの日程表を見て逆算する"}, {"name": "第二種電気工事士", "field": "その他", "hours": "100〜150時間", "note": "学科試験（CBT方式または筆記方式）と技能試験があり、年2回実施。技能試験は工具と練習用の材料をそろえ、手を動かす時間を確保する"}, {"name": "登録販売者", "field": "その他", "hours": "200〜400時間", "note": "試験は都道府県ごとに実施され、日程や申込期間は自治体により異なる。受験を予定する都道府県の公式発表を確認する"}];
+const PHASES = [{"phase": "インプット", "what": "テキストや講義で全体の範囲を一通り終わらせる期間。総学習時間の4割から5割が目安。最初の1周は完璧に覚えることを狙わず、章ごとの全体像をつかむところまでで先へ進む。", "tip": "章を読み終えたらすぐ、その章の基本問題を5問から10問解く。読むだけの時間を長く取るより、思い出す作業を早く入れたほうが記憶に残りやすい。1周目を終える日を、計画表に日付で決めておく。"}, {"phase": "問題演習", "what": "問題集と過去問を解き、間違えた箇所を直していく期間。総学習時間の3割から4割が目安。解いた数よりも、間違えた問題の原因を「知識不足」「読み違い」「時間切れ」に分けて記録することに時間を使う。", "tip": "間違えた問題には印をつけ、3日後と1週間後にもう一度解く。同じ分野を続けて解くだけでなく、途中で別の分野を混ぜる日も作る。本番は分野が混ざって出るため。過去問は最低でも直近の数回分を、試験と同じ制限時間で解く回を入れる。"}, {"phase": "総復習", "what": "試験日の2週間から1か月前に入る仕上げの期間。総学習時間の1割から2割が目安。新しい教材には手を出さず、間違いノートと得点の低い分野の見直しに絞る。試験と同じ時間帯での模擬演習も行う。", "tip": "試験前の3日間は、新しい問題を解くより間違いノートの見直しを中心にする。試験会場までの行き方、持ち物、受験票の確認は前日までに済ませる。睡眠時間を削って詰め込むと当日の集中力が落ちるので、前夜は普段どおりに寝る。"}];
+const KEY = "tsumugi-study-v1";
+const DAY = 86400000;
+const $ = (id) => document.getElementById(id);
+const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const state = (() => { try { return JSON.parse(localStorage.getItem(KEY)) || {}; } catch { return {}; } })();
+const save = () => { try { localStorage.setItem(KEY, JSON.stringify(state)); } catch {} };
+const iso = (d) => new Date(d.getTime() - d.getTimezoneOffset() * 60000).toISOString().slice(0, 10);
+const fmt = (d) => `${d.getMonth() + 1}/${d.getDate()}（${"日月火水木金土"[d.getDay()]}）`;
+const today = () => { const t = new Date(); t.setHours(0, 0, 0, 0); return t; };
+const range = (s) => { const m = String(s).match(/(\d+)\D+(\d+)/); return m ? [+m[1], +m[2]] : null; };
+
+$("exam").innerHTML = `<option value="">（選ばない）</option>` + EXAMS.map((e, i) => `<option value="${i}">${esc(e.name)}（${esc(e.hours)}）</option>`).join("");
+$("phases").innerHTML = PHASES.map((p) => `<div class="item"><span></span><div><div class="title">${esc(p.phase)}</div><p>${esc(p.what)}</p><p class="note">コツ: ${esc(p.tip)}</p></div></div>`).join("");
+
+function hoursBetween(a, b, wd, hd) {  // a〜b（両端を含む）の勉強時間
+  let h = 0;
+  for (let t = a.getTime(); t <= b.getTime(); t += DAY) { const w = new Date(t).getDay(); h += (w === 0 || w === 6) ? hd : wd; }
+  return h;
+}
+
+function render() {
+  const exam = $("examDate").value ? new Date($("examDate").value + "T00:00:00") : null;
+  const start = $("start").value ? new Date($("start").value + "T00:00:00") : today();
+  const wd = +$("wd").value || 0, hd = +$("hd").value || 0;
+  const ex = $("exam").value === "" ? null : EXAMS[+$("exam").value];
+  $("target").textContent = ex ? ex.hours : "―";
+  if (!exam || exam <= start) {
+    ["days", "total", "perWeek"].forEach((id) => $(id).textContent = "―");
+    $("verdict").hidden = true;
+    return;
+  }
+  const last = new Date(exam.getTime() - DAY);
+  const total = hoursBetween(start, last, wd, hd);
+  const days = Math.round((exam - today()) / DAY);
+  $("days").textContent = `${Math.max(0, days)}日`;
+  $("total").textContent = `${Math.round(total)}時間`;
+  $("perWeek").textContent = `${(wd * 5 + hd * 2).toFixed(1)}時間`;
+  const r = ex && range(ex.hours);
+  if (r) {
+    const v = $("verdict");
+    v.hidden = false;
+    v.className = "verdict" + (total < r[0] ? " short" : "");
+    v.textContent = total < r[0]
+      ? `勉強できる総時間（約${Math.round(total)}時間）が、目安（${ex.hours}）の下限に届いていません。1日の時間を増やすか、試験日を先にすることを検討してください。平日の時間をあと${(Math.ceil((r[0] - total) / Math.max(1, hoursBetween(start, last, 1, 0)) * 2) / 2).toFixed(1)}時間ずつ増やすと、下限に届きます。`
+      : total < r[1] ? `勉強できる総時間（約${Math.round(total)}時間）は、目安（${ex.hours}）の範囲に入っています。${esc(ex.note)}`
+      : `勉強できる総時間（約${Math.round(total)}時間）は、目安（${ex.hours}）の上限を超えています。予備日を多めにとる余裕があります。`;
+  }
+  let html = "", cum = 0;
+  for (let w = 0, s = new Date(start); s <= last && w < 104; w++, s = new Date(s.getTime() + 7 * DAY)) {
+    const e = new Date(Math.min(s.getTime() + 6 * DAY, last.getTime()));
+    const h = hoursBetween(s, e, wd, hd);
+    const mid = cum + h / 2;
+    cum += h;
+    const ph = mid <= total * 0.6 ? ["インプット", "ph-i"] : mid <= total * 0.9 ? ["問題演習", "ph-p"] : ["総復習", "ph-r"];
+    const now = s <= today() && today() <= e;
+    html += `<div class="wk ${now ? "now" : ""}"><span>${w + 1}</span><span><span class="ph ${ph[1]}">${ph[0]}</span> ${fmt(s)}〜${fmt(e)}</span>
+      <span style="text-align:right">${h.toFixed(1)}時間</span><span style="text-align:right">${Math.round(cum)}</span></div>`;
+  }
+  $("weeks").innerHTML = html;
+}
+
+$("examDate").value = state.examDate || iso(new Date(today().getTime() + 120 * DAY));
+$("start").value = state.start || iso(today());
+$("wd").value = state.wd ?? 1.5;
+$("hd").value = state.hd ?? 3;
+$("exam").value = state.exam ?? "";
+["exam", "examDate", "start", "wd", "hd"].forEach((id) => $(id).addEventListener("input", () => { state[id] = $(id).value; save(); render(); }));
+render();
+</script>
+</body>
+</html>

@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>結婚式準備やることリスト｜挙式日を入れるだけで期限つきチェックリスト（無料）</title>
+<meta name="description" content="挙式日を入れると、12か月前から挙式後までのやること（約60項目）に期限の日付がつきます。2人で分担できる担当つき。登録不要・無料。入力した内容はこの端末の中だけに保存されます。">
+<meta property="og:title" content="結婚式準備やることリスト（無料）">
+<meta property="og:description" content="挙式日を入れるだけで、やること（約60項目）に期限がつくチェックリスト。">
+<meta name="theme-color" content="#1f2a36">
+<style>
+:root {
+  --bg: #f6f7f9; --card: #ffffff; --text: #1f2a36; --sub: #5b6570; --line: #dde2e7;
+  --accent: #2a8c82; --accent-soft: #e6f3f1; --warn: #fff4d6; --warn-line: #e8c56a;
+  --late: #fde2e1; --late-line: #e59a96; --done: #9aa3ad;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #171b21; --card: #20262e; --text: #e4e7eb; --sub: #a3acb6; --line: #333b45;
+    --accent: #4fb8ad; --accent-soft: #1f3432; --warn: #3a3222; --warn-line: #8a6f2c;
+    --late: #3d2626; --late-line: #8a4a47; --done: #6b737c;
+  }
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--text);
+  font-family: "BIZ UDPGothic", "Hiragino Sans", "Yu Gothic UI", "Meiryo", sans-serif; line-height: 1.7; }
+header { background: #1f2a36; color: #fff; padding: 20px 16px 16px; }
+header h1 { margin: 0; font-size: 1.35rem; }
+header p { margin: 6px 0 0; color: #c9d3dd; font-size: .9rem; }
+main { max-width: 860px; margin: 0 auto; padding: 16px; }
+.card { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 16px; margin-bottom: 16px; }
+.setup { display: grid; gap: 12px; grid-template-columns: 1fr; }
+@media (min-width: 640px) { .setup { grid-template-columns: 1fr 1fr; } }
+label { font-weight: bold; font-size: .95rem; display: block; margin-bottom: 4px; }
+input[type=date], select { font: inherit; font-size: 1.05rem; padding: 8px 10px; border: 1px solid var(--line); border-radius: 8px;
+  background: var(--card); color: var(--text); width: 100%; }
+.progress { margin-top: 12px; }
+.bar { height: 10px; background: var(--line); border-radius: 99px; overflow: hidden; }
+.bar > div { height: 100%; background: var(--accent); width: 0; transition: width .3s; }
+.progress small { color: var(--sub); }
+.tabs { display: flex; gap: 8px; margin-bottom: 12px; flex-wrap: wrap; }
+.tabs button, .tools button { font: inherit; border: 1px solid var(--line); background: var(--card); color: var(--text);
+  padding: 8px 14px; border-radius: 99px; cursor: pointer; }
+.tabs button[aria-selected=true] { background: var(--accent); border-color: var(--accent); color: #fff; font-weight: bold; }
+.tools { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin-bottom: 8px; }
+.tools label { font-weight: normal; display: inline-flex; gap: 6px; align-items: center; margin: 0; }
+h2.phase { font-size: 1.05rem; margin: 20px 0 8px; padding-left: 10px; border-left: 4px solid var(--accent); }
+.item { display: grid; grid-template-columns: 28px 1fr; gap: 8px; padding: 10px 12px; border: 1px solid var(--line);
+  border-radius: 10px; margin-bottom: 8px; background: var(--card); }
+.item.soon { background: var(--warn); border-color: var(--warn-line); }
+.item.late { background: var(--late); border-color: var(--late-line); }
+.item.done { color: var(--done); }
+.item.done .title { text-decoration: line-through; }
+.item input[type=checkbox] { width: 22px; height: 22px; margin-top: 3px; accent-color: var(--accent); }
+.meta { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; font-size: .85rem; color: var(--sub); }
+.chip { background: var(--accent-soft); color: var(--text); border-radius: 99px; padding: 0 8px; font-size: .8rem; }
+.due { font-weight: bold; }
+.title { font-weight: bold; }
+details summary { cursor: pointer; color: var(--sub); font-size: .85rem; }
+details p { margin: 4px 0 0; font-size: .92rem; }
+table { width: 100%; border-collapse: collapse; font-size: .92rem; }
+th, td { border-bottom: 1px solid var(--line); padding: 8px 6px; text-align: left; vertical-align: top; }
+th { color: var(--sub); font-weight: bold; }
+@media (max-width: 640px) {
+  table, thead, tbody, tr, th, td { display: block; }
+  thead { display: none; }
+  tr { border: 1px solid var(--line); border-radius: 10px; margin-bottom: 8px; padding: 8px; background: var(--card); }
+  td { border: none; padding: 2px 0; }
+  td::before { content: attr(data-label) "："; color: var(--sub); font-size: .8rem; }
+}
+.promo { border-color: var(--accent); }
+.promo a { color: var(--accent); font-weight: bold; }
+.note { color: var(--sub); font-size: .85rem; }
+footer { max-width: 860px; margin: 0 auto; padding: 8px 16px 40px; color: var(--sub); font-size: .8rem; }
+@media print {
+  header, .tabs, .tools, .promo, footer, .setup-hint { display: none; }
+  body { background: #fff; color: #000; }
+  .item { break-inside: avoid; background: #fff !important; }
+  details { display: block; } details > * { display: block; }
+}
+
+/* 固定費の計算（household） */
+.sum { display: grid; gap: 8px; grid-template-columns: repeat(2, 1fr); }
+@media (min-width: 640px) { .sum { grid-template-columns: repeat(4, 1fr); } }
+.sum div { background: var(--bg); border-radius: 10px; padding: 10px; }
+.sum small { color: var(--sub); display: block; font-size: .8rem; }
+.sum b { font-size: 1.2rem; }
+.sum .big b { color: var(--accent); font-size: 1.4rem; }
+.row { display: grid; grid-template-columns: 1fr 92px 92px; gap: 8px; align-items: center; padding: 8px 0; border-bottom: 1px solid var(--line); }
+.row .name { font-weight: bold; }
+.row .diff { grid-column: 1 / -1; font-size: .85rem; color: var(--sub); }
+.row input { font: inherit; width: 100%; padding: 6px 8px; border: 1px solid var(--line); border-radius: 8px; background: var(--card); color: var(--text); text-align: right; }
+.row input.name-in { text-align: left; }
+.head { font-size: .8rem; color: var(--sub); border-bottom: 2px solid var(--line); }
+.head span:not(:first-child) { text-align: right; }
+.add { margin-top: 10px; }
+
+</style>
+</head>
+<body>
+<header>
+  <h1>結婚式準備やることリスト</h1>
+  <p>挙式日を入れると、12か月前から挙式後までのやること（約60項目）に期限がつきます。登録不要・無料。</p>
+</header>
+<main>
+  <section class="card">
+    <div class="setup">
+      <div>
+        <label for="date">挙式日</label>
+        <input type="date" id="date">
+      </div>
+    </div>
+    <div class="progress">
+      <div class="bar"><div id="bar"></div></div>
+      <small id="count"></small>
+    </div>
+    <p class="note setup-hint">挙式まで12か月を切ってから使い始めたときは、期限を過ぎた項目（赤）が出ます。まだ間に合うものから済ませ、関係のない項目はチェックして消してください。</p>
+    <p class="note setup-hint">チェックした内容と挙式日は、この端末のブラウザの中だけに保存されます（どこにも送信しません）。</p>
+  </section>
+
+  <div class="tabs" role="tablist">
+    <button role="tab" aria-selected="true" data-tab="tasks">やること</button>
+  </div>
+
+  <section id="tasks">
+    <div class="tools">
+      <label><input type="checkbox" id="hideDone"> 終わったものを隠す</label>
+      <button type="button" id="print">印刷する</button>
+      <button type="button" id="reset">チェックを全部外す</button>
+    </div>
+    <div id="list"></div>
+  </section>
+
+
+  <section class="card promo">
+    <strong>Excel 版もあります（有料・980円）</strong>
+    <p>このリストに、招待客リスト（出欠・ご祝儀・引き出物を自動で集計）、予算と支払いの管理、式場3か所の比較表をつけた Excel 版を、
+      このページの作者が BOOTH で販売しています。</p>
+    <a href="https://tsumugi-ops.booth.pm" target="_blank" rel="noopener">結婚式準備 やることリスト＋招待客・予算管理表（Excel）</a>
+  </section>
+</main>
+<footer>
+  <p>このリストは一般的な例です。ご家庭や地域の事情に合わせてお使いください。内容の作成には AI を利用し、公的機関の情報で確認しています（2026-09-25 時点）。</p>
+  <p>作成: ツムギ（<a href="https://tsumugi-ops.booth.pm" target="_blank" rel="noopener">BOOTH</a>）</p>
+</footer>
+<script>
+const TASKS = [{"days_before": 365, "category": "2人で決める", "task": "結婚式でやりたいこと・やりたくないことを、それぞれ別々に書き出す", "detail": "先に2人が別々に書き、あとで突き合わせる。「親に見せたい」「衣装を2着着たい」「大人数は疲れる」など、順位をつけて残す。式場選びのときに迷ったらこの紙に戻る。"}, {"days_before": 365, "category": "お金", "task": "予算の上限と、お金の出どころを決める", "detail": "2人の貯金から出す額、親や親族から援助を受ける額、ご祝儀で賄う予定の額を分けて書く。ご祝儀は式場への支払いより後に入ることが多いので、先に自分たちで立て替えられる額も確認しておく。"}, {"days_before": 350, "category": "2人で決める", "task": "両家の親に、結婚式をする考えを伝える", "detail": "日程の目安、規模、呼びたい親族の範囲を話し、援助の有無や希望も聞く。結納や顔合わせ、式の形（神前・チャペル・人前）への考え方は地域や家で差が大きいので、この時点で聞いておく。"}, {"days_before": 340, "category": "2人で決める", "task": "式のスタイルを決める（チャペル・神前・人前・会費制パーティー・フォトウェディングなど）", "detail": "挙式と披露宴を同じ会場でするか、挙式は親族のみで会食にするかも合わせて決める。会費制は、ご祝儀を辞退して会費だけ集める形が一般的だが、案内の書き方は式場や幹事によって違う。"}, {"days_before": 335, "category": "招待・ゲスト", "task": "招待人数のおおよその数を出す", "detail": "親族、職場、友人の3つに分けて、「必ず呼ぶ」「できれば呼ぶ」の人数を数える。式場の会場サイズや最低保証人数を見るための目安で、名前の確定は後でいい。"}, {"days_before": 330, "category": "2人で決める", "task": "希望の時期と曜日の候補を3つ出す", "detail": "季節、休みの取りやすさ、親族の予定、六曜（大安など）を気にするかどうかを2人で確認する。六曜は気にする家とまったく気にしない家がある。土日祝や大安は、式場によって料金が変わることがある。"}, {"days_before": 320, "category": "式場", "task": "式場の候補を絞り、ブライダルフェアや見学を予約する", "detail": "雑誌やネットの口コミで5か所前後に絞り、最初に2〜3か所を予約する。見学は同じ週にまとめると比べやすい。試食付きのフェアは日程が埋まりやすい。"}, {"days_before": 310, "category": "式場", "task": "見学で聞くことを、比較表に先に書いておく", "detail": "最低保証人数、持ち込み料（衣装・写真・引き出物など）、支払いの時期、キャンセル料の条件、親族控室の有無などを行に並べる。見学中はその場で書き込めるようスマホか紙で持っていく。"}, {"days_before": 300, "category": "式場", "task": "候補の式場から、同じ条件で見積もりをもらう", "detail": "日取り、人数、料理のグレード、衣装のランクをそろえて出してもらう。「初回見積もり」に含まれていない項目（サービス料、税、装花、司会、音響）を、担当者に1つずつ聞く。"}, {"days_before": 290, "category": "お金", "task": "親や親族から援助を受ける場合、贈与税の扱いを調べる", "detail": "援助の金額や渡し方によって課税の扱いが変わることがある。制度の内容や期限は変わるので、税務署または税理士に確認してから受け取る。援助の額は予算シートに記録する。"}, {"days_before": 285, "category": "式場", "task": "仮予約の期限と、申込金・キャンセル料の条件を確認する", "detail": "仮予約の有効日数、申込金の金額と返金の可否、契約後に日取りを変えるときの扱いを書面でもらう。「今日決めれば特典」と言われても、その場で決めず一度持ち帰ってよい。"}, {"days_before": 280, "category": "式場", "task": "契約前に、見積書と約款を最後まで読む", "detail": "人数が減ったときの扱い、料理や装花の変更期限、天候や災害・感染症などで開催できなくなった場合の取り決めを確認する。わからない点は、メールで質問して回答を残しておく。"}, {"days_before": 275, "category": "式場", "task": "式場と日取りを決めて契約する", "detail": "申込金の支払い日、契約書の控え、担当プランナーの連絡先を受け取る。契約日と、次の打ち合わせ日をカレンダーに入れて2人で共有する。"}, {"days_before": 275, "category": "お金", "task": "式場への支払いスケジュールを予算シートに入れる", "detail": "申込金、内金、残金の金額と支払期日、振込か現金かカードかを記入する。式場によって、残金が挙式の前月や1〜2週間前になり、ご祝儀で払えない場合がある。"}, {"days_before": 270, "category": "2人で決める", "task": "両家の顔合わせ、結納の有無を決める", "detail": "結納をするかどうか、その形（正式・略式・食事会）は地域や家で違う。両家の希望を聞き、場所と日程を決める。予約が必要な店なら、式の準備が本格化する前に済ませる。"}, {"days_before": 260, "category": "2人で決める", "task": "入籍日と婚姻届の出し方を決める", "detail": "挙式日と同じ日にするか、別の日にするかを決める。婚姻届は本籍地または所在地の市区町村に提出でき、戸籍謄本の添付は原則不要。外国籍の方などは別途書類が必要になるため、提出先に確認する。証人2人の署名も頼んでおく。"}, {"days_before": 250, "category": "招待・ゲスト", "task": "招待客リストの第1版を作る", "detail": "招待客シートに氏名、間柄、どちら側のゲストか、子ども連れかどうかを入力する。親族分は両家の親に見てもらい、抜けがないか確認する。"}, {"days_before": 240, "category": "衣装・美容", "task": "衣装のイメージを決め、提携店か持ち込みかを確認する", "detail": "洋装、和装、お色直しの回数を決める。式場の提携衣装店以外を使う場合は、持ち込み料と、式場に届ける期限を聞く。"}, {"days_before": 230, "category": "衣装・美容", "task": "衣装を試着する（仮押さえ）", "detail": "2人とも試着予約を取り、写真を撮って後で見比べる。体型が変わりそうな人は、サイズ直しがいつまで可能かを聞く。仮押さえの期限も確認する。"}, {"days_before": 220, "category": "手配・小物", "task": "写真・映像の方針を決める", "detail": "式場のカメラマンに頼むか、外部に頼むか、前撮りをするかを決める。データで受け取れるか、アルバムのみかを確認する。外部カメラマンには、式場の撮影許可が必要なことが多い。"}, {"days_before": 210, "category": "2人で決める", "task": "新居・引っ越しの時期と、入籍・挙式の順番を整理する", "detail": "引っ越し日、入籍日、挙式日をカレンダーに並べる。同居の時期によって住民票の手続きの期限が変わるので、次に手続きが動く日を書いておく。"}, {"days_before": 200, "category": "招待・ゲスト", "task": "遠方の親族・ゲストの宿泊と交通を相談する", "detail": "宿泊費や交通費を2人で負担するか、一部にするか、負担しないかを決めて両家で共有する。宿泊が必要な人の人数は、式場に提携ホテルがあるか聞くときの材料になる。"}, {"days_before": 190, "category": "招待・ゲスト", "task": "主なゲストに、日程を口頭かメッセージで先に伝える", "detail": "招待状の前に「○月○日に結婚式をします」と伝え、出席できそうかを聞く。上司や恩師、遠方の友人など、予定が先に埋まりやすい人から連絡する。"}, {"days_before": 180, "category": "演出・進行", "task": "挙式の形と内容を決める", "detail": "チャペルは入場の形式や誓いの言葉、神前は神社での作法と初穂料、人前は立会人と誓いの言葉、というように形ごとに決めることが違う。会費制の場合は、挙式を省くかどうかも決める。"}, {"days_before": 180, "category": "衣装・美容", "task": "衣装を決めて発注する", "detail": "新郎新婦の衣装、靴、アクセサリー、ヴェール、ブーケの有無を決める。衣装の追加料金と、試着の回数に上限がないかを見積書で確認する。"}, {"days_before": 170, "category": "手配・小物", "task": "結婚指輪を選ぶ", "detail": "刻印を入れたりサイズ直しをしたりする場合は、注文から受け取りまでの日数を店に聞き、挙式日の前に届くよう逆算する。婚約指輪の有無や、付ける場面（挙式で交換するか）も決める。"}, {"days_before": 165, "category": "衣装・美容", "task": "ヘアメイク・エステの予約を入れる", "detail": "ヘアメイクのリハーサルの日、挙式当日の入り時間を確認する。エステは希望者のみで、肌に合わない場合に備えて式の数か月前に始める、または試すだけにしておく。"}, {"days_before": 160, "category": "演出・進行", "task": "披露宴の流れのたたき台を作る", "detail": "入場、乾杯、歓談、余興、お色直し、ケーキ入刀、謝辞などを時間順に並べる。子ども連れや高齢のゲストが多い場合は、長さを短めにするかどうかも検討する。"}, {"days_before": 150, "category": "招待・ゲスト", "task": "主賓・乾杯・スピーチ・余興・受付・司会の候補を決めて依頼する", "detail": "頼む相手と内容を、招待客シートのメモ欄に記録する。依頼は電話か対面で行い、当日の時間帯と、お礼の予定も伝える。断られたときの候補も1人決めておく。"}, {"days_before": 140, "category": "手配・小物", "task": "招待状などペーパーアイテムの発注先を決める", "detail": "式場の提携品か、自分たちで作るか、外部の印刷会社に頼むかを決める。持ち込みの場合は式場に届ける日を確認する。招待状、席次表、席札、メニュー表、プロフィールブックなどのうち、何が必要か決める。"}, {"days_before": 130, "category": "招待・ゲスト", "task": "招待客の住所・連絡先を集める", "detail": "友人にはメッセージで住所を聞く。連名で出す家族は、全員の名前と敬称を確認する。個人情報なので、リストは2人以外の人が見られない場所に保存する。"}, {"days_before": 120, "category": "演出・進行", "task": "料理・ドリンクを試食して決める", "detail": "アレルギー、宗教上の食事制限、妊娠中、乳幼児、高齢の方の対応をリストにして式場に伝える。子ども用のメニューがあるかも確認する。"}, {"days_before": 110, "category": "演出・進行", "task": "BGMとムービーの素材を集める", "detail": "プロフィールムービーや生い立ち写真の素材を、両家の親から借りる。音楽は式場で使える曲か、著作権の手続きが済んでいるかを確認する。"}, {"days_before": 100, "category": "招待・ゲスト", "task": "招待状の文面と返信はがきの内容を決めて入稿する", "detail": "日付、開始時間、場所、返信期限、会費制なら会費の額を入れる。返信はがきに、アレルギー、住所、同伴者の名前を書く欄を作る。入稿後は誤字がないか、両家の親にも見てもらう。"}, {"days_before": 90, "category": "手配・小物", "task": "引き出物・プチギフトの方向を決める", "detail": "品物と包み方、持ち帰りの負担、宅配にするかを決める。親族向けとゲスト向けで内容を変える場合は、招待客シートに区分を入れる。地域によって、引き出物の数や、品物の種類の習慣が違う。"}, {"days_before": 90, "category": "お金", "task": "ここまでの契約・支払いを見積書と突き合わせる", "detail": "予算シートの「見積もり」と「契約済み」の金額を比べて、追加になった項目を洗い出す。予算をこえそうなら、削れる項目の順番を2人で決める。"}, {"days_before": 80, "category": "招待・ゲスト", "task": "招待状の宛名書きと封入をする", "detail": "宛名の敬称、肩書き、連名をリストで再確認する。手書きか印刷かは2人で決める。分担を決めて進める。出席が確定している人には、宿泊や交通の案内を同封する。"}, {"days_before": 75, "category": "演出・進行", "task": "ムービーの制作を依頼する、または自作を始める", "detail": "式場に頼む場合は、入稿期限を聞く。自作する場合は、再生機器と動画の形式が式場の機材に合うか、事前にテストできる日を決める。"}, {"days_before": 70, "category": "招待・ゲスト", "task": "招待状を発送する", "detail": "挙式の約2か月前が発送の目安。返信期限は挙式の約6週間前に設定する。発送日を招待客シートに記録し、返信が来るたびに出欠を入力する。"}, {"days_before": 60, "category": "衣装・美容", "task": "衣装の最終フィッティングと、ヘアメイクのリハーサルを行う", "detail": "体型の変化があればここで直す。小物、下着、靴の履き心地も確認し、当日の写真の参考にリハーサルの写真を撮る。"}, {"days_before": 56, "category": "手配・小物", "task": "ウェルカムボード・小物類を用意する", "detail": "手作りか購入かを決め、式場に届ける日と、置く場所を確認する。持ち込み料がかかる場合は、予算シートに入れる。"}, {"days_before": 42, "category": "招待・ゲスト", "task": "返信期限。返事がない人に連絡する", "detail": "返信のない人には電話かメッセージで確認する。出欠、アレルギー、席の希望、子連れの有無を招待客シートにまとめる。"}, {"days_before": 40, "category": "式場", "task": "式場への最終人数の連絡期限を確認する", "detail": "最終人数の確定は式場ごとに、挙式の2週間前から1か月前などまちまち。期限を過ぎると、人数を減らしても料理代が変わらない場合がある。"}, {"days_before": 35, "category": "演出・進行", "task": "席次表の案を作る", "detail": "親族、主賓、友人、職場の関係性を見て席を決める。仲が悪い人の同席や、子どもや高齢の方の席の位置を考慮する。両家の親にも案を見せて確認する。"}, {"days_before": 30, "category": "手配・小物", "task": "引き出物の数と内容を確定して発注する", "detail": "出席人数が確定したあとに、数を式場に伝える。地域によって、遠方のゲストには宅配にすることがある。予備を数個入れるかどうか、式場に聞く。"}, {"days_before": 30, "category": "お金", "task": "お礼・お車代・心付けを決めて、封筒を用意する", "detail": "主賓、乾杯、受付、司会、余興の方へのお礼と、遠方のゲストへのお車代の金額を決める。心付けは式場によって受け取らない方針の場合がある。金額の目安は地域と関係性で違うので、両家の親にも相談する。"}, {"days_before": 28, "category": "招待・ゲスト", "task": "当日の役割を、受付・司会・余興の方に確認する", "detail": "集合時間と場所、持ち物、進行での出番を書いたメモを送る。受付の方には、ご祝儀の受け取り方と、芳名帳の使い方も伝える。"}, {"days_before": 21, "category": "式場", "task": "式場との最終打ち合わせをする", "detail": "席次表、進行表、BGM、ムービー、料理の最終確認を行う。当日に式場の人に頼める範囲と、頼めないことを聞いておく。"}, {"days_before": 21, "category": "手配・小物", "task": "新婚旅行の予約とパスポートを確認する", "detail": "パスポートの有効期限と、氏名が変わる場合の手続きの時期を確認する。挙式の直後に行く場合は、名義が旧姓のままの航空券や宿の予約と、パスポートの姓が合っているかを確認する。"}, {"days_before": 14, "category": "演出・進行", "task": "スピーチ・余興の方に進行の最終案内を送る", "detail": "持ち時間、マイクや機材の有無、当日の控室を伝える。スピーチの内容は事前に聞かないが、時間の目安は伝えておく。"}, {"days_before": 14, "category": "お金", "task": "残金の金額と支払い方法・期日を確認する", "detail": "最終の人数と追加項目が反映された請求書を、式場からもらう。振込の場合は手数料を、現金の場合は当日の受け渡しを確認する。金額を予算シートに入力する。"}, {"days_before": 10, "category": "衣装・美容", "task": "衣装・小物・下着の最終確認", "detail": "衣装が届いているか、指輪、靴、アクセサリー、ヴェールなどが揃っているかを確認する。ヘアメイクの当日の集合時間も再確認する。"}, {"days_before": 7, "category": "手配・小物", "task": "席次表・席札・メニュー表の最終データを確認して確定する", "detail": "名前の漢字、肩書き、席の位置を1人ずつ確認する。誤字があるとやり直しになるので、両家の親にも見てもらう。"}, {"days_before": 7, "category": "当日", "task": "当日の持ち物リストを作る", "detail": "婚姻届、印鑑、身分証、指輪、お礼の封筒、予備のストッキングやシャツ、常備薬、モバイルバッテリーなど。式場に預ける荷物と自分で持つ荷物を分ける。"}, {"days_before": 3, "category": "当日", "task": "当日のタイムスケジュールを、2人と両家の親に共有する", "detail": "起床、移動、式場入り、ヘアメイク、挙式、披露宴、終了、翌日の予定を時間順に並べる。遠方の親族は、宿泊先から式場への移動方法も入れる。"}, {"days_before": 1, "category": "当日", "task": "前日の準備と、荷物の最終確認をする", "detail": "荷物を式場に送る場合は、届いているか確認する。当日入籍する場合は、婚姻届の記入と証人の署名を済ませ、提出する役所の開庁時間と、時間外窓口の場所を確認する。早めに寝る。"}, {"days_before": 0, "category": "当日", "task": "式の当日：受付とご祝儀、預かり物の管理を任せる人を確認する", "detail": "受付の方から、ご祝儀の入った袋と芳名帳を、式後に誰が持ち帰るかを決めておく。貴重品は親か信頼できる人に預け、式場の金庫が使えるかも聞く。"}, {"days_before": 0, "category": "当日", "task": "式の終了後：ご祝儀・引き出物・荷物を確認して持ち帰る", "detail": "ご祝儀の袋の数を、出席人数と照らし合わせる。衣装や小物の返却がある場合は、期日を確認する。残金を当日に支払う場合は、この時点で済ませる。"}, {"days_before": -1, "category": "挙式後", "task": "式の翌日：ご祝儀の金額と芳名帳を、招待客シートに入力する", "detail": "袋の表書きの名前と、中の金額を突き合わせて、1人ずつ記録する。金額が想定と違う場合も、そのまま記録する。お返しの参考になる。"}, {"days_before": -3, "category": "挙式後", "task": "協力してくれた方に、お礼の連絡をする", "detail": "受付、司会、余興、スピーチ、遠方から来てくれた方に、お礼のメッセージか電話をする。お礼の品や現金は、式当日に渡していなければ、この時期に渡す。"}, {"days_before": -7, "category": "挙式後", "task": "式場のスタッフ・カメラマンからの写真・映像を受け取る", "detail": "受け取りの方法と、データの保存期限を確認する。ゲストが撮った写真を共有する場合は、共有の範囲を決めて案内する。"}, {"days_before": -7, "category": "お金", "task": "支払いを精算し、予算シートを完成させる", "detail": "式場への残金、追加請求、外部の業者への支払い、お礼の合計を入力する。ご祝儀の合計と比べて、2人の負担額を出す。分担が決まっていれば、その精算をする。"}, {"days_before": -14, "category": "挙式後", "task": "婚姻届を提出する（入籍を式の後にする場合）", "detail": "婚姻届、本人確認書類を持参する。成年の証人2人の署名が必要で、押印は任意。外国籍の方など、事情により追加書類が必要な場合は窓口に確認する。夜間・休日は時間外窓口で預かり、後日審査される。不備がなければ提出日にさかのぼって受理され、その日が婚姻日になる。希望日に確実に受理されるよう、事前に開庁時間内の窓口で記載内容を確認してもらう。"}, {"days_before": -14, "category": "挙式後", "task": "氏名や住所が変わる場合の手続きを進める", "detail": "マイナンバーカードの記載事項の変更は、氏名や住所が変わってから14日以内に市区町村へ。運転免許証は警察署や運転免許センター、パスポートは都道府県の窓口（オンラインで申請できる場合あり）。転入届・転居届の期限は、引っ越し日から14日以内。"}, {"days_before": -14, "category": "挙式後", "task": "銀行・クレジットカード・保険・携帯電話会社・勤務先への届け出をする", "detail": "氏名や住所が変わったら、口座、カード、保険、携帯電話会社、電力会社、勤務先に順に連絡する。勤務先の健康保険の扶養に入る場合は、勤務先の総務に提出期限を確認する。"}, {"days_before": -21, "category": "挙式後", "task": "いただいた結婚祝いへのお返し（内祝い）を手配する", "detail": "ご祝儀や結婚祝いをいただいた方のうち、当日の引き出物で足りない方に内祝いを送る。挙式後1か月以内が目安とされる。品物や金額の目安は地域と関係性で違うので、両家の親にも聞く。"}, {"days_before": -30, "category": "挙式後", "task": "お礼状を書き、アルバムを作る（希望者のみ）", "detail": "招待客だけでなく、式に出られなかったがお祝いをくれた方にも送る。結婚式の写真を、2人で選んで、アルバムやフォトブックを作る場合は、その手配もこの時期に行う。"}, {"days_before": -60, "category": "お金", "task": "年内に入籍した場合の年末調整と、自治体の支援制度の確認", "detail": "勤務先の年末調整では、12月31日時点で婚姻していれば配偶者に関する申告が必要になる場合がある。「結婚・妊娠・共育ての相談機会提供・支援プログラム」に基づく補助など、自治体の支援制度を確認する。自治体により名称、実施の有無、講座受講などの要件、対象、申請期限が異なる。"}];
+const KEY = "tsumugi-wedding-v1";
+const DAY = 86400000;
+const state = (() => { try { return JSON.parse(localStorage.getItem(KEY)) || {}; } catch { return {}; } })();
+state.done = state.done || {};
+const save = () => { try { localStorage.setItem(KEY, JSON.stringify(state)); } catch {} };
+const $ = (id) => document.getElementById(id);
+const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+
+// 同じ市区町村の中なら、転出届・転入届だけの項目を外し、別の市区町村へなら転居届だけの項目を外す
+const applies = () => true;
+const PHASES = [[1000, 181, "12〜6か月前"], [180, 91, "6〜3か月前"], [90, 31, "3〜1か月前"], [30, 8, "1か月前〜1週間前"],
+                [7, 1, "1週間前〜前日"], [0, 0, "挙式当日"], [-1, -1000, "挙式後"]];
+const fmt = (d) => `${d.getFullYear() !== new Date().getFullYear() ? d.getFullYear() + "/" : ""}${d.getMonth() + 1}/${d.getDate()}（${"日月火水木金土"[d.getDay()]}）`;  // 準備は1年に及ぶので、今年以外は年も出す
+const today = () => { const t = new Date(); t.setHours(0, 0, 0, 0); return t; };
+
+function render() {
+  const date = $("date").value ? new Date($("date").value + "T00:00:00") : null;
+  const hide = $("hideDone").checked;
+  const items = TASKS.map((t, i) => ({ ...t, i })).filter((t) => applies(t));
+  let html = "", done = 0;
+  for (const [hi, lo, name] of PHASES) {
+    const group = items.filter((t) => t.days_before <= hi && t.days_before >= lo);
+    if (!group.length) continue;
+    let rows = "";
+    for (const t of group) {
+      const isDone = !!state.done[t.i];
+      if (isDone) done++;
+      if (hide && isDone) continue;
+      let cls = "", due = "";
+      if (date) {
+        const d = new Date(date.getTime() - t.days_before * DAY);
+        const left = Math.round((d - today()) / DAY);
+        due = `<span class="due">${fmt(d)}まで</span>` + (isDone ? "" : left < 0 ? `（${-left}日過ぎています）` : left === 0 ? "（今日）" : `（あと${left}日）`);
+        if (!isDone) cls = left < 0 ? "late" : left <= 7 ? "soon" : "";
+      }
+      const when = t.days_before >= 60 ? `${Math.round(t.days_before / 30)}か月前` : t.days_before > 0 ? `${t.days_before}日前` : t.days_before === 0 ? "当日" : `挙式後${-t.days_before}日`;
+      rows += `<div class="item ${cls} ${isDone ? "done" : ""}">
+        <input type="checkbox" data-i="${t.i}" ${isDone ? "checked" : ""} aria-label="${esc(t.task)}">
+        <div><div class="title">${esc(t.task)}</div>
+          <div class="meta"><span class="chip">${esc(t.category)}</span><span>${when}</span>${due}</div>
+          <details><summary>くわしく</summary><p>${esc(t.detail)}</p></details></div></div>`;
+    }
+    if (rows) html += `<h2 class="phase">${name}</h2>` + rows;
+  }
+  $("list").innerHTML = html || "<p class='note'>表示する項目がありません。</p>";
+  $("bar").style.width = `${Math.round(done / items.length * 100)}%`;
+  $("count").textContent = `終わった数: ${done} / ${items.length}` + (date ? "" : "　※挙式日を入れると期限の日付が出ます");
+}
+
+
+$("date").value = state.date || "";
+$("hideDone").checked = !!state.hide;
+$("date").addEventListener("change", () => { state.date = $("date").value; save(); render(); });
+$("hideDone").addEventListener("change", () => { state.hide = $("hideDone").checked; save(); render(); });
+$("list").addEventListener("change", (e) => {
+  if (e.target.matches("input[type=checkbox]")) { state.done[e.target.dataset.i] = e.target.checked; save(); render(); }
+});
+$("print").addEventListener("click", () => window.print());
+$("reset").addEventListener("click", () => { state.done = {}; save(); render(); });
+document.querySelectorAll(".tabs button").forEach((b) => b.addEventListener("click", () => {
+  document.querySelectorAll(".tabs button").forEach((x) => x.setAttribute("aria-selected", x === b));
+  $("tasks").hidden = b.dataset.tab !== "tasks";
+}));
+render();
+</script>
+</body>
+</html>
