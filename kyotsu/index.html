@@ -104,7 +104,11 @@ table.alloc td::before { content: none; }
 table { width: 100%; border-collapse: collapse; font-size: .92rem; }
 th, td { padding: 6px 4px; border-bottom: 1px solid var(--line); text-align: right; }
 th:first-child, td:first-child { text-align: left; }
-td input { width: 64px; }
+table.alloc td input { width: 54px; padding: 6px 2px; text-align: right; font-size: .9rem; }
+table.alloc td:first-child { min-width: 6.5em; }
+table.alloc th, table.alloc td { padding: 6px 2px; }
+table.alloc td:last-child { white-space: nowrap; }
+table.alloc th { white-space: nowrap; font-size: .85rem; }
 .bar { height: 8px; border-radius: 4px; background: var(--accent); }
 </style>
 <link rel="canonical" href="https://yukaze-x.github.io/tsumugi-tools/kyotsu/">
