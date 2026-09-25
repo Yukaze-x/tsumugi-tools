@@ -1,0 +1,235 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ふるさと納税 ワンストップ特例チェック｜自治体の数・申請書の期限を確認（無料）</title>
+<meta name="description" content="寄附した自治体と金額を入れると、今年の寄附の合計、自治体の数（同じ自治体は1つ）、ワンストップ特例が使えるか、申請書をまだ送っていない件数と期限（翌年1月10日必着）が分かります。登録不要・無料。">
+<meta property="og:title" content="ふるさと納税 ワンストップ特例チェック（無料）">
+<meta property="og:description" content="自治体の数・申請書の期限・特例が使えるかをすぐ確認できます。">
+<meta name="theme-color" content="#1f2a36">
+<style>
+:root {
+  --bg: #f6f7f9; --card: #ffffff; --text: #1f2a36; --sub: #5b6570; --line: #dde2e7;
+  --accent: #2a8c82; --accent-soft: #e6f3f1; --warn: #fff4d6; --warn-line: #e8c56a;
+  --late: #fde2e1; --late-line: #e59a96; --done: #9aa3ad;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #171b21; --card: #20262e; --text: #e4e7eb; --sub: #a3acb6; --line: #333b45;
+    --accent: #4fb8ad; --accent-soft: #1f3432; --warn: #3a3222; --warn-line: #8a6f2c;
+    --late: #3d2626; --late-line: #8a4a47; --done: #6b737c;
+  }
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--text);
+  font-family: "BIZ UDPGothic", "Hiragino Sans", "Yu Gothic UI", "Meiryo", sans-serif; line-height: 1.7; }
+header { background: #1f2a36; color: #fff; padding: 20px 16px 16px; }
+header h1 { margin: 0; font-size: 1.35rem; }
+header p { margin: 6px 0 0; color: #c9d3dd; font-size: .9rem; }
+main { max-width: 860px; margin: 0 auto; padding: 16px; }
+.card { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 16px; margin-bottom: 16px; }
+.setup { display: grid; gap: 12px; grid-template-columns: 1fr; }
+@media (min-width: 640px) { .setup { grid-template-columns: 1fr 1fr; } }
+label { font-weight: bold; font-size: .95rem; display: block; margin-bottom: 4px; }
+input[type=date], select { font: inherit; font-size: 1.05rem; padding: 8px 10px; border: 1px solid var(--line); border-radius: 8px;
+  background: var(--card); color: var(--text); width: 100%; }
+.progress { margin-top: 12px; }
+.bar { height: 10px; background: var(--line); border-radius: 99px; overflow: hidden; }
+.bar > div { height: 100%; background: var(--accent); width: 0; transition: width .3s; }
+.progress small { color: var(--sub); }
+.tabs { display: flex; gap: 8px; margin-bottom: 12px; flex-wrap: wrap; }
+.tabs button, .tools button { font: inherit; border: 1px solid var(--line); background: var(--card); color: var(--text);
+  padding: 8px 14px; border-radius: 99px; cursor: pointer; }
+.tabs button[aria-selected=true] { background: var(--accent); border-color: var(--accent); color: #fff; font-weight: bold; }
+.tools { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin-bottom: 8px; }
+.tools label { font-weight: normal; display: inline-flex; gap: 6px; align-items: center; margin: 0; }
+h2.phase { font-size: 1.05rem; margin: 20px 0 8px; padding-left: 10px; border-left: 4px solid var(--accent); }
+.item { display: grid; grid-template-columns: 28px 1fr; gap: 8px; padding: 10px 12px; border: 1px solid var(--line);
+  border-radius: 10px; margin-bottom: 8px; background: var(--card); }
+.item.soon { background: var(--warn); border-color: var(--warn-line); }
+.item.late { background: var(--late); border-color: var(--late-line); }
+.item.done { color: var(--done); }
+.item.done .title { text-decoration: line-through; }
+.item input[type=checkbox] { width: 22px; height: 22px; margin-top: 3px; accent-color: var(--accent); }
+.meta { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; font-size: .85rem; color: var(--sub); }
+.chip { background: var(--accent-soft); color: var(--text); border-radius: 99px; padding: 0 8px; font-size: .8rem; }
+.due { font-weight: bold; }
+.title { font-weight: bold; }
+details summary { cursor: pointer; color: var(--sub); font-size: .85rem; }
+details p { margin: 4px 0 0; font-size: .92rem; }
+table { width: 100%; border-collapse: collapse; font-size: .92rem; }
+th, td { border-bottom: 1px solid var(--line); padding: 8px 6px; text-align: left; vertical-align: top; }
+th { color: var(--sub); font-weight: bold; }
+@media (max-width: 640px) {
+  table, thead, tbody, tr, th, td { display: block; }
+  thead { display: none; }
+  tr { border: 1px solid var(--line); border-radius: 10px; margin-bottom: 8px; padding: 8px; background: var(--card); }
+  td { border: none; padding: 2px 0; }
+  td::before { content: attr(data-label) "："; color: var(--sub); font-size: .8rem; }
+}
+.promo { border-color: var(--accent); }
+.promo a { color: var(--accent); font-weight: bold; }
+.note { color: var(--sub); font-size: .85rem; }
+footer { max-width: 860px; margin: 0 auto; padding: 8px 16px 40px; color: var(--sub); font-size: .8rem; }
+@media print {
+  header, .tabs, .tools, .promo, footer, .setup-hint { display: none; }
+  body { background: #fff; color: #000; }
+  .item { break-inside: avoid; background: #fff !important; }
+  details { display: block; } details > * { display: block; }
+}
+
+/* 固定費の計算（household） */
+.sum { display: grid; gap: 8px; grid-template-columns: repeat(2, 1fr); }
+@media (min-width: 640px) { .sum { grid-template-columns: repeat(4, 1fr); } }
+.sum div { background: var(--bg); border-radius: 10px; padding: 10px; }
+.sum small { color: var(--sub); display: block; font-size: .8rem; }
+.sum b { font-size: 1.2rem; }
+.sum .big b { color: var(--accent); font-size: 1.4rem; }
+.row { display: grid; grid-template-columns: 1fr 92px 92px; gap: 8px; align-items: center; padding: 8px 0; border-bottom: 1px solid var(--line); }
+.row .name { font-weight: bold; }
+.row .diff { grid-column: 1 / -1; font-size: .85rem; color: var(--sub); }
+.row input { font: inherit; width: 100%; padding: 6px 8px; border: 1px solid var(--line); border-radius: 8px; background: var(--card); color: var(--text); text-align: right; }
+.row input.name-in { text-align: left; }
+.head { font-size: .8rem; color: var(--sub); border-bottom: 2px solid var(--line); }
+.head span:not(:first-child) { text-align: right; }
+.add { margin-top: 10px; }
+
+input[type=number], input[type=text], input[type=date], select { font: inherit; padding: 8px 10px; border: 1px solid var(--line); border-radius: 8px; background: var(--card); color: var(--text); width: 100%; box-sizing: border-box; }
+.don { display: grid; grid-template-columns: 1fr 1fr; grid-template-areas: "d a" "t t" "c x"; gap: 8px; padding: 12px 0; border-bottom: 1px solid var(--line); align-items: center; }
+.don [data-k=date] { grid-area: d; } .don [data-k=amount] { grid-area: a; } .don .town { grid-area: t; } .don label.chk { grid-area: c; } .don button { grid-area: x; justify-self: end; }
+.don label.chk { display: flex; align-items: center; gap: 6px; font-size: .9rem; white-space: nowrap; }
+.don label.chk input { width: 20px; height: 20px; }
+.card button { font: inherit; font-size: .9rem; padding: 6px 14px; border: 1px solid var(--line); border-radius: 8px; background: var(--card); color: var(--text); cursor: pointer; }
+@media (min-width: 640px) { .don { grid-template-columns: 1.1fr 1.6fr 1fr auto auto; grid-template-areas: "d t a c x"; } }
+.verdict { padding: 12px; border-radius: 10px; margin-top: 12px; font-weight: bold; }
+.verdict.ok { background: #e6f4ef; color: #1d6b52; }
+.verdict.ng { background: #fde2e1; color: #9b2c2c; }
+.verdict.info { background: #eef1f5; color: #3a4654; }
+@media (prefers-color-scheme: dark) { .verdict.ok { background: #1c3a31; color: #9fe0c6; } .verdict.ng { background: #43201f; color: #f6b3b0; } .verdict.info { background: #28303a; color: #cdd5de; } }
+ol.tl { padding-left: 1.2em; } ol.tl li { margin-bottom: 8px; } ol.tl b { display: block; }
+</style>
+<link rel="canonical" href="https://yukaze-x.github.io/tsumugi-tools/furusato/">
+<meta property="og:url" content="https://yukaze-x.github.io/tsumugi-tools/furusato/">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://yukaze-x.github.io/tsumugi-tools/furusato/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "ふるさと納税 ワンストップ特例チェック", "url": "https://yukaze-x.github.io/tsumugi-tools/furusato/", "description": "寄附した自治体と金額を入れると、今年の寄附の合計、自治体の数（同じ自治体は1つ）、ワンストップ特例が使えるか、申請書をまだ送っていない件数と期限（翌年1月10日必着）が分かります。登録不要・無料。", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Web", "inLanguage": "ja", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "JPY"}, "creator": {"@type": "Organization", "name": "ツムギ"}}</script>
+</head>
+<body>
+<header>
+  <h1>ふるさと納税 ワンストップ特例チェック</h1>
+  <p>寄附した自治体と金額を入れると、自治体の数・特例が使えるか・申請書の期限が分かります。登録不要・無料。</p>
+</header>
+<main>
+  <section class="card">
+    <div class="sum">
+      <div class="big"><small>寄附の合計</small><b id="total">―</b></div>
+      <div><small>自治体の数</small><b id="towns">―</b></div>
+      <div><small>申請書がまだ</small><b id="unsent">―</b></div>
+    </div>
+    <div id="verdict" class="verdict info">寄附を入れると、ここに結果が出ます。</div>
+    <p class="note" id="deadline"></p>
+  </section>
+
+  <section class="card">
+    <h2 class="phase" style="margin-top:0">条件</h2>
+    <div class="sum" style="grid-template-columns:1fr 1fr">
+      <div><label for="year">寄附した年</label><select id="year"></select></div>
+      <div><label for="mode">確定申告をしますか</label>
+        <select id="mode"><option value="no">しない（会社の年末調整だけ）</option><option value="yes">する</option></select></div>
+    </div>
+    <p class="note">医療費控除を申告する、住宅ローン控除の1年目、副業などで確定申告をする人は「する」を選びます。確定申告をすると、ワンストップ特例の申請は無効になり、寄附金控除を確定申告に入れます。</p>
+  </section>
+
+  <section class="card">
+    <h2 class="phase" style="margin-top:0">寄附の記録</h2>
+    <p class="note">1回の寄附を1行に入れます。同じ自治体に2回寄附したら2行です（申請書も寄附ごとに必要です）。</p>
+    <div id="rows"></div>
+    <p style="margin-top:10px"><button type="button" id="addRow">＋ 寄附を追加</button></p>
+    <p class="note">入力した内容はこの端末の中だけに保存されます。</p>
+  </section>
+
+  <section class="card">
+    <h2 class="phase" style="margin-top:0">1年の流れ</h2>
+    <ol class="tl" id="timeline"></ol>
+    <h2 class="phase">よくある見落とし</h2>
+    <ul id="cautions"></ul>
+  </section>
+
+  <section class="card promo">
+    <strong>Excel 版もあります（有料・780円）</strong>
+    <p>寄附の記録に、受領証明書と返礼品が届いたかのチェック、控除の上限の目安までの残り、月別の寄附額のグラフ、1年の流れのチェックリストをまとめた Excel 版を、このページの作者が BOOTH で販売しています。</p>
+    <a href="https://tsumugi-ops.booth.pm" target="_blank" rel="noopener">ふるさと納税の管理表（Excel）</a>
+  </section>
+<section class="card"><h2 class="phase" style="margin-top:0">ほかの無料ツール</h2><ul style="margin:0;padding-left:1.2em;line-height:2"><li><a href="../moving/">引っ越しやることリスト</a></li><li><a href="../household/">固定費の見直し計算</a></li><li><a href="../study/">試験日から逆算する勉強計画</a></li><li><a href="../wedding/">結婚式準備やることリスト</a></li><li><a href="../procedures/">家族が亡くなったあとの手続き 期限の早見表</a></li><li><a href="../mealplan/">1週間の献立から買い物リスト</a></li><li><a href="../jobhunt/">転職の面接でよく聞かれる質問</a></li><li><a href="../kyotsu/">共通テストまであと何日・科目ごとの時間配分</a></li><li><a href="../shimai/">年賀状じまいの文例（相手別）</a></li></ul></section>
+</main>
+<footer>
+  <p>このページは記録と確認のための道具です。控除の上限や税額は計算しません。制度の条件と期限は 2026-09-26 時点で総務省が案内している内容をもとにしています。最新の情報は総務省のふるさと納税ポータルや寄附先の自治体の案内で確認してください。</p>
+  <p>作成: ツムギ（<a href="https://tsumugi-ops.booth.pm" target="_blank" rel="noopener">BOOTH</a>）・<a href="../">ほかの無料ツール</a></p>
+</footer>
+<script>
+const C = {"timeline": [{"when": "寄附の前（10月ごろまで）", "what": "今年の控除上限の目安を確かめる", "note": "源泉徴収票や給与明細から、今年の年収の見込みと家族の状況を入れてシミュレーションを使う。金額は収入や家族の状況で変わるので、管理表の上限欄には自分で出した目安を入れる。"}, {"when": "寄附の前", "what": "ワンストップ特例を使えるか、確定申告をするかを決める", "note": "医療費控除、副業の所得、住宅ローン控除の初年度などで確定申告をする人は、ワンストップ特例は使えない。寄附先が5自治体以内に収まるかも、この時点で見当をつける。"}, {"when": "10月〜11月", "what": "寄附先と返礼品を選んで申し込む", "note": "申込のたびに、管理表へ日付、自治体、金額、返礼品、支払い方法を1行入れる。同じ自治体への2回目も1行ずつ記録する。"}, {"when": "申込の直後〜数日", "what": "支払いを済ませる", "note": "コンビニ払いや銀行振込は支払期限がある。年末が近いときは、期限と入金の確認が12月31日に間に合うかを見ておく。"}, {"when": "申込から数週間〜数か月", "what": "返礼品、受領証明書、ワンストップ特例の申請書が届いたら、管理表にチェックを入れる", "note": "届く時期は自治体により異なる。返礼品と書類が別便のこともある。1か月たっても届かないときは自治体に問い合わせる。"}, {"when": "12月上旬", "what": "上限の目安と、ここまでの寄附額を見比べる", "note": "ボーナスや転職で年収の見込みが変わっていないか確認する。上限の目安を超えると自己負担が2,000円を超えて増えるので、追加の寄附は目安の範囲内で考える。"}, {"when": "12月31日まで", "what": "今年分の寄附の決済を終える", "note": "その年の寄附として扱われる日は、支払い方法や自治体の処理により異なる。年末の駆け込みは、決済が年内に完了するか申込先の案内で確かめる。"}, {"when": "12月下旬〜1月上旬", "what": "ワンストップ特例の申請書に記入し、添付書類をそろえて送る", "note": "申請書は寄附ごとに必要。マイナンバーを確認できる書類と本人確認書類の写しを添える。自治体によってはオンラインで出せる場合がある。"}, {"when": "翌年1月10日必着", "what": "ワンストップ特例の申請書の期限", "note": "消印ではなく到着の日で判定される。期限は寄附の翌年1月10日必着。郵送は配達日数を考慮して十分早く投函する。オンライン申請の可否・受付時刻は寄附先の案内を確認する。"}, {"when": "申請後〜翌年1月10日必着", "what": "申請後、翌年1月1日までに住所・氏名が変わった場合は、翌年1月10日必着で変更届を提出する", "note": "申請書を出したあとで、翌年1月1日時点の住所や氏名が申請書と変わったときに必要になる。様式や送り先は寄附先の自治体の案内で確かめる。"}, {"when": "翌年2月16日〜3月15日ごろ", "what": "確定申告（ワンストップ特例が使えない人）", "note": "寄附金受領証明書、または利用できる「寄附金控除に関する証明書」を見ながら、その年の寄附すべてを申告書に書く。その年分の申告期間は国税庁の案内で確認する。"}, {"when": "申告後（時期は申告の方法により異なる）", "what": "確定申告の結果が還付となった人は、所得税の還付金の入金を確かめる", "note": "住民税の控除は翌年度の住民税で行われる。所得税の還付と住民税の控除に分かれる点を、管理表のメモ欄に書いておくと後で迷わない。"}, {"when": "翌年5月〜6月", "what": "住民税決定通知書で、寄附金税額控除が入っているか確かめる", "note": "会社員は勤務先を通じて配られることが多い。控除の額は、管理表の寄附合計と大きくずれていないか見る。ずれていれば、自治体の住民税の窓口に確認する。"}, {"when": "翌年6月〜翌々年5月", "what": "給与明細で住民税の額を確かめる", "note": "控除は住民税の6月分から翌年5月分に分かれて反映される。次の年は、ファイルをコピーして新しく始める。"}], "cautions": ["ワンストップ特例は、確定申告が不要な給与所得者などで、1年間（1月〜12月）の寄附先が5自治体以内の人だけが使える。同じ自治体に何回寄附しても1自治体と数える。6自治体になると無効になるので、管理表の自治体の数を寄附のたびに見る。", "医療費控除、副業の所得、住宅ローン控除の初年度などで確定申告をすると、ワンストップ特例は無効になる。申請書を出していても、申告書には寄附全部を書く必要がある。", "ワンストップ特例の申請書は、寄附ごとに必要になる。同じ自治体に2回寄附したときも、2回分を出す。", "申請書の期限は、寄附をした年の翌年1月10日必着。消印有効ではない。2026年分は2027年1月10日で、この日は日曜日になる。", "申請後、翌年1月1日までに住所や氏名が変わったときは、翌年1月10日必着で変更届を寄附先の自治体に出す。申請書が受理されたあとでも必要になる。", "控除の上限の目安は、見込みの年収や家族の状況、ほかの控除で変わる。年の途中の転職、ボーナスの増減、副業、扶養の変化でも動く。前年の数字をそのまま使わず、シミュレーションで確かめる。", "自己負担の2,000円は、上限の目安の範囲内で寄附した場合の考え方。上限の目安を超えると、自己負担が2,000円を超えて増える。超過部分がすべて控除対象外になるとは限らない。", "年末調整では、ふるさと納税の寄附金控除はできない。ワンストップ特例か確定申告のどちらかで手続きをする。", "寄附金受領証明書は、届いたら捨てずに保管する。確定申告では、寄附金受領証明書または利用できる「寄附金控除に関する証明書」が必要。ワンストップ特例でも、住民税の通知と見比べるときに役に立つ。", "寄附の申込者、支払いのカード名義、控除を受ける人の名前は、そろえておく。家族のカードで払うと、控除の確認で説明が必要になることがある。", "ワンストップ特例の申請書には、マイナンバーを確認できる書類と、本人確認書類の写しが要る。どの書類が使えるかは、申請書に添えられた案内で確かめる。", "返礼品を受け取った分は、税の上で一時所得として扱われる場合がある。金額や他の所得によっては申告が必要になることがあるので、心配なときは税務署や税理士に確認する。"]};
+const KEY = "tsumugi-furusato-v1";
+const $ = (id) => document.getElementById(id);
+const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const state = (() => { try { return JSON.parse(localStorage.getItem(KEY)) || {}; } catch { return {}; } })();
+state.rows = state.rows || [{ date: "", town: "", amount: "", sent: false }];
+const save = () => { try { localStorage.setItem(KEY, JSON.stringify(state)); } catch {} };
+const now = new Date();
+// 1月10日までは、前の年の寄附の申請書を送る時期なので前の年を初期値にする
+const defYear = now.getMonth() === 0 && now.getDate() <= 10 ? now.getFullYear() - 1 : now.getFullYear();
+$("year").innerHTML = [defYear - 1, defYear, defYear + 1].map((y) => `<option value="${y}">${y}年</option>`).join("");
+$("year").value = state.year || defYear;
+$("mode").value = state.mode || "no";
+const norm = (s) => s.normalize("NFKC").replace(/\s/g, "");  // 全角・半角や空白の違いは同じ自治体として数える
+function drawRows() {
+  $("rows").innerHTML = state.rows.map((r, i) => `<div class="don">
+    <input type="date" data-i="${i}" data-k="date" value="${esc(r.date)}" aria-label="寄附日">
+    <input type="text" class="town" data-i="${i}" data-k="town" value="${esc(r.town)}" placeholder="自治体（例: ◯◯町）" aria-label="自治体">
+    <input type="number" min="0" step="1000" data-i="${i}" data-k="amount" value="${esc(r.amount)}" placeholder="寄附額（円）" aria-label="寄附額">
+    <label class="chk"><input type="checkbox" data-i="${i}" data-k="sent" ${r.sent ? "checked" : ""}>申請書を送った</label>
+    <button type="button" data-del="${i}" aria-label="この行を消す">消す</button></div>`).join("");
+  $("rows").querySelectorAll("input").forEach((el) => el.addEventListener(el.type === "checkbox" ? "change" : "input", () => {
+    state.rows[el.dataset.i][el.dataset.k] = el.type === "checkbox" ? el.checked : el.value; save(); calc();
+  }));
+  $("rows").querySelectorAll("button[data-del]").forEach((b) => b.addEventListener("click", () => {
+    state.rows.splice(+b.dataset.del, 1); if (!state.rows.length) state.rows.push({ date: "", town: "", amount: "", sent: false }); save(); drawRows(); calc();
+  }));
+}
+function calc() {
+  const y = +$("year").value, mode = $("mode").value;
+  const mine = state.rows.filter((r) => r.date && +r.date.slice(0, 4) === y && norm(r.town));
+  const total = mine.reduce((a, r) => a + (+r.amount || 0), 0);
+  const towns = new Set(mine.map((r) => norm(r.town))).size;
+  const unsent = mine.filter((r) => !r.sent).length;
+  $("total").textContent = `${total.toLocaleString()}円`;
+  $("towns").textContent = `${towns}`;
+  $("unsent").textContent = mode === "yes" ? "―" : `${unsent}件`;
+  const v = $("verdict");
+  const dl = new Date(y + 1, 0, 10);
+  const days = Math.ceil((dl - new Date(now.getFullYear(), now.getMonth(), now.getDate())) / 86400000);
+  if (!mine.length) { v.className = "verdict info"; v.textContent = `${y}年の日付の寄附を入れると、ここに結果が出ます。`; $("deadline").textContent = ""; return; }
+  if (mode === "yes") {
+    v.className = "verdict info"; v.textContent = "確定申告をするので、ワンストップ特例は使いません。寄附金控除を確定申告に入れます（自治体から届く受領証明書を使います）。";
+    $("deadline").textContent = `確定申告の期間は、原則として${y + 1}年2月16日〜3月15日です（土日祝の場合は次の平日）。`;
+  } else if (towns > 5) {
+    v.className = "verdict ng"; v.textContent = `寄附した自治体が${towns}つあり、5つを超えているのでワンストップ特例は使えません。確定申告で寄附金控除を申告します。`;
+    $("deadline").textContent = `確定申告の期間は、原則として${y + 1}年2月16日〜3月15日です（土日祝の場合は次の平日）。`;
+  } else {
+    v.className = unsent ? "verdict ng" : "verdict ok";
+    v.textContent = unsent ? `自治体は${towns}つで、ワンストップ特例の条件（5つまで）に入っています。申請書をまだ送っていない寄附が${unsent}件あります。`
+      : `自治体は${towns}つで、ワンストップ特例の条件（5つまで）に入っています。申請書はすべて送ってあります。`;
+    $("deadline").textContent = `申請書の期限: ${y + 1}年1月10日（必着）` + (days >= 0 ? `。あと${days}日です。` : "。期限を過ぎた場合は、確定申告で寄附金控除を申告します。")
+      + "年の途中で医療費控除などの確定申告をすることになったら、特例は無効になるので確定申告に寄附を入れます。";
+  }
+}
+$("timeline").innerHTML = C.timeline.map((t) => `<li><b>${esc(t.when)}: ${esc(t.what)}</b>${esc(t.note)}</li>`).join("");
+$("cautions").innerHTML = C.cautions.map((t) => `<li>${esc(t)}</li>`).join("");
+["year", "mode"].forEach((id) => $(id).addEventListener("change", () => { state[id] = $(id).value; save(); calc(); }));
+$("addRow").addEventListener("click", () => { state.rows.push({ date: "", town: "", amount: "", sent: false }); save(); drawRows(); calc(); });
+drawRows();
+calc();
+</script>
+</body>
+</html>
