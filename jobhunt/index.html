@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>転職の面接でよく聞かれる質問41問｜聞く側の意図と答え方のポイント・回答メモつき（無料）</title>
+<meta name="description" content="転職の面接でよく聞かれる質問41問を、聞く側の意図と答えるときのポイントつきでまとめました。自分の回答をその場で書いて、準備できた数を数えられます。登録不要・無料。">
+<meta property="og:title" content="転職の面接でよく聞かれる質問と答え方のポイント（無料）">
+<meta property="og:description" content="よく聞かれる質問41問。意図とポイントを見ながら、自分の回答を準備できます。">
+<meta name="theme-color" content="#1f2a36">
+<style>
+:root {
+  --bg: #f6f7f9; --card: #ffffff; --text: #1f2a36; --sub: #5b6570; --line: #dde2e7;
+  --accent: #2a8c82; --accent-soft: #e6f3f1; --warn: #fff4d6; --warn-line: #e8c56a;
+  --late: #fde2e1; --late-line: #e59a96; --done: #9aa3ad;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #171b21; --card: #20262e; --text: #e4e7eb; --sub: #a3acb6; --line: #333b45;
+    --accent: #4fb8ad; --accent-soft: #1f3432; --warn: #3a3222; --warn-line: #8a6f2c;
+    --late: #3d2626; --late-line: #8a4a47; --done: #6b737c;
+  }
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--text);
+  font-family: "BIZ UDPGothic", "Hiragino Sans", "Yu Gothic UI", "Meiryo", sans-serif; line-height: 1.7; }
+header { background: #1f2a36; color: #fff; padding: 20px 16px 16px; }
+header h1 { margin: 0; font-size: 1.35rem; }
+header p { margin: 6px 0 0; color: #c9d3dd; font-size: .9rem; }
+main { max-width: 860px; margin: 0 auto; padding: 16px; }
+.card { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 16px; margin-bottom: 16px; }
+.setup { display: grid; gap: 12px; grid-template-columns: 1fr; }
+@media (min-width: 640px) { .setup { grid-template-columns: 1fr 1fr; } }
+label { font-weight: bold; font-size: .95rem; display: block; margin-bottom: 4px; }
+input[type=date], select { font: inherit; font-size: 1.05rem; padding: 8px 10px; border: 1px solid var(--line); border-radius: 8px;
+  background: var(--card); color: var(--text); width: 100%; }
+.progress { margin-top: 12px; }
+.bar { height: 10px; background: var(--line); border-radius: 99px; overflow: hidden; }
+.bar > div { height: 100%; background: var(--accent); width: 0; transition: width .3s; }
+.progress small { color: var(--sub); }
+.tabs { display: flex; gap: 8px; margin-bottom: 12px; flex-wrap: wrap; }
+.tabs button, .tools button { font: inherit; border: 1px solid var(--line); background: var(--card); color: var(--text);
+  padding: 8px 14px; border-radius: 99px; cursor: pointer; }
+.tabs button[aria-selected=true] { background: var(--accent); border-color: var(--accent); color: #fff; font-weight: bold; }
+.tools { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin-bottom: 8px; }
+.tools label { font-weight: normal; display: inline-flex; gap: 6px; align-items: center; margin: 0; }
+h2.phase { font-size: 1.05rem; margin: 20px 0 8px; padding-left: 10px; border-left: 4px solid var(--accent); }
+.item { display: grid; grid-template-columns: 28px 1fr; gap: 8px; padding: 10px 12px; border: 1px solid var(--line);
+  border-radius: 10px; margin-bottom: 8px; background: var(--card); }
+.item.soon { background: var(--warn); border-color: var(--warn-line); }
+.item.late { background: var(--late); border-color: var(--late-line); }
+.item.done { color: var(--done); }
+.item.done .title { text-decoration: line-through; }
+.item input[type=checkbox] { width: 22px; height: 22px; margin-top: 3px; accent-color: var(--accent); }
+.meta { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; font-size: .85rem; color: var(--sub); }
+.chip { background: var(--accent-soft); color: var(--text); border-radius: 99px; padding: 0 8px; font-size: .8rem; }
+.due { font-weight: bold; }
+.title { font-weight: bold; }
+details summary { cursor: pointer; color: var(--sub); font-size: .85rem; }
+details p { margin: 4px 0 0; font-size: .92rem; }
+table { width: 100%; border-collapse: collapse; font-size: .92rem; }
+th, td { border-bottom: 1px solid var(--line); padding: 8px 6px; text-align: left; vertical-align: top; }
+th { color: var(--sub); font-weight: bold; }
+@media (max-width: 640px) {
+  table, thead, tbody, tr, th, td { display: block; }
+  thead { display: none; }
+  tr { border: 1px solid var(--line); border-radius: 10px; margin-bottom: 8px; padding: 8px; background: var(--card); }
+  td { border: none; padding: 2px 0; }
+  td::before { content: attr(data-label) "："; color: var(--sub); font-size: .8rem; }
+}
+.promo { border-color: var(--accent); }
+.promo a { color: var(--accent); font-weight: bold; }
+.note { color: var(--sub); font-size: .85rem; }
+footer { max-width: 860px; margin: 0 auto; padding: 8px 16px 40px; color: var(--sub); font-size: .8rem; }
+@media print {
+  header, .tabs, .tools, .promo, footer, .setup-hint { display: none; }
+  body { background: #fff; color: #000; }
+  .item { break-inside: avoid; background: #fff !important; }
+  details { display: block; } details > * { display: block; }
+}
+
+/* 固定費の計算（household） */
+.sum { display: grid; gap: 8px; grid-template-columns: repeat(2, 1fr); }
+@media (min-width: 640px) { .sum { grid-template-columns: repeat(4, 1fr); } }
+.sum div { background: var(--bg); border-radius: 10px; padding: 10px; }
+.sum small { color: var(--sub); display: block; font-size: .8rem; }
+.sum b { font-size: 1.2rem; }
+.sum .big b { color: var(--accent); font-size: 1.4rem; }
+.row { display: grid; grid-template-columns: 1fr 92px 92px; gap: 8px; align-items: center; padding: 8px 0; border-bottom: 1px solid var(--line); }
+.row .name { font-weight: bold; }
+.row .diff { grid-column: 1 / -1; font-size: .85rem; color: var(--sub); }
+.row input { font: inherit; width: 100%; padding: 6px 8px; border: 1px solid var(--line); border-radius: 8px; background: var(--card); color: var(--text); text-align: right; }
+.row input.name-in { text-align: left; }
+.head { font-size: .8rem; color: var(--sub); border-bottom: 2px solid var(--line); }
+.head span:not(:first-child) { text-align: right; }
+.add { margin-top: 10px; }
+
+.q { border-bottom: 1px solid var(--line); padding: 12px 0; }
+.q .title { font-weight: 700; }
+.q textarea { width: 100%; min-height: 70px; font: inherit; padding: 8px; border: 1px solid var(--line); border-radius: 8px; background: var(--card); color: var(--text); box-sizing: border-box; }
+.q.done .title::after { content: " ✓"; color: var(--accent); }
+.filter { display: flex; flex-wrap: wrap; gap: 6px; }
+.filter button { font: inherit; border: 1px solid var(--line); background: var(--card); color: var(--text); border-radius: 99px; padding: 4px 12px; cursor: pointer; }
+.filter button.on { background: var(--accent); color: #fff; border-color: var(--accent); }
+</style>
+</head>
+<body>
+<header>
+  <h1>転職の面接でよく聞かれる質問</h1>
+  <p>よく聞かれる質問41問を、聞く側の意図と答えるときのポイントつきでまとめました。自分の回答を書くと、準備できた数が出ます。登録不要・無料。</p>
+</header>
+<main>
+  <section class="card">
+    <div class="sum">
+      <div class="big"><small>準備できた質問</small><b id="done">0 / 41</b></div>
+    </div>
+    <div class="filter" id="filter" style="margin-top:12px"></div>
+    <p class="note setup-hint">回答を書いて「準備できた」にチェックを付けます。書いた内容はこの端末の中だけに保存され、送信されません。</p>
+  </section>
+  <section class="card" id="qs"></section>
+
+  <section class="card promo">
+    <strong>Excel 版もあります（有料・980円）</strong>
+    <p>応募先100社の一覧（状態・次の予定日の色分け・状態ごとの社数の自動集計）、面接の記録と振り返り、転職の軸の重みで点数をつける内定の比較、
+      退職・入社の準備までのやることリストをまとめた Excel 版を、このページの作者が BOOTH で販売しています。</p>
+    <a href="https://tsumugi-ops.booth.pm/items/8900005" target="_blank" rel="noopener">転職活動の管理表＋面接の振り返りシート（Excel）</a>
+  </section>
+</main>
+<footer>
+  <p>質問と答え方のポイントは一般的な例で、選考の結果を約束するものではありません。内容の作成には AI を利用しています（2026-09-26 時点）。</p>
+  <p>作成: ツムギ（<a href="https://tsumugi-ops.booth.pm" target="_blank" rel="noopener">BOOTH</a>）・<a href="../">ほかの無料ツール</a></p>
+</footer>
+<script>
+const QS = [{"area": "自己紹介・経歴", "q": "これまでの経歴を、1〜2分で自己紹介として話してください。", "intent": "話を短くまとめる力を見る。職務経歴書のどこを詳しく聞くかを決める材料にもしている。", "point": "現職の職種と年数、主な成果、応募先とのつながりの順に、1分半ほどで話す。新卒から順番に全部話さず、応募先に関係する部分を厚くする。"}, {"area": "自己紹介・経歴", "q": "現在の仕事の内容を、1日の流れも含めて教えてください。", "intent": "職務経歴書の内容が実態と合っているか、どの程度の仕事を任されているかを確かめる。", "point": "「営業をしています」で止めず、「既存顧客40社を担当し、週6件ほど商談、午後は見積書と月次報告」のように数と作業で話す。"}, {"area": "自己紹介・経歴", "q": "今のチームは何人で、その中でのあなたの役割は何ですか。", "intent": "組織の中での立ち位置と、入社後にどの規模のチームで動けるかを想像したい。", "point": "人数、上司との関係、後輩の有無、自分が任されている範囲を一息で言えるようにしておく。"}, {"area": "自己紹介・経歴", "q": "これまでで一番力を入れた時期はいつで、何に取り組みましたか。", "intent": "仕事に熱が入るのはどんな場面か、価値観を知りたい。", "point": "時期、そのときの課題、自分が動いたこと、結果の順で話す。成果が小さくても、自分で決めて動いた部分がわかる話を選ぶ。"}, {"area": "転職理由", "q": "転職を考えた理由を教えてください。", "intent": "同じ理由で入社後にまた辞めたくならないかを確かめる。", "point": "不満だけで終わらせず、「次の職場でこうしたい」まで話す。前職の悪口は、事実であっても言い方を抑える。"}, {"area": "転職理由", "q": "今の会社の中では、その理由を解決できませんか。", "intent": "社内で動いたのか、本気で外に出る必要があるのかを見ている。", "point": "異動の希望を出した、上司に相談したなど、実際に試したことがあれば話す。試していない場合は、事業の構造上むずかしい理由を1つに絞る。"}, {"area": "転職理由", "q": "転職を考え始めたのはいつごろで、きっかけは何でしたか。", "intent": "一時的な感情か、時間をかけて考えた結論かを見分けたい。", "point": "時期と、きっかけになった出来事（担当の変更、評価面談、資格の取得など）を短く言う。その後どれくらい情報を集めたかも添える。"}, {"area": "転職理由", "q": "今の会社で、良いと思っている点はありますか。", "intent": "不満ばかりの人ではないか、現職での経験を前向きに捉えられているかを見る。", "point": "本当に良かった点を1つか2つ挙げ、そのうえで「それでも変えたいこと」に話をつなぐ。"}, {"area": "転職理由", "q": "転職で叶えたいことに順位をつけるなら、一番は何ですか。", "intent": "譲れない条件と、自社で叶えられるかどうかを確かめる。", "point": "比較の軸で決めた1位と2位を自分の言葉で答える。年収が1位の場合も、なぜ必要かを仕事の内容や将来の計画とあわせて話す。"}, {"area": "志望動機", "q": "数ある会社の中で、なぜ当社に応募したのですか。", "intent": "会社をどれだけ調べたか、他社でも通用する答えになっていないかを確認する。", "point": "事業内容、顧客、求人票の仕事内容のうち、惹かれた点を1つ選び、自分の経験と結びつける。「成長できそうだから」だけで終わらせない。"}, {"area": "志望動機", "q": "なぜこの業界を選んだのですか。", "intent": "業界への理解と、異業種からの応募なら本気度を見たい。", "point": "業界の動きや課題を1つ自分で調べた内容として話す。異業種の場合は、今の仕事で身につけた力がどう使えるかも一緒に伝える。"}, {"area": "志望動機", "q": "なぜこの職種に応募したのですか。", "intent": "職種の中身を理解しているか、入社後のギャップが小さいかを確認する。", "point": "求人票の業務内容のうち、自分が経験した部分と、これから挑戦したい部分を分けて話す。"}, {"area": "志望動機", "q": "入社したら、最初の半年で何に取り組みたいですか。", "intent": "入社後の動きを具体的に想像できているか、現実的な計画を立てられる人かを見る。", "point": "最初の1〜2か月は業務とチームを知ることに使い、3か月目以降に自分の経験を活かせる部分に着手する、と現実的な順序で話す。"}, {"area": "志望動機", "q": "ほかにどんな会社を受けていますか。選考はどこまで進んでいますか。", "intent": "志望度の高さ、就職活動の軸に一貫性があるか、内定が出た場合の回答時期の見込みを知りたい。", "point": "社名は聞かれた範囲で答え、業界や職種の共通点を軸として話す。選考が進んでいる会社があれば、事実のとおりに伝える。"}, {"area": "志望動機", "q": "当社の商品やサービスについて、どう感じていますか。", "intent": "企業研究の深さと、自分の目で見て考えているかを確認する。", "point": "使った経験か、公開されている情報から気づいた点を1つ話す。改善案を出すなら、決めつけずに「こう見えました」と伝える。"}, {"area": "強み・弱み", "q": "あなたの強みを教えてください。", "intent": "強みが仕事の場面で再現できるか、応募先の求める人物像と合うかを見る。", "point": "強みを1つに絞り、それが出た場面を1つ添える。「コミュニケーション力」など広い言葉より、「関係者7人の調整を1人で進めた」のような話にする。"}, {"area": "強み・弱み", "q": "あなたの弱みと、それをどう補っていますか。", "intent": "自己理解の深さと、改善する姿勢があるかを確認する。", "point": "仕事に致命的でない弱みを選び、実際にやっている対策（確認のタイミングを決めた、メモを残すなど）を話す。"}, {"area": "強み・弱み", "q": "同僚や上司からは、どんな人だと言われますか。", "intent": "自己評価と周囲からの評価にずれがないかを見る。", "point": "実際に言われた言葉を、いつ誰から言われたかとあわせて話す。自分で作った表現より、人の言葉のほうが伝わりやすい。"}, {"area": "強み・弱み", "q": "仕事をするうえで大切にしていることは何ですか。", "intent": "仕事観が会社の考え方と合うかを確かめる。", "point": "1つに絞り、それを守った結果うまくいった、または守れず失敗した場面を添える。"}, {"area": "強み・弱み", "q": "ストレスを感じるのはどんな場面で、どう対処していますか。", "intent": "入社後に負荷がかかったとき、どう動く人かを知りたい。", "point": "「納期の直前に仕様が変わる場面」など具体的な場面を挙げ、その場での動き方と、日ごろの切り替え方を話す。"}, {"area": "実績・経験", "q": "これまでで一番の成果を、数字を入れて教えてください。", "intent": "成果の大きさと、自分がどこに貢献したかを把握したい。", "point": "売上、件数、時間、人数など、数字が出せるものを選ぶ。チームの成果なら「その中で自分は何をしたか」を分けて話す。"}, {"area": "実績・経験", "q": "失敗した経験と、そこから変えたことを教えてください。", "intent": "失敗をどう受け止め、次にどう活かす人かを見る。", "point": "原因が自分にあった失敗を選び、その後に変えた具体的なやり方まで話す。言い訳が長くならないようにする。"}, {"area": "実績・経験", "q": "一番苦労した仕事と、どう乗り越えたかを聞かせてください。", "intent": "困難な場面での動き方と粘り強さを確認する。", "point": "何が難しかったか、誰に相談し何を試したかを順に話す。乗り越えられなかった部分があれば、それも正直に言う。"}, {"area": "実績・経験", "q": "意見が合わない相手と仕事を進めた経験はありますか。", "intent": "衝突したときの対応力と、周囲との関わり方を見たい。", "point": "相手を悪く言わず、相手の事情をどう聞いたか、どこで折り合ったかを話す。"}, {"area": "実績・経験", "q": "業務のやり方を改善した経験はありますか。", "intent": "言われたことをこなすだけでなく、自分で課題を見つけて動ける人かを確認する。", "point": "「月末の集計に5時間かかっていたのを、テンプレートを作って2時間にした」のように、前後の差がわかる例を1つ話す。"}, {"area": "実績・経験", "q": "後輩の指導やチームをまとめた経験はありますか。", "intent": "将来リーダー役を任せられるか、今のポジションでどこまで動けるかを確認する。", "point": "肩書きがなくても、新人の教育担当をした、勉強会を開いたなどの経験があれば話す。経験がなければ、その代わりに周囲を巻き込んだ場面を話す。"}, {"area": "実績・経験", "q": "今のスキルは当社でどう活かせますか。足りないと思う部分はありますか。", "intent": "自分の力を客観的に見ているか、入社後に補う意欲があるかを見る。", "point": "求人票の必須条件と自分の経験を照らし、合う点を先に話す。足りない点は、すでに始めている学習（資格の勉強など）とあわせて伝える。"}, {"area": "働き方・条件", "q": "希望年収はいくらですか。その理由も教えてください。", "intent": "会社の予算とのすり合わせと、希望額に根拠があるかを確かめる。", "point": "現在の年収を踏まえ、幅で答える（例として「現在より少し上を希望しますが、仕事内容を含めて相談したい」など）。金額の交渉は条件面談で行うことが多い。"}, {"area": "働き方・条件", "q": "現在の年収の内訳を教えてください。", "intent": "月給、賞与、手当、残業代のどれで構成されているかを知り、条件を組み立てたい。", "point": "前年分の源泉徴収票の支払金額と、今年の見込みを手元に置いて答える。残業代が多い場合は、それを含めた額かどうかを分けて言う。"}, {"area": "働き方・条件", "q": "入社可能な時期はいつごろですか。", "intent": "採用計画に間に合うか、退職の手続きを進められる状況かを確認する。", "point": "就業規則の退職の申し出期限と、引き継ぎに必要な期間から逆算して答える。「内定から1〜2か月後」のように幅を持たせ、確定ではなく見込みだと添える。"}, {"area": "働き方・条件", "q": "残業や休日出勤は、どのくらい対応できますか。", "intent": "繁忙期の働き方と、本人の希望に大きなずれがないかを確認する。", "point": "できる範囲を具体的に話す（例：月に20〜30時間程度、繁忙期は増えても対応できる）。無理に「何でもやります」と言うと、入社後に困る。"}, {"area": "働き方・条件", "q": "転勤や部署の異動、勤務地の希望はありますか。", "intent": "配属や転勤の可能性がある職場で、本人の事情と合うかを確かめる。", "point": "譲れない条件（通勤時間の上限、家庭の事情など）は最初に伝え、そうでない部分は柔軟だと話す。"}, {"area": "働き方・条件", "q": "在宅勤務と出社の働き方について、希望はありますか。", "intent": "会社の運用と本人の希望が合うかを見る。", "point": "希望する出社日数は、理由（集中作業、家庭の事情など）と一緒に言う。会社の実際の運用は、逆質問で確かめる。"}, {"area": "逆質問への備え", "q": "最後に、何か質問はありますか。（一次・二次面接）", "intent": "入社への関心の高さと、仕事をどこまで想像できているかを見る。", "point": "調べればわかる質問（福利厚生の一覧など）は避け、仕事の進め方や配属先の話を3〜5個用意しておく。当日の会話で出た分は削る。"}, {"area": "逆質問への備え", "q": "（逆質問の例）配属予定のチームの人数構成と、入社後1か月の流れを教えてください。", "intent": "応募者が入社後を具体的に考えているか、答え方に会社の実態が出るかを見る。", "point": "チームの人数、年齢構成、立ち上がりまでの期間を聞き、面接官の答えを振り返りシートの「人・社風」の欄に書き留める。"}, {"area": "逆質問への備え", "q": "（逆質問の例）評価はどんな基準で、どのくらいの頻度で行われますか。", "intent": "評価や昇給の仕組みに関心があるか、長く働く想定かを確認する。", "point": "「年収を上げるために聞く」ように聞こえないよう、「どんな成果が評価されるかを知って動きたい」と目的を添える。"}, {"area": "逆質問への備え", "q": "（最終面接向け）今後3年間、事業でいちばん力を入れる領域はどこですか。", "intent": "経営や事業への関心があり、会社の方向に共感できるかを確かめる。", "point": "最終面接では役員や部門長が出てくることが多い。現場のことより、事業の方向や求める人物像を聞き、答えを比較シートの「会社の安定性」に反映する。"}, {"area": "その他", "q": "5年後、どんな仕事をしていたいですか。", "intent": "入社後の成長の見通しと、会社の中で描けるキャリアが合っているかを見る。", "point": "役職より、「どんな仕事を任されている状態か」で話す。会社に用意された道と合わない場合は、無理に合わせない。"}, {"area": "その他", "q": "在籍期間が短い会社があります。（または空白期間があります。）その理由を教えてください。", "intent": "辞めた理由に一貫性があるか、同じことが繰り返されないかを確認する。", "point": "事実を短く話し、その経験から今の軸ができたことにつなげる。空白期間は、その間に何をしていたかを具体的に言う。"}, {"area": "その他", "q": "内定が出た場合、返事までにどのくらい時間が必要ですか。", "intent": "他社の選考状況と、入社の意思がどれくらい固いかを知りたい。", "point": "他の選考が残っているなら、その結果が出る時期を事実として伝える。日数の相談は、内定が出てから労働条件通知書を見て決めたい、と説明する。"}, {"area": "その他", "q": "最後に、伝えておきたいことはありますか。", "intent": "面接で話しきれなかった点の補足と、締めの印象を見る。", "point": "新しい内容を足すより、志望理由と入社後にやりたいことを30秒で言い直す。何もなければ「面接の時間をいただいた」お礼だけでもよい。"}];
+const KEY = "tsumugi-jobhunt-v1";
+const $ = (id) => document.getElementById(id);
+const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const state = (() => { try { return JSON.parse(localStorage.getItem(KEY)) || {}; } catch { return {}; } })();
+state.ans = state.ans || {}; state.ok = state.ok || {};
+const save = () => { try { localStorage.setItem(KEY, JSON.stringify(state)); } catch {} };
+const areas = [...new Set(QS.map((q) => q.area))];
+let cur = "";
+function count() { $("done").textContent = `${QS.filter((_, i) => state.ok[i]).length} / ${QS.length}`; }
+function render() {
+  $("filter").innerHTML = [["", "すべて"], ...areas.map((a) => [a, a])].map(([v, l]) => `<button data-v="${esc(v)}" class="${v === cur ? "on" : ""}">${esc(l)}</button>`).join("");
+  $("filter").querySelectorAll("button").forEach((b) => b.addEventListener("click", () => { cur = b.dataset.v; render(); }));
+  $("qs").innerHTML = QS.map((q, i) => (cur && q.area !== cur) ? "" : `<div class="q ${state.ok[i] ? "done" : ""}" id="q${i}">
+    <div class="note">${esc(q.area)}</div><div class="title">${esc(q.q)}</div>
+    <p><small>聞く側の意図:</small> ${esc(q.intent)}</p><p><small>答えるときのポイント:</small> ${esc(q.point)}</p>
+    <textarea data-i="${i}" placeholder="自分の回答（この端末にだけ保存）">${esc(state.ans[i] || "")}</textarea>
+    <label><input type="checkbox" data-c="${i}" ${state.ok[i] ? "checked" : ""}> 準備できた</label></div>`).join("");
+  $("qs").querySelectorAll("textarea").forEach((t) => t.addEventListener("input", () => { state.ans[t.dataset.i] = t.value; save(); }));
+  $("qs").querySelectorAll("input[type=checkbox]").forEach((c) => c.addEventListener("change", () => {
+    state.ok[c.dataset.c] = c.checked; save(); $("q" + c.dataset.c).classList.toggle("done", c.checked); count();
+  }));
+  count();
+}
+render();
+</script>
+</body>
+</html>

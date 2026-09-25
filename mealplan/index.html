@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>1週間の献立から買い物リストを作る｜定番料理33品から選ぶだけ（無料）</title>
+<meta name="description" content="1週間の夕食を定番料理33品から選ぶと、必要な食材を売り場ごとにまとめた買い物リストが出ます。家にあるものにチェックを付けて、買うものだけ残せます。登録不要・無料。">
+<meta property="og:title" content="1週間の献立から買い物リストを作る（無料）">
+<meta property="og:description" content="献立を選ぶだけで、売り場ごとの買い物リストができます。">
+<meta name="theme-color" content="#1f2a36">
+<style>
+:root {
+  --bg: #f6f7f9; --card: #ffffff; --text: #1f2a36; --sub: #5b6570; --line: #dde2e7;
+  --accent: #2a8c82; --accent-soft: #e6f3f1; --warn: #fff4d6; --warn-line: #e8c56a;
+  --late: #fde2e1; --late-line: #e59a96; --done: #9aa3ad;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #171b21; --card: #20262e; --text: #e4e7eb; --sub: #a3acb6; --line: #333b45;
+    --accent: #4fb8ad; --accent-soft: #1f3432; --warn: #3a3222; --warn-line: #8a6f2c;
+    --late: #3d2626; --late-line: #8a4a47; --done: #6b737c;
+  }
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--text);
+  font-family: "BIZ UDPGothic", "Hiragino Sans", "Yu Gothic UI", "Meiryo", sans-serif; line-height: 1.7; }
+header { background: #1f2a36; color: #fff; padding: 20px 16px 16px; }
+header h1 { margin: 0; font-size: 1.35rem; }
+header p { margin: 6px 0 0; color: #c9d3dd; font-size: .9rem; }
+main { max-width: 860px; margin: 0 auto; padding: 16px; }
+.card { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 16px; margin-bottom: 16px; }
+.setup { display: grid; gap: 12px; grid-template-columns: 1fr; }
+@media (min-width: 640px) { .setup { grid-template-columns: 1fr 1fr; } }
+label { font-weight: bold; font-size: .95rem; display: block; margin-bottom: 4px; }
+input[type=date], select { font: inherit; font-size: 1.05rem; padding: 8px 10px; border: 1px solid var(--line); border-radius: 8px;
+  background: var(--card); color: var(--text); width: 100%; }
+.progress { margin-top: 12px; }
+.bar { height: 10px; background: var(--line); border-radius: 99px; overflow: hidden; }
+.bar > div { height: 100%; background: var(--accent); width: 0; transition: width .3s; }
+.progress small { color: var(--sub); }
+.tabs { display: flex; gap: 8px; margin-bottom: 12px; flex-wrap: wrap; }
+.tabs button, .tools button { font: inherit; border: 1px solid var(--line); background: var(--card); color: var(--text);
+  padding: 8px 14px; border-radius: 99px; cursor: pointer; }
+.tabs button[aria-selected=true] { background: var(--accent); border-color: var(--accent); color: #fff; font-weight: bold; }
+.tools { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin-bottom: 8px; }
+.tools label { font-weight: normal; display: inline-flex; gap: 6px; align-items: center; margin: 0; }
+h2.phase { font-size: 1.05rem; margin: 20px 0 8px; padding-left: 10px; border-left: 4px solid var(--accent); }
+.item { display: grid; grid-template-columns: 28px 1fr; gap: 8px; padding: 10px 12px; border: 1px solid var(--line);
+  border-radius: 10px; margin-bottom: 8px; background: var(--card); }
+.item.soon { background: var(--warn); border-color: var(--warn-line); }
+.item.late { background: var(--late); border-color: var(--late-line); }
+.item.done { color: var(--done); }
+.item.done .title { text-decoration: line-through; }
+.item input[type=checkbox] { width: 22px; height: 22px; margin-top: 3px; accent-color: var(--accent); }
+.meta { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; font-size: .85rem; color: var(--sub); }
+.chip { background: var(--accent-soft); color: var(--text); border-radius: 99px; padding: 0 8px; font-size: .8rem; }
+.due { font-weight: bold; }
+.title { font-weight: bold; }
+details summary { cursor: pointer; color: var(--sub); font-size: .85rem; }
+details p { margin: 4px 0 0; font-size: .92rem; }
+table { width: 100%; border-collapse: collapse; font-size: .92rem; }
+th, td { border-bottom: 1px solid var(--line); padding: 8px 6px; text-align: left; vertical-align: top; }
+th { color: var(--sub); font-weight: bold; }
+@media (max-width: 640px) {
+  table, thead, tbody, tr, th, td { display: block; }
+  thead { display: none; }
+  tr { border: 1px solid var(--line); border-radius: 10px; margin-bottom: 8px; padding: 8px; background: var(--card); }
+  td { border: none; padding: 2px 0; }
+  td::before { content: attr(data-label) "："; color: var(--sub); font-size: .8rem; }
+}
+.promo { border-color: var(--accent); }
+.promo a { color: var(--accent); font-weight: bold; }
+.note { color: var(--sub); font-size: .85rem; }
+footer { max-width: 860px; margin: 0 auto; padding: 8px 16px 40px; color: var(--sub); font-size: .8rem; }
+@media print {
+  header, .tabs, .tools, .promo, footer, .setup-hint { display: none; }
+  body { background: #fff; color: #000; }
+  .item { break-inside: avoid; background: #fff !important; }
+  details { display: block; } details > * { display: block; }
+}
+
+/* 固定費の計算（household） */
+.sum { display: grid; gap: 8px; grid-template-columns: repeat(2, 1fr); }
+@media (min-width: 640px) { .sum { grid-template-columns: repeat(4, 1fr); } }
+.sum div { background: var(--bg); border-radius: 10px; padding: 10px; }
+.sum small { color: var(--sub); display: block; font-size: .8rem; }
+.sum b { font-size: 1.2rem; }
+.sum .big b { color: var(--accent); font-size: 1.4rem; }
+.row { display: grid; grid-template-columns: 1fr 92px 92px; gap: 8px; align-items: center; padding: 8px 0; border-bottom: 1px solid var(--line); }
+.row .name { font-weight: bold; }
+.row .diff { grid-column: 1 / -1; font-size: .85rem; color: var(--sub); }
+.row input { font: inherit; width: 100%; padding: 6px 8px; border: 1px solid var(--line); border-radius: 8px; background: var(--card); color: var(--text); text-align: right; }
+.row input.name-in { text-align: left; }
+.head { font-size: .8rem; color: var(--sub); border-bottom: 2px solid var(--line); }
+.head span:not(:first-child) { text-align: right; }
+.add { margin-top: 10px; }
+
+.days { display: grid; gap: 8px; }
+.day { display: grid; grid-template-columns: 92px 1fr; gap: 8px; align-items: center; }
+.day select { width: 100%; }
+.shop h3 { margin: 14px 0 4px; font-size: 1rem; color: var(--accent); }
+.shop label { display: flex; gap: 8px; align-items: center; padding: 4px 0; border-bottom: 1px solid var(--line); }
+.shop label.have { opacity: .45; text-decoration: line-through; }
+.shop .qty { margin-left: auto; font-variant-numeric: tabular-nums; }
+</style>
+</head>
+<body>
+<header>
+  <h1>1週間の献立から買い物リストを作る</h1>
+  <p>夕食を選ぶと、必要な食材を売り場ごとにまとめます。家にあるものにチェックを付けると、買うものだけが残ります。登録不要・無料。</p>
+</header>
+<main>
+  <section class="card">
+    <h2 class="phase" style="margin-top:0">1週間の夕食</h2>
+    <div class="days" id="days"></div>
+    <p class="note setup-hint">量は4人分の目安です。家族の人数に合わせて調整してください。入力した内容はこの端末の中だけに保存されます。</p>
+  </section>
+
+  <section class="card shop">
+    <h2 class="phase" style="margin-top:0">買い物リスト <span id="count" class="note"></span></h2>
+    <div id="list"><p class="note">献立を選ぶと出ます。</p></div>
+  </section>
+
+  <section class="card promo">
+    <strong>Excel 版もあります（有料・980円）</strong>
+    <p>4週間の献立表（朝・昼・夜）、冷蔵庫の在庫と期限の管理（期限切れは赤）、在庫と「常にほしい数」を差し引いて買う量を自動で出す買い物リスト、
+      自分の料理を足せるレシピ表をまとめた Excel 版を、このページの作者が BOOTH で販売しています。</p>
+    <a href="https://tsumugi-ops.booth.pm/items/8900004" target="_blank" rel="noopener">献立表＋冷蔵庫の在庫管理＋買い物リスト（Excel）</a>
+  </section>
+</main>
+<footer>
+  <p>料理と材料は家庭の定番の例です。栄養やカロリーの計算はしていません。内容の作成には AI を利用しています（2026-09-26 時点）。</p>
+  <p>作成: ツムギ（<a href="https://tsumugi-ops.booth.pm" target="_blank" rel="noopener">BOOTH</a>）・<a href="../">ほかの無料ツール</a></p>
+</footer>
+<script>
+const RECIPES = [{"name": "鶏の照り焼き", "kind": "主菜", "items": [{"ingredient": "鶏もも肉", "qty": 2}, {"ingredient": "キャベツ", "qty": 0.25}]}, {"name": "鶏の唐揚げ", "kind": "主菜", "items": [{"ingredient": "鶏もも肉", "qty": 2}, {"ingredient": "キャベツ", "qty": 0.25}]}, {"name": "豚の生姜焼き", "kind": "主菜", "items": [{"ingredient": "豚こま切れ肉", "qty": 400}, {"ingredient": "たまねぎ", "qty": 1}, {"ingredient": "キャベツ", "qty": 0.25}]}, {"name": "豚バラと大根の煮物", "kind": "主菜", "items": [{"ingredient": "豚バラ薄切り肉", "qty": 250}, {"ingredient": "大根", "qty": 0.5}]}, {"name": "とんかつ", "kind": "主菜", "items": [{"ingredient": "豚ロース厚切り肉", "qty": 4}, {"ingredient": "卵", "qty": 1}, {"ingredient": "パン粉", "qty": 60}, {"ingredient": "キャベツ", "qty": 0.25}]}, {"name": "ハンバーグ", "kind": "主菜", "items": [{"ingredient": "合いびき肉", "qty": 400}, {"ingredient": "たまねぎ", "qty": 1}, {"ingredient": "卵", "qty": 1}, {"ingredient": "パン粉", "qty": 40}]}, {"name": "麻婆豆腐", "kind": "主菜", "items": [{"ingredient": "木綿豆腐", "qty": 2}, {"ingredient": "鶏ひき肉", "qty": 200}, {"ingredient": "長ねぎ", "qty": 1}]}, {"name": "鮭の塩焼き", "kind": "主菜", "items": [{"ingredient": "鮭の切り身", "qty": 4}, {"ingredient": "大根", "qty": 0.25}]}, {"name": "さばのみそ煮", "kind": "主菜", "items": [{"ingredient": "さばの切り身", "qty": 4}, {"ingredient": "長ねぎ", "qty": 1}]}, {"name": "ぶりの照り焼き", "kind": "主菜", "items": [{"ingredient": "ぶりの切り身", "qty": 4}, {"ingredient": "ブロッコリー", "qty": 1}]}, {"name": "肉じゃが", "kind": "主菜", "items": [{"ingredient": "豚こま切れ肉", "qty": 250}, {"ingredient": "じゃがいも", "qty": 4}, {"ingredient": "たまねぎ", "qty": 2}, {"ingredient": "にんじん", "qty": 1}]}, {"name": "カレーライス", "kind": "主菜", "items": [{"ingredient": "豚こま切れ肉", "qty": 300}, {"ingredient": "じゃがいも", "qty": 3}, {"ingredient": "たまねぎ", "qty": 2}, {"ingredient": "にんじん", "qty": 1}, {"ingredient": "カレールー", "qty": 0.5}, {"ingredient": "米", "qty": 0.5}]}, {"name": "野菜炒め", "kind": "主菜", "items": [{"ingredient": "豚バラ薄切り肉", "qty": 200}, {"ingredient": "キャベツ", "qty": 0.25}, {"ingredient": "もやし", "qty": 1}, {"ingredient": "にんじん", "qty": 0.5}, {"ingredient": "ピーマン", "qty": 2}]}, {"name": "クリームシチュー", "kind": "主菜", "items": [{"ingredient": "鶏もも肉", "qty": 1}, {"ingredient": "じゃがいも", "qty": 3}, {"ingredient": "にんじん", "qty": 1}, {"ingredient": "たまねぎ", "qty": 2}, {"ingredient": "シチュールー", "qty": 0.5}, {"ingredient": "牛乳", "qty": 0.5}]}, {"name": "焼き餃子", "kind": "主菜", "items": [{"ingredient": "冷凍餃子", "qty": 2}, {"ingredient": "もやし", "qty": 1}]}, {"name": "蒸し鶏の中華だれ", "kind": "主菜", "items": [{"ingredient": "鶏むね肉", "qty": 2}, {"ingredient": "きゅうり", "qty": 2}, {"ingredient": "トマト", "qty": 2}]}, {"name": "納豆ごはん", "kind": "主食", "items": [{"ingredient": "米", "qty": 0.5}, {"ingredient": "納豆", "qty": 4}]}, {"name": "焼きそば", "kind": "主食", "items": [{"ingredient": "中華麺", "qty": 4}, {"ingredient": "豚バラ薄切り肉", "qty": 200}, {"ingredient": "キャベツ", "qty": 0.25}, {"ingredient": "もやし", "qty": 1}]}, {"name": "ミートソーススパゲッティ", "kind": "主食", "items": [{"ingredient": "スパゲッティ", "qty": 400}, {"ingredient": "合いびき肉", "qty": 250}, {"ingredient": "たまねぎ", "qty": 1}, {"ingredient": "トマト缶", "qty": 1}]}, {"name": "親子丼", "kind": "主食", "items": [{"ingredient": "米", "qty": 0.5}, {"ingredient": "鶏もも肉", "qty": 1}, {"ingredient": "たまねぎ", "qty": 1}, {"ingredient": "卵", "qty": 4}]}, {"name": "チャーハン", "kind": "主食", "items": [{"ingredient": "米", "qty": 0.5}, {"ingredient": "卵", "qty": 3}, {"ingredient": "長ねぎ", "qty": 1}, {"ingredient": "ベーコン", "qty": 1}, {"ingredient": "冷凍ミックスベジタブル", "qty": 0.5}]}, {"name": "きつねうどん", "kind": "主食", "items": [{"ingredient": "ゆでうどん", "qty": 4}, {"ingredient": "油揚げ", "qty": 2}, {"ingredient": "長ねぎ", "qty": 1}, {"ingredient": "乾燥わかめ", "qty": 0.25}]}, {"name": "チーズトースト", "kind": "主食", "items": [{"ingredient": "食パン", "qty": 4}, {"ingredient": "ピザ用チーズ", "qty": 0.5}, {"ingredient": "ベーコン", "qty": 0.5}]}, {"name": "ほうれん草と油揚げの煮びたし", "kind": "副菜", "items": [{"ingredient": "ほうれん草", "qty": 1}, {"ingredient": "油揚げ", "qty": 1}]}, {"name": "ポテトサラダ", "kind": "副菜", "items": [{"ingredient": "じゃがいも", "qty": 3}, {"ingredient": "きゅうり", "qty": 1}, {"ingredient": "にんじん", "qty": 0.5}, {"ingredient": "卵", "qty": 2}]}, {"name": "きんぴらごぼう", "kind": "副菜", "items": [{"ingredient": "ごぼう", "qty": 1}, {"ingredient": "にんじん", "qty": 1}]}, {"name": "ひじきの煮物", "kind": "副菜", "items": [{"ingredient": "ひじき", "qty": 0.5}, {"ingredient": "にんじん", "qty": 0.5}, {"ingredient": "油揚げ", "qty": 1}]}, {"name": "ツナとキャベツのサラダ", "kind": "副菜", "items": [{"ingredient": "キャベツ", "qty": 0.25}, {"ingredient": "ツナ缶", "qty": 1}]}, {"name": "なすとピーマンのみそ炒め", "kind": "副菜", "items": [{"ingredient": "なす", "qty": 3}, {"ingredient": "ピーマン", "qty": 3}]}, {"name": "豆腐とわかめのみそ汁", "kind": "汁物", "items": [{"ingredient": "絹ごし豆腐", "qty": 1}, {"ingredient": "乾燥わかめ", "qty": 0.25}]}, {"name": "小松菜と油揚げのみそ汁", "kind": "汁物", "items": [{"ingredient": "小松菜", "qty": 1}, {"ingredient": "油揚げ", "qty": 1}]}, {"name": "豚汁", "kind": "汁物", "items": [{"ingredient": "豚バラ薄切り肉", "qty": 150}, {"ingredient": "大根", "qty": 0.25}, {"ingredient": "にんじん", "qty": 0.5}, {"ingredient": "ごぼう", "qty": 0.5}, {"ingredient": "長ねぎ", "qty": 0.5}]}, {"name": "きのこと卵の中華スープ", "kind": "汁物", "items": [{"ingredient": "しめじ", "qty": 1}, {"ingredient": "えのきだけ", "qty": 1}, {"ingredient": "卵", "qty": 2}, {"ingredient": "白菜", "qty": 0.25}]}];
+const INGS = [{"name": "たまねぎ", "section": "野菜", "unit": "玉"}, {"name": "にんじん", "section": "野菜", "unit": "本"}, {"name": "じゃがいも", "section": "野菜", "unit": "個"}, {"name": "キャベツ", "section": "野菜", "unit": "玉"}, {"name": "もやし", "section": "野菜", "unit": "袋"}, {"name": "ほうれん草", "section": "野菜", "unit": "束"}, {"name": "小松菜", "section": "野菜", "unit": "束"}, {"name": "ピーマン", "section": "野菜", "unit": "個"}, {"name": "なす", "section": "野菜", "unit": "本"}, {"name": "きゅうり", "section": "野菜", "unit": "本"}, {"name": "トマト", "section": "野菜", "unit": "個"}, {"name": "大根", "section": "野菜", "unit": "本"}, {"name": "白菜", "section": "野菜", "unit": "玉"}, {"name": "長ねぎ", "section": "野菜", "unit": "本"}, {"name": "ブロッコリー", "section": "野菜", "unit": "株"}, {"name": "しめじ", "section": "野菜", "unit": "パック"}, {"name": "えのきだけ", "section": "野菜", "unit": "袋"}, {"name": "ごぼう", "section": "野菜", "unit": "本"}, {"name": "バナナ", "section": "果物", "unit": "房"}, {"name": "りんご", "section": "果物", "unit": "個"}, {"name": "キウイ", "section": "果物", "unit": "個"}, {"name": "鶏もも肉", "section": "肉", "unit": "枚"}, {"name": "鶏むね肉", "section": "肉", "unit": "枚"}, {"name": "鶏ひき肉", "section": "肉", "unit": "g"}, {"name": "豚こま切れ肉", "section": "肉", "unit": "g"}, {"name": "豚バラ薄切り肉", "section": "肉", "unit": "g"}, {"name": "豚ロース厚切り肉", "section": "肉", "unit": "枚"}, {"name": "合いびき肉", "section": "肉", "unit": "g"}, {"name": "ベーコン", "section": "肉", "unit": "パック"}, {"name": "鮭の切り身", "section": "魚", "unit": "切れ"}, {"name": "さばの切り身", "section": "魚", "unit": "切れ"}, {"name": "ぶりの切り身", "section": "魚", "unit": "切れ"}, {"name": "ツナ缶", "section": "魚", "unit": "缶"}, {"name": "しらす干し", "section": "魚", "unit": "パック"}, {"name": "卵", "section": "卵・乳製品", "unit": "個"}, {"name": "牛乳", "section": "卵・乳製品", "unit": "本"}, {"name": "ピザ用チーズ", "section": "卵・乳製品", "unit": "袋"}, {"name": "ヨーグルト", "section": "卵・乳製品", "unit": "パック"}, {"name": "木綿豆腐", "section": "豆腐・大豆", "unit": "丁"}, {"name": "絹ごし豆腐", "section": "豆腐・大豆", "unit": "丁"}, {"name": "納豆", "section": "豆腐・大豆", "unit": "パック"}, {"name": "油揚げ", "section": "豆腐・大豆", "unit": "枚"}, {"name": "米", "section": "乾物・麺・米", "unit": "kg"}, {"name": "スパゲッティ", "section": "乾物・麺・米", "unit": "g"}, {"name": "中華麺", "section": "乾物・麺・米", "unit": "玉"}, {"name": "ゆでうどん", "section": "乾物・麺・米", "unit": "玉"}, {"name": "乾燥わかめ", "section": "乾物・麺・米", "unit": "袋"}, {"name": "ひじき", "section": "乾物・麺・米", "unit": "袋"}, {"name": "パン粉", "section": "乾物・麺・米", "unit": "g"}, {"name": "食パン", "section": "乾物・麺・米", "unit": "枚"}, {"name": "冷凍餃子", "section": "冷凍食品", "unit": "袋"}, {"name": "冷凍ミックスベジタブル", "section": "冷凍食品", "unit": "袋"}, {"name": "冷凍むきえび", "section": "冷凍食品", "unit": "袋"}, {"name": "しょうゆ", "section": "調味料", "unit": "本"}, {"name": "塩", "section": "調味料", "unit": "袋"}, {"name": "砂糖", "section": "調味料", "unit": "袋"}, {"name": "みりん", "section": "調味料", "unit": "本"}, {"name": "料理酒", "section": "調味料", "unit": "本"}, {"name": "酢", "section": "調味料", "unit": "本"}, {"name": "みそ", "section": "調味料", "unit": "パック"}, {"name": "サラダ油", "section": "調味料", "unit": "本"}, {"name": "ごま油", "section": "調味料", "unit": "本"}, {"name": "マヨネーズ", "section": "調味料", "unit": "本"}, {"name": "ケチャップ", "section": "調味料", "unit": "本"}, {"name": "顆粒だし", "section": "調味料", "unit": "袋"}, {"name": "コンソメ", "section": "調味料", "unit": "箱"}, {"name": "めんつゆ", "section": "調味料", "unit": "本"}, {"name": "カレールー", "section": "その他", "unit": "箱"}, {"name": "シチュールー", "section": "その他", "unit": "箱"}, {"name": "トマト缶", "section": "その他", "unit": "缶"}];
+const SECTIONS = ["野菜", "果物", "肉", "魚", "卵・乳製品", "豆腐・大豆", "乾物・麺・米", "調味料", "冷凍食品", "その他"];
+const KEY = "tsumugi-mealplan-v1";
+const $ = (id) => document.getElementById(id);
+const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const state = (() => { try { return JSON.parse(localStorage.getItem(KEY)) || {}; } catch { return {}; } })();
+state.menu = state.menu || ["", "", "", "", "", "", ""];
+state.have = state.have || {};
+const save = () => { try { localStorage.setItem(KEY, JSON.stringify(state)); } catch {} };
+const ing = Object.fromEntries(INGS.map((g) => [g.name, g]));
+const DAYS = ["月", "火", "水", "木", "金", "土", "日"];
+const opts = `<option value="">（選ばない・外食など）</option>` + ["主菜", "主食", "汁物", "副菜", "その他"].map((k) => {
+  const rs = RECIPES.filter((r) => r.kind === k);
+  return rs.length ? `<optgroup label="${k}">` + rs.map((r) => `<option>${esc(r.name)}</option>`).join("") + "</optgroup>" : "";
+}).join("");
+$("days").innerHTML = DAYS.map((d, i) => `<div class="day"><label for="d${i}">${d}曜の夕食</label><select id="d${i}">${opts}</select></div>`).join("");
+
+function render() {
+  const need = {};
+  state.menu.forEach((n) => {
+    const r = RECIPES.find((x) => x.name === n);
+    if (r) r.items.forEach((it) => { need[it.ingredient] = (need[it.ingredient] || 0) + it.qty; });
+  });
+  const names = Object.keys(need);
+  if (!names.length) { $("list").innerHTML = `<p class="note">献立を選ぶと出ます。</p>`; $("count").textContent = ""; return; }
+  let html = "", left = 0;
+  const sec = (n) => (ing[n] && ing[n].section) || "その他";
+  SECTIONS.forEach((s) => {
+    const xs = names.filter((n) => sec(n) === s);
+    if (!xs.length) return;
+    html += `<h3>${s}</h3>` + xs.map((n) => {
+      const have = !!state.have[n];
+      if (!have) left++;
+      const q = Math.round(need[n] * 10) / 10;
+      return `<label class="${have ? "have" : ""}"><input type="checkbox" data-n="${esc(n)}" ${have ? "checked" : ""}> ${esc(n)}<span class="qty">${q}${esc((ing[n] && ing[n].unit) || "")}</span></label>`;
+    }).join("");
+  });
+  $("list").innerHTML = html + `<p class="note">チェック＝家にある（買わない）もの。</p>`;
+  $("count").textContent = `（買うもの ${left} 品）`;
+  $("list").querySelectorAll("input").forEach((c) => c.addEventListener("change", () => { state.have[c.dataset.n] = c.checked; save(); render(); }));
+}
+DAYS.forEach((_, i) => {
+  const el = $("d" + i);
+  el.value = state.menu[i] || "";
+  el.addEventListener("change", () => { state.menu[i] = el.value; save(); render(); });
+});
+render();
+</script>
+</body>
+</html>
