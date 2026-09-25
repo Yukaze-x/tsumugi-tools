@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>共通テストまであと何日？残り日数と科目ごとの勉強時間の配分を計算（無料）</title>
+<meta name="description" content="共通テスト（2027年1月16日・17日）までの残り日数と、平日・休日の勉強時間から使える総時間を計算。科目ごとの目標点と模試の点を入れると、伸びしろに合わせた時間の配分が出ます。登録不要・無料。">
+<meta property="og:title" content="共通テストまであと何日？科目ごとの時間配分を計算（無料）">
+<meta property="og:description" content="残り日数・使える総時間・科目ごとの時間の配分がすぐ分かります。">
+<meta name="theme-color" content="#1f2a36">
+<style>
+:root {
+  --bg: #f6f7f9; --card: #ffffff; --text: #1f2a36; --sub: #5b6570; --line: #dde2e7;
+  --accent: #2a8c82; --accent-soft: #e6f3f1; --warn: #fff4d6; --warn-line: #e8c56a;
+  --late: #fde2e1; --late-line: #e59a96; --done: #9aa3ad;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #171b21; --card: #20262e; --text: #e4e7eb; --sub: #a3acb6; --line: #333b45;
+    --accent: #4fb8ad; --accent-soft: #1f3432; --warn: #3a3222; --warn-line: #8a6f2c;
+    --late: #3d2626; --late-line: #8a4a47; --done: #6b737c;
+  }
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--text);
+  font-family: "BIZ UDPGothic", "Hiragino Sans", "Yu Gothic UI", "Meiryo", sans-serif; line-height: 1.7; }
+header { background: #1f2a36; color: #fff; padding: 20px 16px 16px; }
+header h1 { margin: 0; font-size: 1.35rem; }
+header p { margin: 6px 0 0; color: #c9d3dd; font-size: .9rem; }
+main { max-width: 860px; margin: 0 auto; padding: 16px; }
+.card { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 16px; margin-bottom: 16px; }
+.setup { display: grid; gap: 12px; grid-template-columns: 1fr; }
+@media (min-width: 640px) { .setup { grid-template-columns: 1fr 1fr; } }
+label { font-weight: bold; font-size: .95rem; display: block; margin-bottom: 4px; }
+input[type=date], select { font: inherit; font-size: 1.05rem; padding: 8px 10px; border: 1px solid var(--line); border-radius: 8px;
+  background: var(--card); color: var(--text); width: 100%; }
+.progress { margin-top: 12px; }
+.bar { height: 10px; background: var(--line); border-radius: 99px; overflow: hidden; }
+.bar > div { height: 100%; background: var(--accent); width: 0; transition: width .3s; }
+.progress small { color: var(--sub); }
+.tabs { display: flex; gap: 8px; margin-bottom: 12px; flex-wrap: wrap; }
+.tabs button, .tools button { font: inherit; border: 1px solid var(--line); background: var(--card); color: var(--text);
+  padding: 8px 14px; border-radius: 99px; cursor: pointer; }
+.tabs button[aria-selected=true] { background: var(--accent); border-color: var(--accent); color: #fff; font-weight: bold; }
+.tools { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin-bottom: 8px; }
+.tools label { font-weight: normal; display: inline-flex; gap: 6px; align-items: center; margin: 0; }
+h2.phase { font-size: 1.05rem; margin: 20px 0 8px; padding-left: 10px; border-left: 4px solid var(--accent); }
+.item { display: grid; grid-template-columns: 28px 1fr; gap: 8px; padding: 10px 12px; border: 1px solid var(--line);
+  border-radius: 10px; margin-bottom: 8px; background: var(--card); }
+.item.soon { background: var(--warn); border-color: var(--warn-line); }
+.item.late { background: var(--late); border-color: var(--late-line); }
+.item.done { color: var(--done); }
+.item.done .title { text-decoration: line-through; }
+.item input[type=checkbox] { width: 22px; height: 22px; margin-top: 3px; accent-color: var(--accent); }
+.meta { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; font-size: .85rem; color: var(--sub); }
+.chip { background: var(--accent-soft); color: var(--text); border-radius: 99px; padding: 0 8px; font-size: .8rem; }
+.due { font-weight: bold; }
+.title { font-weight: bold; }
+details summary { cursor: pointer; color: var(--sub); font-size: .85rem; }
+details p { margin: 4px 0 0; font-size: .92rem; }
+table { width: 100%; border-collapse: collapse; font-size: .92rem; }
+th, td { border-bottom: 1px solid var(--line); padding: 8px 6px; text-align: left; vertical-align: top; }
+th { color: var(--sub); font-weight: bold; }
+@media (max-width: 640px) {
+  table, thead, tbody, tr, th, td { display: block; }
+  thead { display: none; }
+  tr { border: 1px solid var(--line); border-radius: 10px; margin-bottom: 8px; padding: 8px; background: var(--card); }
+  td { border: none; padding: 2px 0; }
+  td::before { content: attr(data-label) "："; color: var(--sub); font-size: .8rem; }
+}
+.promo { border-color: var(--accent); }
+.promo a { color: var(--accent); font-weight: bold; }
+.note { color: var(--sub); font-size: .85rem; }
+footer { max-width: 860px; margin: 0 auto; padding: 8px 16px 40px; color: var(--sub); font-size: .8rem; }
+@media print {
+  header, .tabs, .tools, .promo, footer, .setup-hint { display: none; }
+  body { background: #fff; color: #000; }
+  .item { break-inside: avoid; background: #fff !important; }
+  details { display: block; } details > * { display: block; }
+}
+
+/* 固定費の計算（household） */
+.sum { display: grid; gap: 8px; grid-template-columns: repeat(2, 1fr); }
+@media (min-width: 640px) { .sum { grid-template-columns: repeat(4, 1fr); } }
+.sum div { background: var(--bg); border-radius: 10px; padding: 10px; }
+.sum small { color: var(--sub); display: block; font-size: .8rem; }
+.sum b { font-size: 1.2rem; }
+.sum .big b { color: var(--accent); font-size: 1.4rem; }
+.row { display: grid; grid-template-columns: 1fr 92px 92px; gap: 8px; align-items: center; padding: 8px 0; border-bottom: 1px solid var(--line); }
+.row .name { font-weight: bold; }
+.row .diff { grid-column: 1 / -1; font-size: .85rem; color: var(--sub); }
+.row input { font: inherit; width: 100%; padding: 6px 8px; border: 1px solid var(--line); border-radius: 8px; background: var(--card); color: var(--text); text-align: right; }
+.row input.name-in { text-align: left; }
+.head { font-size: .8rem; color: var(--sub); border-bottom: 2px solid var(--line); }
+.head span:not(:first-child) { text-align: right; }
+.add { margin-top: 10px; }
+
+.grid2 { display: grid; gap: 12px; grid-template-columns: 1fr; }
+@media (min-width: 640px) { .grid2 { grid-template-columns: 1fr 1fr; } }
+input[type=number], select { font: inherit; padding: 8px 10px; border: 1px solid var(--line); border-radius: 8px; background: var(--card); color: var(--text); width: 100%; box-sizing: border-box; }
+table { width: 100%; border-collapse: collapse; font-size: .92rem; }
+th, td { padding: 6px 4px; border-bottom: 1px solid var(--line); text-align: right; }
+th:first-child, td:first-child { text-align: left; }
+td input { width: 64px; }
+.bar { height: 8px; border-radius: 4px; background: var(--accent); }
+</style>
+<link rel="canonical" href="https://yukaze-x.github.io/tsumugi-tools/kyotsu/">
+<meta property="og:url" content="https://yukaze-x.github.io/tsumugi-tools/kyotsu/">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://yukaze-x.github.io/tsumugi-tools/kyotsu/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "共通テストまであと何日・科目ごとの時間配分", "url": "https://yukaze-x.github.io/tsumugi-tools/kyotsu/", "description": "共通テスト（2027年1月16日・17日）までの残り日数と、平日・休日の勉強時間から使える総時間を計算。科目ごとの目標点と模試の点を入れると、伸びしろに合わせた時間の配分が出ます。登録不要・無料。", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Web", "inLanguage": "ja", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "JPY"}, "creator": {"@type": "Organization", "name": "ツムギ"}}</script>
+</head>
+<body>
+<header>
+  <h1>共通テストまであと何日？</h1>
+  <p>残り日数と使える総時間、科目ごとの時間の配分を計算します。登録不要・無料。</p>
+</header>
+<main>
+  <section class="card">
+    <div class="sum">
+      <div class="big"><small>試験まで</small><b id="days">―</b></div>
+      <div><small>使える総時間</small><b id="total">―</b></div>
+      <div><small>平日／休日</small><b id="split">―</b></div>
+    </div>
+    <div class="grid2" style="margin-top:12px">
+      <div><label for="exam">試験日（1日目）</label><input type="date" id="exam"></div>
+      <div class="grid2">
+        <div><label for="wd">平日の時間</label><input type="number" id="wd" min="0" max="24" step="0.5" value="4"></div>
+        <div><label for="hd">休日の時間</label><input type="number" id="hd" min="0" max="24" step="0.5" value="8"></div>
+      </div>
+    </div>
+    <p class="note setup-hint">初期値は2027年度の共通テスト（2027年1月16日・17日）。日程は大学入試センターの受験案内で確認してください。祝日は平日として数えます。入力した内容はこの端末の中だけに保存されます。</p>
+  </section>
+
+  <section class="card">
+    <h2 class="phase" style="margin-top:0">科目ごとの時間の配分</h2>
+    <p class="note">目標点と、最新の模試の点を入れると、伸びしろ（目標−模試）の大きさに合わせて時間を配分します。</p>
+    <table>
+      <thead><tr><th>科目</th><th>目標</th><th>模試</th><th>配分</th><th>時間</th></tr></thead>
+      <tbody id="rows"></tbody>
+    </table>
+    <div style="margin-top:10px"><select id="add"></select></div>
+  </section>
+
+  <section class="card promo">
+    <strong>Excel 版もあります（有料・980円）</strong>
+    <p>この配分に、試験の週までの週ごとの計画（時期が「基礎の穴埋め→過去問演習→総仕上げ」に自動で切り替わる）、模試・過去問の記録、
+      試験日から日付が決まる直前30日のチェックリスト、当日の持ち物をまとめた Excel 版を、このページの作者が BOOTH で販売しています。</p>
+    <a href="https://tsumugi-ops.booth.pm" target="_blank" rel="noopener">共通テスト直前 学習の立て直しキット（Excel）</a>
+  </section>
+<section class="card"><h2 class="phase" style="margin-top:0">ほかの無料ツール</h2><ul style="margin:0;padding-left:1.2em;line-height:2"><li><a href="../moving/">引っ越しやることリスト</a></li><li><a href="../household/">固定費の見直し計算</a></li><li><a href="../study/">試験日から逆算する勉強計画</a></li><li><a href="../wedding/">結婚式準備やることリスト</a></li><li><a href="../procedures/">家族が亡くなったあとの手続き 期限の早見表</a></li><li><a href="../mealplan/">1週間の献立から買い物リスト</a></li><li><a href="../jobhunt/">転職の面接でよく聞かれる質問</a></li></ul></section>
+</main>
+<footer>
+  <p>このページは計画を立てるための道具で、合格や点数の上昇を約束するものではありません。科目と配点は 2026-09-26 時点で公表されている内容をもとにしています。</p>
+  <p>作成: ツムギ（<a href="https://tsumugi-ops.booth.pm" target="_blank" rel="noopener">BOOTH</a>）・<a href="../">ほかの無料ツール</a></p>
+</footer>
+<script>
+const SUBJECTS = [{"name": "国語", "points": 200}, {"name": "外国語 英語（リーディング）", "points": 100}, {"name": "外国語 英語（リスニング）", "points": 100}, {"name": "外国語 ドイツ語（筆記）", "points": 200}, {"name": "外国語 フランス語（筆記）", "points": 200}, {"name": "外国語 中国語（筆記）", "points": 200}, {"name": "外国語 韓国語（筆記）", "points": 200}, {"name": "数学① 数学Ⅰ・数学A", "points": 100}, {"name": "数学① 数学Ⅰ", "points": 100}, {"name": "数学② 数学Ⅱ・数学B・数学C", "points": 100}, {"name": "地理歴史 地理総合・地理探究", "points": 100}, {"name": "地理歴史 歴史総合・日本史探究", "points": 100}, {"name": "地理歴史 歴史総合・世界史探究", "points": 100}, {"name": "公民 公共・倫理", "points": 100}, {"name": "公民 公共・政治経済", "points": 100}, {"name": "地理歴史・公民 地理総合／歴史総合／公共（選び方は受験案内で確認）", "points": 100}, {"name": "理科 物理基礎・化学基礎・生物基礎・地学基礎（4科目から2科目）", "points": 100}, {"name": "理科 物理", "points": 100}, {"name": "理科 化学", "points": 100}, {"name": "理科 生物", "points": 100}, {"name": "理科 地学", "points": 100}, {"name": "情報 情報Ⅰ", "points": 100}];
+const KEY = "tsumugi-kyotsu-v1";
+const DAY = 86400000;
+const $ = (id) => document.getElementById(id);
+const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const state = (() => { try { return JSON.parse(localStorage.getItem(KEY)) || {}; } catch { return {}; } })();
+state.rows = state.rows || [];
+const save = () => { try { localStorage.setItem(KEY, JSON.stringify(state)); } catch {} };
+const today = () => { const t = new Date(); t.setHours(0, 0, 0, 0); return t; };
+function render() {
+  const exam = $("exam").value ? new Date($("exam").value + "T00:00:00") : null;
+  const wd = +$("wd").value || 0, hd = +$("hd").value || 0;
+  let nW = 0, nH = 0;
+  if (exam && exam > today()) for (let t = today().getTime(); t < exam.getTime(); t += DAY) { const w = new Date(t).getDay(); (w === 0 || w === 6) ? nH++ : nW++; }
+  const total = nW * wd + nH * hd;
+  $("days").textContent = exam ? `${Math.max(0, Math.round((exam - today()) / DAY))}日` : "―";
+  $("total").textContent = `${Math.round(total)}時間`;
+  $("split").textContent = `${nW}日／${nH}日`;
+  const gaps = state.rows.map((r) => (r.goal !== "" && r.now !== "" ? Math.max(0, r.goal - r.now) : 0));
+  const sum = gaps.reduce((a, b) => a + b, 0);
+  $("rows").innerHTML = state.rows.map((r, i) => {
+    const share = sum ? gaps[i] / sum : 0;
+    return `<tr><td>${esc(r.name)}<br><small class="note">配点${r.points}</small></td>
+      <td><input type="number" min="0" data-i="${i}" data-k="goal" value="${r.goal}"></td>
+      <td><input type="number" min="0" data-i="${i}" data-k="now" value="${r.now}"></td>
+      <td>${Math.round(share * 100)}%<div class="bar" style="width:${Math.round(share * 100)}%"></div></td>
+      <td>${Math.round(total * share)}時間</td></tr>`;
+  }).join("") || `<tr><td colspan="5" class="note">下の「科目を追加」から、受ける科目を選んでください。</td></tr>`;
+  $("rows").querySelectorAll("input").forEach((el) => el.addEventListener("change", () => {
+    state.rows[el.dataset.i][el.dataset.k] = el.value === "" ? "" : +el.value; save(); render();
+  }));
+}
+$("add").innerHTML = `<option value="">＋ 科目を追加</option>` + SUBJECTS.map((s, i) => `<option value="${i}">${esc(s.name)}（配点${s.points}）</option>`).join("");
+$("add").addEventListener("change", () => {
+  if ($("add").value === "") return;
+  const s = SUBJECTS[+$("add").value];
+  if (!state.rows.some((r) => r.name === s.name)) state.rows.push({ name: s.name, points: s.points, goal: "", now: "" });
+  $("add").value = ""; save(); render();
+});
+$("exam").value = state.exam || "2027-01-16";
+$("wd").value = state.wd ?? 4;
+$("hd").value = state.hd ?? 8;
+["exam", "wd", "hd"].forEach((id) => $(id).addEventListener("input", () => { state[id] = $(id).value; save(); render(); }));
+render();
+</script>
+</body>
+</html>
