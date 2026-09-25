@@ -1,0 +1,239 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>固定費の見直し計算｜今の月額と見直し後を入れると年間の差額がわかる（無料）</title>
+<meta name="description" content="家賃・通信・保険・サブスク・光熱費などの固定費を一覧にして、今の月額と見直し後の月額を入れると、年間の差額が自動で出ます。見直しのときに確認すること34項目つき。登録不要・無料。入力した内容はこの端末の中だけに保存されます。">
+<meta property="og:title" content="固定費の見直し計算（無料）">
+<meta property="og:description" content="固定費の今の月額と見直し後の月額を入れるだけで、年間の差額がわかります。確認することのチェックリストつき。">
+<meta name="theme-color" content="#1f2a36">
+<style>
+:root {
+  --bg: #f6f7f9; --card: #ffffff; --text: #1f2a36; --sub: #5b6570; --line: #dde2e7;
+  --accent: #2a8c82; --accent-soft: #e6f3f1; --warn: #fff4d6; --warn-line: #e8c56a;
+  --late: #fde2e1; --late-line: #e59a96; --done: #9aa3ad;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #171b21; --card: #20262e; --text: #e4e7eb; --sub: #a3acb6; --line: #333b45;
+    --accent: #4fb8ad; --accent-soft: #1f3432; --warn: #3a3222; --warn-line: #8a6f2c;
+    --late: #3d2626; --late-line: #8a4a47; --done: #6b737c;
+  }
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--text);
+  font-family: "BIZ UDPGothic", "Hiragino Sans", "Yu Gothic UI", "Meiryo", sans-serif; line-height: 1.7; }
+header { background: #1f2a36; color: #fff; padding: 20px 16px 16px; }
+header h1 { margin: 0; font-size: 1.35rem; }
+header p { margin: 6px 0 0; color: #c9d3dd; font-size: .9rem; }
+main { max-width: 860px; margin: 0 auto; padding: 16px; }
+.card { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 16px; margin-bottom: 16px; }
+.setup { display: grid; gap: 12px; grid-template-columns: 1fr; }
+@media (min-width: 640px) { .setup { grid-template-columns: 1fr 1fr; } }
+label { font-weight: bold; font-size: .95rem; display: block; margin-bottom: 4px; }
+input[type=date], select { font: inherit; font-size: 1.05rem; padding: 8px 10px; border: 1px solid var(--line); border-radius: 8px;
+  background: var(--card); color: var(--text); width: 100%; }
+.progress { margin-top: 12px; }
+.bar { height: 10px; background: var(--line); border-radius: 99px; overflow: hidden; }
+.bar > div { height: 100%; background: var(--accent); width: 0; transition: width .3s; }
+.progress small { color: var(--sub); }
+.tabs { display: flex; gap: 8px; margin-bottom: 12px; flex-wrap: wrap; }
+.tabs button, .tools button { font: inherit; border: 1px solid var(--line); background: var(--card); color: var(--text);
+  padding: 8px 14px; border-radius: 99px; cursor: pointer; }
+.tabs button[aria-selected=true] { background: var(--accent); border-color: var(--accent); color: #fff; font-weight: bold; }
+.tools { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin-bottom: 8px; }
+.tools label { font-weight: normal; display: inline-flex; gap: 6px; align-items: center; margin: 0; }
+h2.phase { font-size: 1.05rem; margin: 20px 0 8px; padding-left: 10px; border-left: 4px solid var(--accent); }
+.item { display: grid; grid-template-columns: 28px 1fr; gap: 8px; padding: 10px 12px; border: 1px solid var(--line);
+  border-radius: 10px; margin-bottom: 8px; background: var(--card); }
+.item.soon { background: var(--warn); border-color: var(--warn-line); }
+.item.late { background: var(--late); border-color: var(--late-line); }
+.item.done { color: var(--done); }
+.item.done .title { text-decoration: line-through; }
+.item input[type=checkbox] { width: 22px; height: 22px; margin-top: 3px; accent-color: var(--accent); }
+.meta { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; font-size: .85rem; color: var(--sub); }
+.chip { background: var(--accent-soft); color: var(--text); border-radius: 99px; padding: 0 8px; font-size: .8rem; }
+.due { font-weight: bold; }
+.title { font-weight: bold; }
+details summary { cursor: pointer; color: var(--sub); font-size: .85rem; }
+details p { margin: 4px 0 0; font-size: .92rem; }
+table { width: 100%; border-collapse: collapse; font-size: .92rem; }
+th, td { border-bottom: 1px solid var(--line); padding: 8px 6px; text-align: left; vertical-align: top; }
+th { color: var(--sub); font-weight: bold; }
+@media (max-width: 640px) {
+  table, thead, tbody, tr, th, td { display: block; }
+  thead { display: none; }
+  tr { border: 1px solid var(--line); border-radius: 10px; margin-bottom: 8px; padding: 8px; background: var(--card); }
+  td { border: none; padding: 2px 0; }
+  td::before { content: attr(data-label) "："; color: var(--sub); font-size: .8rem; }
+}
+.promo { border-color: var(--accent); }
+.promo a { color: var(--accent); font-weight: bold; }
+.note { color: var(--sub); font-size: .85rem; }
+footer { max-width: 860px; margin: 0 auto; padding: 8px 16px 40px; color: var(--sub); font-size: .8rem; }
+@media print {
+  header, .tabs, .tools, .promo, footer, .setup-hint { display: none; }
+  body { background: #fff; color: #000; }
+  .item { break-inside: avoid; background: #fff !important; }
+  details { display: block; } details > * { display: block; }
+}
+
+/* 固定費の計算（household） */
+.sum { display: grid; gap: 8px; grid-template-columns: repeat(2, 1fr); }
+@media (min-width: 640px) { .sum { grid-template-columns: repeat(4, 1fr); } }
+.sum div { background: var(--bg); border-radius: 10px; padding: 10px; }
+.sum small { color: var(--sub); display: block; font-size: .8rem; }
+.sum b { font-size: 1.2rem; }
+.sum .big b { color: var(--accent); font-size: 1.4rem; }
+.row { display: grid; grid-template-columns: 1fr 92px 92px; gap: 8px; align-items: center; padding: 8px 0; border-bottom: 1px solid var(--line); }
+.row .name { font-weight: bold; }
+.row .diff { grid-column: 1 / -1; font-size: .85rem; color: var(--sub); }
+.row input { font: inherit; width: 100%; padding: 6px 8px; border: 1px solid var(--line); border-radius: 8px; background: var(--card); color: var(--text); text-align: right; }
+.row input.name-in { text-align: left; }
+.head { font-size: .8rem; color: var(--sub); border-bottom: 2px solid var(--line); }
+.head span:not(:first-child) { text-align: right; }
+.add { margin-top: 10px; }
+
+</style>
+</head>
+<body>
+<header>
+  <h1>固定費の見直し計算</h1>
+  <p>今の月額と、見直したあとの月額を入れると、年間の差額が自動で出ます。登録不要・無料。</p>
+</header>
+<main>
+  <section class="card">
+    <div class="sum">
+      <div><small>今の固定費（月）</small><b id="nowM">0円</b></div>
+      <div><small>今の固定費（年）</small><b id="nowY">0円</b></div>
+      <div><small>見直し後（年）</small><b id="afterY">―</b></div>
+      <div class="big"><small>年間の差額</small><b id="diffY">―</b></div>
+    </div>
+    <p class="note setup-hint">金額は、明細や契約書で確かめた月額を入れてください。年払いのものは12で割った額を入れます。見直し後の月額は、見直さない項目は空欄のままで構いません（今の月額のまま計算します）。</p>
+    <p class="note setup-hint">入力した内容は、この端末のブラウザの中だけに保存されます（どこにも送信しません）。</p>
+  </section>
+
+  <div class="tabs" role="tablist">
+    <button role="tab" aria-selected="true" data-tab="calc">固定費の一覧</button>
+    <button role="tab" aria-selected="false" data-tab="check">確認することのリスト</button>
+  </div>
+
+  <section id="calc">
+    <div class="tools">
+      <button type="button" id="print">印刷する</button>
+      <button type="button" id="reset">入力を全部消す</button>
+    </div>
+    <div class="row head"><span>項目</span><span>今の月額</span><span>見直し後</span></div>
+    <div id="rows"></div>
+    <div class="tools add"><button type="button" id="addRow">＋ 項目を足す</button></div>
+  </section>
+
+  <section id="check" hidden>
+    <div class="progress">
+      <div class="bar"><div id="bar"></div></div>
+      <small id="count"></small>
+    </div>
+    <div id="checks"></div>
+  </section>
+
+  <section class="card promo">
+    <strong>Excel 版もあります（有料・1,480円）</strong>
+    <p>この計算に、家計簿の入力と月別の集計・グラフ（予算を超えた月は赤）、特別費の積み立て額の計算をつけた Excel 版を、
+      このページの作者が BOOTH で販売しています。</p>
+    <a href="https://tsumugi-ops.booth.pm/items/8896161" target="_blank" rel="noopener">家計と固定費の見直しシート（Excel・Googleスプレッドシート対応）</a>
+  </section>
+</main>
+<footer>
+  <p>このページは記録と計算のための道具です。見直しでいくら変わるかは契約内容やご家庭によって違います。契約についての判断はご自身で行ってください。
+    内容の作成には AI を利用しています（2026-09-25 時点）。</p>
+  <p>作成: ツムギ（<a href="https://tsumugi-ops.booth.pm" target="_blank" rel="noopener">BOOTH</a>）・<a href="../">ほかの無料ツール</a></p>
+</footer>
+<script>
+const ITEMS = [{"area": "住まい", "name": "家賃"}, {"area": "住まい", "name": "住宅ローン返済"}, {"area": "通信", "name": "携帯電話（本人）"}, {"area": "通信", "name": "携帯電話（家族分）"}, {"area": "通信", "name": "自宅のインターネット回線"}, {"area": "保険", "name": "生命保険・医療保険・がん保険"}, {"area": "保険", "name": "火災保険・地震保険"}, {"area": "保険", "name": "自動車保険"}, {"area": "サブスク", "name": "動画・音楽の配信サービス"}, {"area": "サブスク", "name": "電子書籍・雑誌の読み放題"}, {"area": "サブスク", "name": "クラウド保存容量・アプリの月額課金"}, {"area": "サブスク", "name": "ジム・スポーツクラブの会費"}, {"area": "光熱", "name": "電気"}, {"area": "光熱", "name": "ガス（都市ガス・プロパン）"}, {"area": "光熱", "name": "水道・下水道"}, {"area": "車・交通", "name": "駐車場代"}, {"area": "車・交通", "name": "自動車ローン・カーリース"}, {"area": "車・交通", "name": "通勤定期代（自己負担分）"}, {"area": "教育・習い事", "name": "保育料・学童保育料"}, {"area": "教育・習い事", "name": "習い事の月謝"}, {"area": "教育・習い事", "name": "塾・通信教育"}, {"area": "その他", "name": "放送受信料"}, {"area": "その他", "name": "自治会・町内会費"}, {"area": "その他", "name": "定額の仕送り・親への援助"}];
+const CHECKS = [{"area": "住まい", "check": "賃貸契約の更新時期と、更新料の有無・金額を確認する", "why": "更新料は2年ごとなどでまとめて出ていくので、月々の家計簿に出てこない。", "how": "契約書の「契約期間」「更新料」の欄を見る。更新月がわかったら、特別費の該当月に金額を入れておく。"}, {"area": "住まい", "check": "家賃に含まれている費用（共益費、駐車場、室内の保証サービス、24時間サポートなど）の内訳を確認する", "why": "契約時に付いたオプションが、使っていないまま毎月の請求に入っていることがある。", "how": "契約書の費用一覧と、直近の請求書または引き落とし明細を並べて、同じ項目名を探す。わからない項目は管理会社に問い合わせる。"}, {"area": "住まい", "check": "住宅ローンの金利タイプ（変動・固定）、残高、残りの返済期間を確認する", "why": "固定金利の期間が終わる時期や、変動金利の見直し時期を知らないと、返済額が変わってから気づくことになる。", "how": "金融機関から年1回届く残高証明書か、ネットバンキングの返済予定表を見る。借り換えを考えるなら、手数料や諸費用も合わせて見積もりを取る。"}, {"area": "住まい", "check": "管理費・修繕積立金の現在の額と、今後の値上げ予定を確認する", "why": "マンションでは修繕積立金が段階的に上がる計画になっていることがあり、数年後の固定費に響く。", "how": "管理組合の総会資料や長期修繕計画の「積立金の推移」のページを見る。手元になければ管理会社に閲覧を頼む。"}, {"area": "住まい", "check": "固定資産税・都市計画税の納期と納付方法を確認する（持ち家の場合）", "why": "納期は自治体により異なり、年4回に分かれる地域も一括の地域もある。納期に貯金が足りないと慌てる。", "how": "毎年春ごろに届く納税通知書で、各期の金額と期限を見る。特別費に書き入れて、月ごとに積み立てる額を決める。"}, {"area": "通信", "check": "携帯電話の料金プランと、直近3か月の実際のデータ使用量・通話時間を見比べる", "why": "契約したときと今とで、使い方が変わっていることが多い。プランが大きすぎるか小さすぎるかは、数字を見ないとわからない。", "how": "契約会社のマイページで「データ使用量」の履歴を開き、3か月分を書き写す。契約容量に対して何割使っているかを計算する。"}, {"area": "通信", "check": "家族の回線ごとに、プラン名・月額・適用されている割引の条件を書き出す", "why": "家族割やセット割は、1回線が抜けたり、ネット回線を変えたりすると外れて、全体の請求が上がることがある。", "how": "回線ごとにマイページの「契約内容」を開いて、割引名と条件を控える。条件が何かを見て、変更を考えるときに影響が出る回線をメモしておく。"}, {"area": "通信", "check": "有料オプション（保証、安心サービス、コンテンツ）の加入状況を確認する", "why": "店頭で申し込んだ初月無料のオプションが、そのまま残っていることがある。", "how": "マイページの「加入中のサービス」を開き、一覧にある名前を1つずつ見る。用途がわからないものは、サービス名で検索するか、窓口に聞く。"}, {"area": "通信", "check": "端末代の分割の残り回数と、契約を途中でやめた場合にかかる費用を確認する", "why": "端末代が残っていると、乗り換えたときに一括で請求される場合がある。", "how": "契約内容の画面で「端末代金の残額」と「契約解除料の有無」を見る。乗り換えを考えるなら、残額を払い終える月を書いておく。"}, {"area": "通信", "check": "自宅のインターネット回線の契約期間、更新月、月額に含まれる機器代・オプション代を確認する", "why": "更新月以外に契約を変えると、違約金がかかる契約がある。機器のレンタル代が別に付いていることもある。", "how": "契約書か請求書で「契約期間」「更新月」「機器利用料」を探す。更新月をカレンダーの予定に入れておく。"}, {"area": "保険", "check": "加入している保険をすべて書き出し、保険料、保障の中身、満期を確認する", "why": "家族それぞれが別々に入っていると、全体でいくら払っているか誰も把握していないことがある。", "how": "保険証券か、年1回届く契約内容のお知らせを集める。保険ごとに、月額（年払いなら12で割る）、保障の内容、満期を1行にまとめる。"}, {"area": "保険", "check": "公的な保障で賄える部分と、自己負担になる部分を確認する", "why": "高額療養費制度では、1か月の保険診療分の自己負担に、年齢・所得に応じた上限がある。差額ベッド代、食事代、先進医療などは対象外。会社員などの健康保険には傷病手当金もあるが、国民健康保険は自治体により異なる。", "how": "加入先の健康保険（会社の健保、協会けんぽ、国民健康保険）のサイトで、自己負担の上限と、傷病手当金の有無を見る。会社の福利厚生の資料も確認する。"}, {"area": "保険", "check": "死亡保障の額を、子どもの年齢、住宅ローンの団体信用生命保険、遺族年金の見込みと並べて確認する", "why": "住宅ローンに団体信用生命保険が付いていると、必要な保障額が変わる。子どもが成長すると、必要な期間や額も変わる。", "how": "ねんきんネットで加入記録を確認し、遺族年金の見込額は日本年金機構の制度説明・年金事務所などで個別に確認する。ローンの契約書で団体信用生命保険の有無を確認する。この2つを保険証券の保障額と並べて書く。"}, {"area": "保険", "check": "火災保険の補償範囲（水災、家財、破損・汚損）、契約期間、更新時期を確認する", "why": "補償の範囲は住まいの立地や階数によって必要なものが違う。2022年10月以降に新規契約・更新する火災保険は原則最長5年。以前に締結した長期契約は証券で満期を確認する。更新時に保険料が変わることもある。", "how": "保険証券で、補償ごとに付けている・付けていないを○×で書く。ハザードマップ（自治体が公開）で、自宅の水害リスクを見て照らし合わせる。"}, {"area": "保険", "check": "個人賠償責任の補償が、複数の契約に重複して付いていないか確認する", "why": "自動車保険、火災保険、クレジットカード付帯などに特約として付いていて、同じ補償に二重で払っている場合がある。", "how": "各保険証券の「特約」欄と、カード会社の付帯サービスの案内を見る。「個人賠償」の文字があるものを並べて、補償額と対象の家族の範囲を比べる。"}, {"area": "保険", "check": "自動車保険の等級、運転者の範囲、年齢条件、車両保険の有無が、今の車の使い方に合っているか確認する", "why": "運転する人が変わった、走行距離が減ったなどの変化が、契約に反映されていないことがある。", "how": "更新のお知らせに書かれた契約条件を、実際に運転する人・年間走行距離・車の年式と見比べる。変更が必要な場合は、更新前に契約先へ連絡する。"}, {"area": "サブスク", "check": "直近3か月のカード明細、携帯料金への合算請求、スマホのアプリストアの定期購入画面から、定期課金を洗い出す", "why": "支払い方法が複数に散らばっていると、存在を忘れているものが出てくる。", "how": "カード会社の明細を3か月分開き、毎月同じ金額のものにマーカーを引く。スマホの設定にある「定期購入（サブスクリプション）」の画面も別に開いて、同じように書き出す。"}, {"area": "サブスク", "check": "洗い出した各サービスを、最後に使った日と月の利用回数で確認する", "why": "料金だけを見ても、使っているかどうかはわからない。使った回数で割ると、1回あたりの金額が出る。", "how": "視聴履歴、ログイン履歴、アプリの利用状況から、最後に使った日を書く。月額を利用回数で割った金額を出して、続けるかどうかは自分で決める。"}, {"area": "サブスク", "check": "無料期間が終わる日、年払いの更新日を確認する", "why": "無料期間は自動で有料に変わるものが多い。年払いは、更新日にまとまった金額が引き落とされる。", "how": "サービスの契約管理ページで、次回の請求日を見る。その日の3日前にスマホのカレンダーで通知が出るよう登録する。"}, {"area": "サブスク", "check": "家族の間で、同じ種類のサービスを別々に契約していないか確認する", "why": "家族プランや共有できるプランがあるサービスは、個別契約より条件が変わることがある。", "how": "家族全員のスマホで定期購入の画面を見せ合い、サービスの種類ごとに並べる。同じ種類のものがあれば、共有できるプランの有無を各サービスのヘルプで調べる。"}, {"area": "サブスク", "check": "ジムや会員制サービスの会費と、直近3か月の利用回数を確認する", "why": "通う回数が少ないと、1回あたりの費用が高くなる。休会や退会の手続き方法が決まっていることも多い。", "how": "入館記録か、予約履歴で3か月分の利用回数を数える。会費の合計を回数で割って書き、契約書で休会・退会の手続きと期限を確認する。"}, {"area": "光熱", "check": "電気の契約プラン、契約容量（アンペアまたはkVA）、直近12か月の使用量を確認する", "why": "季節で使用量が大きく変わる。1か月だけ見ても、年間の傾向はわからない。", "how": "検針票か電力会社のマイページから、12か月分の使用量と請求額を書き写す。夏と冬の月がどれだけ上がるかを見る。ブレーカーが落ちる頻度も合わせて考える。"}, {"area": "光熱", "check": "電気は基本料金・電力量料金・燃料費調整額・再エネ賦課金、都市ガスは基本料金・従量料金・原料費調整額などを確認する", "why": "料金メニューの違いなのか、燃料価格や制度で動く部分なのかがわからないと、比べる意味が薄くなる。", "how": "請求書の内訳欄を見て、電気とガスそれぞれの項目ごとに色を分けて印を付ける。メニューを比べるときは、同じ使用量で試算する。プロパンガスは会社ごとに料金の決め方が違うので、契約書も見る。"}, {"area": "光熱", "check": "水道の使用量の推移と、使っていない時間帯にメーターが動いていないかを確認する", "why": "漏水があると、使っていないのに水道料金が上がる。料金の体系は自治体により異なる。", "how": "検針票で過去1年の使用量を見る。外出前に家中の蛇口を閉めて、メーターのパイロット（銀色の小さな回転板）が回っていないかを見る。回っていれば水道局に連絡する。"}, {"area": "車・交通", "check": "車の年間の維持費（駐車場、保険、税金、車検、ガソリン、ローン）を合計して、月あたりと乗った回数あたりに直す", "why": "月々の支払いだけでは、年払いや車検の分が抜けて、実際の負担が見えない。", "how": "ファイルの固定費と特別費から車関連の行を全部合計する。月に乗る回数で割って、1回あたりの費用を出す。タクシーやレンタカー、カーシェアの利用費と並べるかどうかは、家族の事情で判断する。"}, {"area": "車・交通", "check": "会社の通勤手当の支給額と、実際にかかっている交通費を照らして確認する", "why": "経路や定期券の種類を変えたときに、手当の申請内容が古いままになっていることがある。", "how": "就業規則や社内の通勤手当規定で、支給の基準（最短経路、上限額など）を見る。実際に買っている定期券の金額と比べる。"}, {"area": "教育・習い事", "check": "習い事ごとに、月謝以外の費用（入会金、教材費、発表会費、年会費、用具代）を確認する", "why": "月謝は変わらなくても、年に数回の追加費用で、実際の負担は大きくなる。", "how": "教室の案内書か、これまでの振込履歴から、年間の合計を出す。年会費や発表会費は、特別費の該当月に書き入れる。"}, {"area": "教育・習い事", "check": "保育料、学童、給食費、学用品などに、自治体の減免や助成があるかを確認する", "why": "3〜5歳の幼児教育・保育の無償化は施設の種類で範囲が異なり、給食費の補助や医療費助成なども自治体により異なる。", "how": "住んでいる自治体の子育て支援のページで、対象年齢と、申請が必要かどうかを確認する。申請が必要なものは、窓口に持っていく書類も控える。"}, {"area": "教育・習い事", "check": "塾や通信教育の契約期間、退会の手続きの締め日、教材費の請求時期を確認する", "why": "退会は前月の月末までなど、締め日が決まっていることが多い。教材費が別に請求される場合もある。", "how": "契約書や会員規約で「退会」「休会」の項目を探す。締め日をカレンダーの予定に入れておく。"}, {"area": "その他", "check": "児童手当の振込先口座と受給者、直近の支給が始まっているかを確認する", "why": "2024年10月分から高校生年代までが対象になり、所得制限もなくなった。支給は偶数月の年6回。振込先が家計管理の口座と違うと、把握しにくい。", "how": "自治体からの通知か、窓口で受給者と振込口座を確認する。通帳の入金履歴で、直近の支給月を見る。第3子以降の加算の対象になる子がいる場合は、対象の年齢と人数も自治体に確認する。"}, {"area": "その他", "check": "放送受信料の契約の種類と支払い方法、割引や免除の条件を確認する", "why": "6か月・12か月の前払いには割引がある。契約種別、支払期間、免除・各種割引の適用状況を確認する。", "how": "請求書か契約内容の通知を見て、契約種別と支払い方法を確認する。免除・割引の条件は、放送受信料の窓口の公式サイトで最新の内容を見る。"}, {"area": "その他", "check": "固定費の引き落とし口座と、引き落とし日が給料日とずれていないかを確認する", "why": "給料日の前に引き落としが集中すると、口座残高が足りなくなって、手数料や延滞の連絡が来ることがある。", "how": "固定費の一覧に、支払日と引き落とし口座を1列ずつ足す。給料日の前後に何件・いくら落ちるかを日付順に並べて見る。"}, {"area": "その他", "check": "クレジットカードの年会費と、1年間で実際に受け取ったポイントの額を確認する", "why": "年会費がかかるカードは、ポイント還元で年会費分を取り戻せているかがわからないことが多い。", "how": "カード会社のマイページで、年間の利用額、獲得ポイント、年会費を1年分並べる。付帯の保険やサービスを使っているかも書く。"}, {"area": "家計全体", "check": "年払い・半年払いの支払いを洗い出し、12で割った月額を出す", "why": "年払いの請求は月ごとの収支に大きな山をつくる。月額に直しておくと、月々いくら取っておけばいいかがわかる。", "how": "保険料、税金、年会費、更新料の請求書を集めて、金額と支払月を特別費に書き入れる。合計を12で割った金額を、毎月の積立額の目安にする。"}];
+const KEY = "tsumugi-household-v1";
+const state = (() => { try { return JSON.parse(localStorage.getItem(KEY)) || {}; } catch { return {}; } })();
+state.v = state.v || {};        // 項目ごとの {now, after}
+state.extra = state.extra || []; // 自分で足した項目の名前
+state.done = state.done || {};
+const save = () => { try { localStorage.setItem(KEY, JSON.stringify(state)); } catch {} };
+const $ = (id) => document.getElementById(id);
+const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const yen = (n) => `${Math.round(n).toLocaleString("ja-JP")}円`;
+const num = (s) => { const n = parseInt(String(s || "").replace(/[^0-9]/g, ""), 10); return isNaN(n) ? null : n; };
+
+function rowsHtml() {
+  let html = "", area = "";
+  const all = [...ITEMS, ...state.extra.map((name, i) => ({ area: "自分で足した項目", name, key: `x${i}` }))];
+  for (const it of all) {
+    const key = it.key || it.name;
+    if (it.area !== area) { area = it.area; html += `<h2 class="phase">${esc(area)}</h2>`; }
+    const v = state.v[key] || {};
+    const nameCell = it.key ? `<input class="name-in" data-x="${it.key.slice(1)}" value="${esc(it.name)}" aria-label="項目名">` : `<span class="name">${esc(it.name)}</span>`;
+    html += `<div class="row" data-key="${esc(key)}">${nameCell}
+      <input inputmode="numeric" data-f="now" value="${v.now ?? ""}" placeholder="0" aria-label="${esc(it.name)} 今の月額">
+      <input inputmode="numeric" data-f="after" value="${v.after ?? ""}" placeholder="—" aria-label="${esc(it.name)} 見直し後の月額">
+      <span class="diff" data-diff></span></div>`;
+  }
+  $("rows").innerHTML = html;
+}
+
+function calc() {
+  let nowM = 0, afterM = 0, any = false;
+  document.querySelectorAll("#rows .row").forEach((r) => {
+    const v = state.v[r.dataset.key] || {};
+    const now = num(v.now), after = num(v.after);
+    nowM += now || 0;
+    afterM += after ?? now ?? 0;
+    if (after !== null) any = true;
+    const d = r.querySelector("[data-diff]");
+    d.textContent = now !== null && after !== null ? `年間の差額: ${yen((now - after) * 12)}` : "";
+  });
+  $("nowM").textContent = yen(nowM);
+  $("nowY").textContent = yen(nowM * 12);
+  $("afterY").textContent = any ? yen(afterM * 12) : "―";
+  $("diffY").textContent = any ? yen((nowM - afterM) * 12) : "―";
+}
+
+function checksHtml() {
+  let html = "", area = "", done = 0;
+  CHECKS.forEach((c, i) => {
+    if (c.area !== area) { area = c.area; html += `<h2 class="phase">${esc(area)}</h2>`; }
+    const d = !!state.done[i];
+    if (d) done++;
+    html += `<div class="item ${d ? "done" : ""}"><input type="checkbox" data-i="${i}" ${d ? "checked" : ""} aria-label="${esc(c.check)}">
+      <div><div class="title">${esc(c.check)}</div>
+      <details><summary>理由と確認のしかた</summary><p><b>理由:</b> ${esc(c.why)}</p><p><b>確認のしかた:</b> ${esc(c.how)}</p></details></div></div>`;
+  });
+  $("checks").innerHTML = html;
+  $("bar").style.width = `${Math.round(done / CHECKS.length * 100)}%`;
+  $("count").textContent = `確認した数: ${done} / ${CHECKS.length}`;
+}
+
+$("rows").addEventListener("input", (e) => {
+  const r = e.target.closest(".row");
+  if (!r) return;
+  if (e.target.dataset.f) {
+    const v = state.v[r.dataset.key] = state.v[r.dataset.key] || {};
+    v[e.target.dataset.f] = e.target.value;
+  } else if (e.target.dataset.x !== undefined) {
+    state.extra[+e.target.dataset.x] = e.target.value;
+  }
+  save(); calc();
+});
+$("addRow").addEventListener("click", () => { state.extra.push("新しい項目"); save(); rowsHtml(); calc(); });
+$("checks").addEventListener("change", (e) => {
+  if (e.target.matches("input[type=checkbox]")) { state.done[e.target.dataset.i] = e.target.checked; save(); checksHtml(); }
+});
+$("print").addEventListener("click", () => window.print());
+$("reset").addEventListener("click", () => { state.v = {}; state.extra = []; save(); rowsHtml(); calc(); });
+document.querySelectorAll(".tabs button").forEach((b) => b.addEventListener("click", () => {
+  document.querySelectorAll(".tabs button").forEach((x) => x.setAttribute("aria-selected", x === b));
+  $("calc").hidden = b.dataset.tab !== "calc";
+  $("check").hidden = b.dataset.tab !== "check";
+}));
+rowsHtml(); calc(); checksHtml();
+</script>
+</body>
+</html>

@@ -78,6 +78,23 @@ footer { max-width: 860px; margin: 0 auto; padding: 8px 16px 40px; color: var(--
   .item { break-inside: avoid; background: #fff !important; }
   details { display: block; } details > * { display: block; }
 }
+
+/* 固定費の計算（household） */
+.sum { display: grid; gap: 8px; grid-template-columns: repeat(2, 1fr); }
+@media (min-width: 640px) { .sum { grid-template-columns: repeat(4, 1fr); } }
+.sum div { background: var(--bg); border-radius: 10px; padding: 10px; }
+.sum small { color: var(--sub); display: block; font-size: .8rem; }
+.sum b { font-size: 1.2rem; }
+.sum .big b { color: var(--accent); font-size: 1.4rem; }
+.row { display: grid; grid-template-columns: 1fr 92px 92px; gap: 8px; align-items: center; padding: 8px 0; border-bottom: 1px solid var(--line); }
+.row .name { font-weight: bold; }
+.row .diff { grid-column: 1 / -1; font-size: .85rem; color: var(--sub); }
+.row input { font: inherit; width: 100%; padding: 6px 8px; border: 1px solid var(--line); border-radius: 8px; background: var(--card); color: var(--text); text-align: right; }
+.row input.name-in { text-align: left; }
+.head { font-size: .8rem; color: var(--sub); border-bottom: 2px solid var(--line); }
+.head span:not(:first-child) { text-align: right; }
+.add { margin-top: 10px; }
+
 </style>
 </head>
 <body>
